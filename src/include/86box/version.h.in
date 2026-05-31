@@ -30,7 +30,7 @@
 #define EMU_VERSION_PATCH @CMAKE_PROJECT_VERSION_PATCH@
 
 #cmakedefine EMU_BUILD     "@EMU_BUILD@"
-#define EMU_BUILD_NUM      "10001"
+#define EMU_BUILD_NUM      10001
 #cmakedefine EMU_GIT_HASH  "@EMU_GIT_HASH@"
 
 #ifdef EMU_BUILD
