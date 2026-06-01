@@ -1214,6 +1214,35 @@ machine_at_gw2kte_init(const machine_t *model)
 }
 
 int
+machine_at_p56ips_init(const machine_t *model)
+{
+    int ret;
+
+    ret = bios_load_linear("roms/machines/p56ips/56i112.BIN",
+                           0x000e0000, 131072, 0);
+
+    if (bios_only || !ret)
+        return ret;
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x0C, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x0D, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x0E, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x0F, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 0, 0, 0, 0);
+    device_add(&i430vx_device);
+    device_add(&piix3_device);
+    device_add_params(machine_get_kbc_device(machine), (void *) model->kbc_params);
+    device_add_params(&w83877_device, (void *) (W83877F | W83877_3F0));
+    device_add(&sst_flash_29ee010_device);
+
+    return ret;
+}
+
+int
 machine_at_brio80xx_init(const machine_t *model)
 {
     int ret;
@@ -1368,6 +1397,35 @@ machine_at_pb680_init(const machine_t *model)
     return ret;
 }
 
+int
+machine_at_pb770_init(const machine_t *model)
+{
+    int ret;
+
+    ret = bios_load_linear("roms/machines/pb770/A013A00H.ROM",
+                           0x000c0000, 262144, 0);
+
+    if (bios_only || !ret)
+        return ret;
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x08, PCI_CARD_VIDEO,       4, 0, 0, 0);
+    pci_register_slot(0x11, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x13, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x0B, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+
+    device_add(&i430vx_device);
+    device_add(&piix3_device);
+    device_add_params(&fdc37c93x_device, (void *) (FDC37XXX5 | FDC37C93X_NORMAL | FDC37XXXX_370));
+    device_add(&sst_flash_29ee020_device);
+
+    return ret;
+}
+
 static const device_config_t pb810_config[] = {
     // clang-format off
     {
@@ -1381,15 +1439,6 @@ static const device_config_t pb810_config[] = {
         .selection      = { { 0 } },
         .bios           = {
             {
-                .name          = "Award Modular BIOS v4.51PG - Revision v1.25I (Packard Bell OEM)",
-                .internal_name = "pb810",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/pb810/G400125I.BIN", "" }
-            },
-            {
                 .name          = "Award Modular BIOS v4.51PG - Revision v1.25I (NEC OEM)",
                 .internal_name = "pb810_nec",
                 .bios_type     = BIOS_NORMAL,
@@ -1397,6 +1446,15 @@ static const device_config_t pb810_config[] = {
                 .local         = 0,
                 .size          = 131072,
                 .files         = { "roms/machines/pb810/NECV125I.BIN", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision v1.25I (Packard Bell OEM)",
+                .internal_name = "pb810",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 131072,
+                .files         = { "roms/machines/pb810/G400125I.BIN", "" }
             },
             { .files_no = 0 }
         }
@@ -1543,7 +1601,65 @@ machine_at_55a5_init(const machine_t *model)
     return ret;
 }
 
+int
+machine_at_sy5va_init(const machine_t *model)
+{
+    int ret;
+
+    ret = bios_load_linear("roms/machines/sy5va/5va0911h.BIN",
+                           0x000e0000, 131072, 0);
+
+    if (bios_only || !ret)
+        return ret;
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x08, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x09, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x0A, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x0B, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 0, 0, 0, 0);
+    device_add(&i430vx_device);
+    device_add(&piix3_device);
+    device_add_params(machine_get_kbc_device(machine), (void *) model->kbc_params);
+    device_add_params(&fdc37c669_device, (void *) FDC37C6XX_370);
+    device_add(&sst_flash_29ee010_device);
+
+    return ret;
+}
+
 /* i430TX */
+int
+machine_at_tx5_init(const machine_t *model)
+{
+    int ret;
+
+    ret = bios_load_linear("roms/machines/tx5/TX5B_GN.BIN",
+                           0x000e0000, 131072, 0);
+
+    if (bios_only || !ret)
+        return ret;
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x09, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x0B, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x0D, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x0F, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 0, 0, 0, 0);
+    device_add(&i430tx_device);
+    device_add(&piix4_device);
+    device_add_params(&w83977_device, (void *) (W83977TF | W83977_AMI | W83977_NO_NVR));
+    device_add(&sst_flash_29ee010_device);
+    spd_register(SPD_TYPE_SDRAM, 0x3, 128);
+
+    return ret;
+}
+
 int
 machine_at_nupro592_init(const machine_t *model)
 {
@@ -1785,6 +1901,70 @@ machine_at_txp4x_init(const machine_t *model)
     return ret;
 }
 
+int
+machine_at_sq576_init(const machine_t *model)
+{
+    int ret;
+
+    ret = bios_load_linear("roms/machines/sq576/576A03.bin",
+                           0x000e0000, 131072, 0);
+
+    if (bios_only || !ret)
+        return ret;
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x08, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x09, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x0A, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x0B, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x0C, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 1, 2, 3, 4); /* PIIX4 */
+
+    device_add(&i430tx_device);
+    device_add(&piix4_device);
+    device_add_params(machine_get_kbc_device(machine), (void *) model->kbc_params);
+    device_add_params(&fdc37c93x_device, (void *) (FDC37XXX5 | FDC37C93X_NORMAL | FDC37C93X_NO_NVR));
+    device_add(&sst_flash_29ee010_device);
+    spd_register(SPD_TYPE_SDRAM, 0x3, 128);
+
+    return ret;
+}
+
+int
+machine_at_mb8500tuda_init(const machine_t *model)
+{
+    int ret;
+
+    ret = bios_load_linear("roms/machines/mb8500tuda/tud1202b.bin",
+                           0x000e0000, 131072, 0);
+
+    if (bios_only || !ret)
+        return ret;
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x08, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x09, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x0A, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x0B, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x0C, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 1, 2, 3, 4); /* PIIX4 */
+
+    device_add(&i430tx_device);
+    device_add(&piix4_device);
+    device_add_params(machine_get_kbc_device(machine), (void *) model->kbc_params);
+    device_add_params(&fdc37c67x_device, (void *) (FDC37XXX2 | FDC37XXXX_370));
+    device_add(&sst_flash_29ee010_device);
+    spd_register(SPD_TYPE_SDRAM, 0x3, 128);
+
+    return ret;
+}
+
 void
 machine_at_optiplex_21152_init(void)
 {
@@ -1828,6 +2008,35 @@ machine_at_optiplexgn_init(const machine_t *model)
     machine_at_optiplex_21152_init();
     device_add_params(&pc87307_device, (void *) (PCX730X_PHOENIX_42 | PCX7307_PC87307));
     device_add(&intel_flash_bxt_device);
+    spd_register(SPD_TYPE_SDRAM, 0x3, 128);
+
+    return ret;
+}
+
+int
+machine_at_p5txbpro_init(const machine_t *model)
+{
+    int ret;
+
+    ret = bios_load_linear("roms/machines/p5txbpro/BPRO22.BIN",
+                           0x000e0000, 131072, 0);
+
+    if (bios_only || !ret)
+        return ret;
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x09, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x0A, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x0B, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x0C, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 0, 0, 0, 0);
+    device_add(&i430tx_device);
+    device_add(&piix4_device);
+    device_add_params(&w83877_device, (void *) (W83877F | W83877_3F0));
+    device_add(&sst_flash_29ee010_device);
     spd_register(SPD_TYPE_SDRAM, 0x3, 128);
 
     return ret;
@@ -2417,6 +2626,36 @@ machine_at_richmond_init(const machine_t *model)
     return ret;
 }
 
+int
+machine_at_s1573s_init(const machine_t *model)
+{
+    int ret;
+
+    ret = bios_load_linear("roms/machines/s1573s/tx73w106.BIN",
+                           0x000e0000, 131072, 0);
+
+    if (bios_only || !ret)
+        return ret;
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x10, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x11, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x12, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x13, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x14, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 0, 0, 0, 0);
+    device_add(&i430tx_device);
+    device_add(&piix4_device);
+    device_add_params(&fdc37c669_device, (void *) FDC37C6XX_370);
+    device_add(&sst_flash_29ee010_device);
+    spd_register(SPD_TYPE_SDRAM, 0x3, 128);
+
+    return ret;
+}
+
 /* VIA VPX */
 static const device_config_t ficva502_config[] = {
     // clang-format off
@@ -2457,7 +2696,7 @@ static const device_config_t ficva502_config[] = {
 
 const device_t ficva502_device = {
     .name          = "FIC VA-502",
-    .internal_name = "ficva502_device",
+    .internal_name = "ficva502",
     .flags         = 0,
     .local         = 0,
     .init          = NULL,
@@ -2605,7 +2844,7 @@ static const device_config_t via809ds_config[] = {
 
 const device_t via809ds_device = {
     .name          = "PC Partner VIA809DS",
-    .internal_name = "via809ds_device",
+    .internal_name = "via809ds",
     .flags         = 0,
     .local         = 0,
     .init          = NULL,
