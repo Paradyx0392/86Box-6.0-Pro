@@ -1504,7 +1504,20 @@ extern int             machine_at_m773_init(const machine_t *);
 extern int             machine_at_vim863s_init(const machine_t *);
 
 /* VIA Apollo Pro 133 */
+#ifdef EMU_DEVICE_H
+extern const device_t  m6vch_device;
+#endif
+extern int             machine_at_m6vch_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  cb664mvi_device;
+#endif
+extern int             machine_at_cb664mvi_init(const machine_t *);
 extern int             machine_at_p6bap_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  ms6153va_device;
+#endif
+extern int             machine_at_ms6153va_init(const machine_t *);
+extern int             machine_at_sl63avplus_init(const machine_t *);
 
 /* VIA Apollo Pro 133A */
 extern int             machine_at_6via90ap_init(const machine_t *);
@@ -1517,6 +1530,11 @@ extern const device_t  cuv4xls_device;
 #endif
 extern int             machine_at_cuv4xls_init(const machine_t *);
 extern int             machine_at_gt694vp_init(const machine_t *);
+extern int             machine_at_ca64en_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  p6vap_device;
+#endif
+extern int             machine_at_p6vap_init(const machine_t *);
 #ifdef EMU_DEVICE_H
 extern const device_t  m6vcg_device;
 #endif

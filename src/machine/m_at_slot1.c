@@ -304,6 +304,15 @@ static const device_config_t lx6_config[] = {
                 .files         = { "roms/machines/lx6/LX6C_7T.bin", "" }
             },
             {
+                .name          = "Award Modular BIOS v4.51PG - Revision DY",
+                .internal_name = "lx6_dy",
+                .bios_type     = BIOS_NORMAL, 
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 131072,
+                .files         = { "roms/machines/lx6/LX6C_DY.bin", "" }
+            },
+            {
                 .name          = "Award Modular BIOS v4.51PG - Revision LY",
                 .internal_name = "lx6",
                 .bios_type     = BIOS_NORMAL, 
@@ -933,6 +942,15 @@ static const device_config_t como_config[] = {
                 .size          = 262144,
                 .files         = { "roms/machines/como/COMO.ROM", "" }
             },
+            {
+                .name          = "AMIBIOS 6 (071595) - Revision 01/23/99 (Xoceco OEM)",
+                .internal_name = "como_xoceco",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/como/COMO.ROM", "" }
+            },
             { .files_no = 0 }
         }
     },
@@ -1037,6 +1055,15 @@ static const device_config_t bf6_config[] = {
         .selection      = { { 0 } },
         .bios           = {
             {
+                .name          = "Award Modular BIOS v6.00PG - Revision QJ",
+                .internal_name = "bf6_QJ",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 131072,
+                .files         = { "roms/machines/bf6/BEH_QJ.bin", "" }
+            },
+            {
                 .name          = "Award Modular BIOS v6.00PG - Revision RV",
                 .internal_name = "bf6_RV",
                 .bios_type     = BIOS_NORMAL,
@@ -1126,15 +1153,6 @@ static const device_config_t bx6_config[] = {
         .selection      = { { 0 } },
         .bios           = {
             {
-                .name          = "Award Modular BIOS v4.51PG - Revision EG",
-                .internal_name = "bx6",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/bx6/BX6_EG.BIN", "" }
-            },
-            {
                 .name          = "Award Modular BIOS v4.51PG - Revision CW",
                 .internal_name = "bx6_CW",
                 .bios_type     = BIOS_NORMAL,
@@ -1142,6 +1160,15 @@ static const device_config_t bx6_config[] = {
                 .local         = 0,
                 .size          = 131072,
                 .files         = { "roms/machines/bx6/BX6_CW.bin", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision EG",
+                .internal_name = "bx6",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 131072,
+                .files         = { "roms/machines/bx6/BX6_EG.BIN", "" }
             },
             {
                 .name          = "Award Modular BIOS v4.51PG - Revision GQ",
@@ -1163,12 +1190,21 @@ static const device_config_t bx6_config[] = {
             },
             {
                 .name          = "Award Modular BIOS v4.51PG - Revision MP",
-                .internal_name = "bx6_CW",
+                .internal_name = "bx6_MP",
                 .bios_type     = BIOS_NORMAL,
                 .files_no      = 1,
                 .local         = 0,
                 .size          = 131072,
                 .files         = { "roms/machines/bx6/BX6_MP.bin", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision MX",
+                .internal_name = "bx6_MX",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 131072,
+                .files         = { "roms/machines/bx6/BX6_MX.bin", "" }
             },
             {
                 .name          = "Award Modular BIOS v4.51PG - Revision QS",
@@ -1247,6 +1283,15 @@ static const device_config_t p2bls_config[] = {
         .spinner        = { 0 },
         .selection      = { { 0 } },
         .bios           = {
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision 1011",
+                .internal_name = "p2bls_1011",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/p2bls/1011ls.bin", "" }
+            },
             {
                 .name          = "Award Modular BIOS v4.51PG - Revision 1012",
                 .internal_name = "p2bls",
@@ -1342,13 +1387,22 @@ static const device_config_t p3bf_config[] = {
         .selection      = { { 0 } },
         .bios           = {
             {
+                .name          = "Award Medallion BIOS v6.0 - Revision 1005",
+                .internal_name = "p3bf_1005",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/p3bf/BX3F1005.AWD", "" }
+            },
+            {
                 .name          = "Award Medallion BIOS v6.0 - Revision 1006",
                 .internal_name = "p3bf",
                 .bios_type     = BIOS_NORMAL,
                 .files_no      = 1,
                 .local         = 0,
                 .size          = 262144,
-                .files         = { "roms/machines/p3bf/BX3F1007.bin", "" }
+                .files         = { "roms/machines/p3bf/BX3F1006.AWD", "" }
             },
             {
                 .name          = "Award Medallion BIOS v6.0 - Revision 1008 Beta 004",
@@ -1451,8 +1505,17 @@ static const device_config_t ax6bc_config[] = {
                 .files         = { "roms/machines/ax6bc/ax6bc220.bin", "" }
             },
             {
+                .name          = "Award Modular BIOS v4.60PGMA - Revision R2.47",
+                .internal_name = "ax6bc_247",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/ax6bc/ax6bc255.bin", "" }
+            },
+            {
                 .name          = "Award Modular BIOS v4.60PGMA - Revision R2.55",
-                .internal_name = "ax6bc_rm",
+                .internal_name = "ax6bc_255",
                 .bios_type     = BIOS_NORMAL,
                 .files_no      = 1,
                 .local         = 0,
@@ -1975,6 +2038,15 @@ static const device_config_t ms6119_config[] = {
         .spinner        = { 0 },
         .selection      = { { 0 } },
         .bios           = {
+            {
+                .name          = "AMIBIOS 6 (071595) - Revision 1.61 (Packard Bell-ZDS Tacoma)",
+                .internal_name = "tacoma_161",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/ms6119/A19P2161.ROM", "" }
+            },
             {
                 .name          = "AMIBIOS 6 (071595) - Revision 1.72 (Packard Bell Tacoma with logo)",
                 .internal_name = "tacoma_172",
@@ -2894,6 +2966,15 @@ static const device_config_t p3v133_config[] = {
                 .size          = 262144,
                 .files         = { "roms/machines/p3v133/1008f.004", "" }
             },
+            {
+                .name          = "Award Medallion BIOS v6.0 - Revision 0.18 (HP NetServer E200)",
+                .internal_name = "p3v133_hp018",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/p3v133/SST39SF020A-01.BIN", "" }
+            },
             { .files_no = 0 }
         }
     },
@@ -3082,6 +3163,15 @@ static const device_config_t p3v4x_config[] = {
         .spinner        = { 0 },
         .selection      = { { 0 } },
         .bios           = {
+            {
+                .name          = "Award Medallion BIOS v6.0 - Revision 1003",
+                .internal_name = "p3v4x",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/p3v4x/p3v4x103.awd", "" }
+            },
             {
                 .name          = "Award Medallion BIOS v6.0 - Revision 1005",
                 .internal_name = "p3v4x",

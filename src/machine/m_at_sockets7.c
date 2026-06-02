@@ -61,6 +61,15 @@ static const device_config_t p5a_config[] = {
                 .files         = { "roms/machines/p5a/1007.AWD", "" }
             },
             {
+                .name          = "Award Modular BIOS v4.51PG - Revision 1007.A",
+                .internal_name = "p5a_1007a",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 131072,
+                .files         = { "roms/machines/p5a/AL5I107A.AWD", "" }
+            },
+            {
                 .name          = "Award Modular BIOS v4.51PG - Revision 1011 Beta 005",
                 .internal_name = "p5a_1011b005",
                 .bios_type     = BIOS_NORMAL,
