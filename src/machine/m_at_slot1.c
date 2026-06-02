@@ -943,13 +943,13 @@ static const device_config_t como_config[] = {
                 .files         = { "roms/machines/como/COMO.ROM", "" }
             },
             {
-                .name          = "AMIBIOS 6 (071595) - Revision 01/23/99 (Xoceco OEM)",
-                .internal_name = "como_xoceco",
+                .name          = "AMIBIOS 6 (071595) - Revision 01/23/99",
+                .internal_name = "como_x",
                 .bios_type     = BIOS_NORMAL,
                 .files_no      = 1,
                 .local         = 0,
                 .size          = 262144,
-                .files         = { "roms/machines/como/COMO.ROM", "" }
+                .files         = { "roms/machines/como/COMOX.ROM", "" }
             },
             { .files_no = 0 }
         }
@@ -1284,13 +1284,22 @@ static const device_config_t p2bls_config[] = {
         .selection      = { { 0 } },
         .bios           = {
             {
+                .name          = "Award Modular BIOS v4.51PG - Revision 1008",
+                .internal_name = "p2bls_1008",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/p2bls/bxls1008.awd", "" }
+            },
+            {
                 .name          = "Award Modular BIOS v4.51PG - Revision 1011",
                 .internal_name = "p2bls_1011",
                 .bios_type     = BIOS_NORMAL,
                 .files_no      = 1,
                 .local         = 0,
                 .size          = 262144,
-                .files         = { "roms/machines/p2bls/1011ls.bin", "" }
+                .files         = { "roms/machines/p2bls/BXLS1011.AWD", "" }
             },
             {
                 .name          = "Award Modular BIOS v4.51PG - Revision 1012",
@@ -1299,7 +1308,7 @@ static const device_config_t p2bls_config[] = {
                 .files_no      = 1,
                 .local         = 0,
                 .size          = 262144,
-                .files         = { "roms/machines/p2bls/1012ls.bin", "" }
+                .files         = { "roms/machines/p2bls/bxls1012.awd", "" }
             },
             {
                 .name          = "Award Modular BIOS v4.51PG - Revision 1014 Beta 003",
@@ -1386,6 +1395,15 @@ static const device_config_t p3bf_config[] = {
         .spinner        = { 0 },
         .selection      = { { 0 } },
         .bios           = {
+            {
+                .name          = "Award Medallion BIOS v6.0 - Revision 1004",
+                .internal_name = "p3bf_1004",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/p3bf/BX3F1004.AWD", "" }
+            },
             {
                 .name          = "Award Medallion BIOS v6.0 - Revision 1005",
                 .internal_name = "p3bf_1005",
@@ -2094,7 +2112,7 @@ static const device_config_t ms6119_config[] = {
             },
             {
                 .name          = "Award Modular BIOS v4.51PG - Revision 3.20 (LG IBM Multinet x7G)",
-                .internal_name = "lgibmx7g",
+                .internal_name = "lgibmx7g_320",
                 .bios_type     = BIOS_NORMAL,
                 .files_no      = 1,
                 .local         = 0,
@@ -2949,6 +2967,15 @@ static const device_config_t p3v133_config[] = {
         .selection      = { { 0 } },
         .bios           = {
             {
+                .name          = "Award Medallion BIOS v6.0 - Revision 1001a",
+                .internal_name = "p3v133_1001a",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/p3v133/p3v1331a.awd", "" }
+            },
+            {
                 .name          = "Award Medallion BIOS v6.0 - Revision 1002",
                 .internal_name = "p3v133",
                 .bios_type     = BIOS_NORMAL,
@@ -3164,8 +3191,17 @@ static const device_config_t p3v4x_config[] = {
         .selection      = { { 0 } },
         .bios           = {
             {
+                .name          = "Award Medallion BIOS v6.0 - Revision 1002",
+                .internal_name = "p3v4x_1002",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/p3v4x/p3v4x102.awd", "" }
+            },
+            {
                 .name          = "Award Medallion BIOS v6.0 - Revision 1003",
-                .internal_name = "p3v4x",
+                .internal_name = "p3v4x_1003",
                 .bios_type     = BIOS_NORMAL,
                 .files_no      = 1,
                 .local         = 0,

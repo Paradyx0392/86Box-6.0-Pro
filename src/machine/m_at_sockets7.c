@@ -45,12 +45,21 @@ static const device_config_t p5a_config[] = {
         .name           = "bios",
         .description    = "BIOS Version",
         .type           = CONFIG_BIOS,
-        .default_string = "p5a_f6",
+        .default_string = "p5a",
         .default_int    = 0,
         .file_filter    = NULL,
         .spinner        = { 0 },
         .selection      = { { 0 } },
         .bios           = {
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision 1005",
+                .internal_name = "p5a_1005",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 131072,
+                .files         = { "roms/machines/p5a/AL5I1005.AWD", "" }
+            },
             {
                 .name          = "Award Modular BIOS v4.51PG - Revision 1007",
                 .internal_name = "p5a",
@@ -58,7 +67,7 @@ static const device_config_t p5a_config[] = {
                 .files_no      = 1,
                 .local         = 0,
                 .size          = 131072,
-                .files         = { "roms/machines/p5a/1007.AWD", "" }
+                .files         = { "roms/machines/p5a/AL5I1007.AWD", "" }
             },
             {
                 .name          = "Award Modular BIOS v4.51PG - Revision 1007.A",

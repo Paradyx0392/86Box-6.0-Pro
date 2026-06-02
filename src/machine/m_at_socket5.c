@@ -1074,18 +1074,75 @@ machine_at_p54sps_init(const machine_t *model)
     return ret;
 }
 
+static const device_config_t ms5109_config[] = {
+    // clang-format off
+    {
+        .name           = "bios",
+        .description    = "BIOS Version",
+        .type           = CONFIG_BIOS,
+        .default_string = "ms5109",
+        .default_int    = 0,
+        .file_filter    = NULL,
+        .spinner        = { 0 },
+        .selection      = { { 0 } },
+        .bios           = {
+            {
+                .name          = "AMIBIOS 6 (071595) - Revision A778",
+                .internal_name = "ms5109",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 131072,
+                .files         = { "roms/machines/ms5109/A778.ROM", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision W772",
+                .internal_name = "ms5109_451pg",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 131072,
+                .files         = { "roms/machines/ms5109/W772.BIN", "" }
+            },
+            { .files_no = 0 }
+        }
+    },
+    { .name = "", .description = "", .type = CONFIG_END }
+    // clang-format on
+};
+
+const device_t ms5109_device = {
+    .name          = "MSI MS-5109",
+    .internal_name = "ms5109",
+    .flags         = 0,
+    .local         = 0,
+    .init          = NULL,
+    .close         = NULL,
+    .reset         = NULL,
+    .available     = NULL,
+    .speed_changed = NULL,
+    .force_redraw  = NULL,
+    .config        = ms5109_config
+};
+
 int
 machine_at_ms5109_init(const machine_t *model)
 {
-    int ret;
+    int         ret = 0;
+    const char *fn;
 
-    ret = bios_load_linear("roms/machines/ms5109/A778.ROM",
-                           0x000e0000, 131072, 0);
-
-    if (bios_only || !ret)
+    /* No ROMs available */
+    if (!device_available(model->device))
         return ret;
 
+    device_context(model->device);
+    int is_award = !strcmp(device_get_config_bios("bios"), "ms5109_v451pg");
+    fn           = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
+    ret          = bios_load_linear(fn, 0x000e0000, 131072, 0);
+    device_context_restore();
+
     machine_at_common_init(model);
+    device_add_params(&nvr_at_device, (void *) (uintptr_t) (is_award ? (NVR_AT) : (NVR_AMI_1994)));
 
     pci_init(PCI_CONFIG_TYPE_1 | FLAG_TRC_CONTROLS_CPURST);
     pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);

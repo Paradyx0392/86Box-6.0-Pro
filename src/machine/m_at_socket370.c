@@ -1094,10 +1094,6 @@ machine_at_ms6153va_init(const machine_t *model)
     device_add(&w83782d_device); /* fans: Chassis, Power, CPU; temperatures: System, CPU, unused */
     hwm_values.temperatures[2] = 0; /* unused */
 
-    if (sound_card_current[0] == SOUND_INTERNAL)
-        device_add(machine_get_snd_device(machine));
-        device_add(&cs4297_device); /* ES1373 */
-
     return ret;
 }
 
