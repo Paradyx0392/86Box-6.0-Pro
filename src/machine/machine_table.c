@@ -23602,7 +23602,7 @@ const machine_t machines[] = {
         .kbd_device               = NULL,
         .fdc_device               = NULL,
         .vid_device               = NULL,
-        .snd_device               = &vt1611_device,
+        .snd_device               = &vt1611a_device,
         .net_device               = NULL,
         .aliases                  = { "" }
     },
@@ -25144,7 +25144,7 @@ const machine_t machines[] = {
         .kbd_device               = NULL,
         .fdc_device               = NULL,
         .vid_device               = NULL,
-        .snd_device               = &vt1611_device,
+        .snd_device               = &vt1611a_device,
         .net_device               = NULL,
         .aliases                  = { "" }
     },
