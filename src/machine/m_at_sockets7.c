@@ -131,6 +131,127 @@ machine_at_p5a_init(const machine_t *model)
 }
 
 int
+machine_at_vp1541_init(const machine_t *model)
+{
+    int ret;
+
+    ret = bios_load_linear("roms/machines/vp1541/20641108.bin",
+                           0x000e0000, 131072, 0);
+
+    if (bios_only || !ret)
+        return ret;
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE,     0, 0, 0, 0);
+    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,       1, 2, 0, 0);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE,     1, 2, 3, 4);
+    pci_register_slot(0x0F, PCI_CARD_SOUTHBRIDGE_IDE, 1, 2, 3, 4);
+    pci_register_slot(0x03, PCI_CARD_SOUTHBRIDGE_PMU, 1, 2, 3, 4);
+    pci_register_slot(0x02, PCI_CARD_SOUTHBRIDGE_USB, 1, 2, 3, 4);
+    pci_register_slot(0x14, PCI_CARD_NORMAL,          1, 2, 3, 4);
+    pci_register_slot(0x12, PCI_CARD_NORMAL,          2, 3, 4, 1);
+    pci_register_slot(0x10, PCI_CARD_NORMAL,          3, 4, 1, 2);
+    pci_register_slot(0x0E, PCI_CARD_NORMAL,          4, 1, 2, 3);
+
+    device_add(&ali1541_device);
+    device_add(&ali1543c_device);
+    device_add(&sst_flash_29ee010_device);
+    spd_register(SPD_TYPE_SDRAM, 0x7, 512);
+
+    return ret;
+}
+
+static const device_config_t m5ala_config[] = {
+    // clang-format off
+    {
+        .name           = "bios",
+        .description    = "BIOS Version",
+        .type           = CONFIG_BIOS,
+        .default_string = "m5ala",
+        .default_int    = 0,
+        .file_filter    = NULL,
+        .spinner        = { 0 },
+        .selection      = { { 0 } },
+        .bios           = {
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision 11/05/1999",
+                .internal_name = "m5ala_1999",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 131072,
+                .files         = { "roms/machines/m5ala/ALA1105B.BIN", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision 11/22/2000",
+                .internal_name = "m5ala",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 131072,
+                .files         = { "roms/machines/m5ala/ALA1122B.BIN", "" }
+            },
+            { .files_no = 0 }
+        }
+    },
+    { .name = "", .description = "", .type = CONFIG_END }
+    // clang-format on
+};
+
+const device_t m5ala_device = {
+    .name          = "Biostar M5ALA",
+    .internal_name = "m5ala",
+    .flags         = 0,
+    .local         = 0,
+    .init          = NULL,
+    .close         = NULL,
+    .reset         = NULL,
+    .available     = NULL,
+    .speed_changed = NULL,
+    .force_redraw  = NULL,
+    .config        = m5ala_config
+};
+
+int
+machine_at_m5ala_init(const machine_t *model)
+{
+    int         ret = 0;
+    const char *fn;
+
+    /* No ROMs available */
+    if (!device_available(model->device))
+        return ret;
+
+    device_context(model->device);
+    fn  = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
+    ret = bios_load_linear(fn, 0x000e0000, 131072, 0);
+    device_context_restore();
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE,     0, 0, 0, 0);
+    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,       1, 2, 0, 0);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE,     1, 2, 3, 4);
+    pci_register_slot(0x0F, PCI_CARD_SOUTHBRIDGE_IDE, 1, 2, 3, 4);
+    pci_register_slot(0x03, PCI_CARD_SOUTHBRIDGE_PMU, 1, 2, 3, 4);
+    pci_register_slot(0x02, PCI_CARD_SOUTHBRIDGE_USB, 1, 2, 3, 4);
+    pci_register_slot(0x08, PCI_CARD_NORMAL,          1, 2, 3, 4);
+    pci_register_slot(0x09, PCI_CARD_NORMAL,          2, 3, 4, 1);
+    pci_register_slot(0x0A, PCI_CARD_NORMAL,          3, 4, 1, 2);
+    pci_register_slot(0x0B, PCI_CARD_NORMAL,          4, 1, 2, 3);
+
+    device_add(&ali1541_device);
+    device_add(&ali1543c_device); /* +0 */
+    device_add(&sst_flash_29ee010_device);
+    spd_register(SPD_TYPE_SDRAM, 0x7, 512);
+
+    return ret;
+}
+
+int
 machine_at_m579_init(const machine_t *model)
 {
     int ret;
@@ -561,6 +682,38 @@ machine_at_ficva503a_init(const machine_t *model)
 }
 
 int
+machine_at_5emaplus_init(const machine_t *model)
+{
+    int ret;
+
+    ret = bios_load_linear("roms/machines/5emaplus/5ema1ea1.bin",
+                           0x000e0000, 131072, 0);
+
+    if (bios_only || !ret)
+        return ret;
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 0, 0, 3, 4);
+    pci_register_slot(0x08, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x09, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x0A, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x0B, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x0C, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,   1, 2, 3, 4);
+
+    device_add(&via_mvp3_device);
+    device_add(&via_vt82c586b_device);
+    device_add_params(&fdc37c669_device, (void *) 0);
+    device_add(&sst_flash_39sf010_device);
+    spd_register(SPD_TYPE_SDRAM, 0x7, 256);
+
+    return ret;
+}
+
+int
 machine_at_5emapro_init(const machine_t *model)
 {
     int ret;
@@ -622,6 +775,168 @@ machine_at_k6bv3p_a_init(const machine_t *model)
     device_add_params(&fdc37c669_device, (void *) 0); /* jmi2k: what's that param? */
     device_add(&winbond_flash_w29c011a_device);
     spd_register(SPD_TYPE_SDRAM, 0x7, 256);
+
+    return ret;
+}
+
+int
+machine_at_sl54u5_init(const machine_t *model)
+{
+    int ret;
+
+    ret = bios_load_linear("roms/machines/sl54u5/54u5-a11.bin",
+                           0x000e0000, 131072, 0);
+
+    if (bios_only || !ret)
+        return ret;
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 1, 2, 3, 4);
+    pci_register_slot(0x08, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x09, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x0A, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x0B, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,   1, 2, 3, 4);
+
+    device_add(&via_mvp3_device);
+    device_add(&via_vt82c586b_device);
+    /* This actually has the Winbond W83877AF. */
+    device_add_params(&w83877_device, (void *) (W83877F | W83877_3F0));
+    device_add(&sst_flash_39sf010_device);
+    spd_register(SPD_TYPE_SDRAM, 0x3, 256);
+
+    return ret;
+}
+
+static const device_config_t sl56d5_config[] = {
+    // clang-format off
+    {
+        .name           = "bios",
+        .description    = "BIOS Version",
+        .type           = CONFIG_BIOS,
+        .default_string = "sl56d5",
+        .default_int    = 0,
+        .file_filter    = NULL,
+        .spinner        = { 0 },
+        .selection      = { { 0 } },
+        .bios           = {
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision L5",
+                .internal_name = "sl56d5",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 131072,
+                .files         = { "roms/machines/sl56d5/56d-l5.bin", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision L5.2 (Magic-Pro MP-VIP4-X)",
+                .internal_name = "mpvip4x",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 131072,
+                .files         = { "roms/machines/sl56d5/v4xl52.bin", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v4.51PG - 2001 Revision (beta)",
+                .internal_name = "sl56d5beta",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 131072,
+                .files         = { "roms/machines/sl56d5/56d5.bin", "" }
+            },
+            { .files_no = 0 }
+        }
+    },
+    { .name = "", .description = "", .type = CONFIG_END }
+    // clang-format on
+};
+
+const device_t sl56d5_device = {
+    .name          = "Soltek SL-56D5",
+    .internal_name = "sl56d5",
+    .flags         = 0,
+    .local         = 0,
+    .init          = NULL,
+    .close         = NULL,
+    .reset         = NULL,
+    .available     = NULL,
+    .speed_changed = NULL,
+    .force_redraw  = NULL,
+    .config        = sl56d5_config
+};
+
+int
+machine_at_sl56d5_init(const machine_t *model)
+{
+    int         ret = 0;
+    const char *fn;
+
+    /* No ROMs available */
+    if (!device_available(model->device))
+        return ret;
+
+    device_context(model->device);
+    fn  = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
+    ret = bios_load_linear(fn, 0x000e0000, 131072, 0);
+    device_context_restore();
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 1, 2, 3, 4);
+    pci_register_slot(0x08, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x09, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x0A, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x0B, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x0C, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,   1, 2, 3, 4);
+
+    device_add(&via_mvp3_device);
+    device_add(&via_vt82c586b_device);
+    device_add_params(&w83877_device, (void *) (W83877TF | W83877_3F0));
+    device_add(&sst_flash_39sf010_device);
+    spd_register(SPD_TYPE_SDRAM, 0x3, 256);
+
+    return ret;
+}
+
+int
+machine_at_sl56h5_init(const machine_t *model)
+{
+    int ret;
+
+    ret = bios_load_linear("roms/machines/sl56h5/56h-m1.bin",
+                           0x000e0000, 131072, 0);
+
+    if (bios_only || !ret)
+        return ret;
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 0, 0, 3, 4);
+    pci_register_slot(0x08, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x09, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x0A, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x0B, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,   1, 2, 3, 4);
+
+    device_add(&via_mvp3_device);
+    device_add(&via_vt82c686a_device);
+    device_add(&winbond_flash_w29c011a_device);
+    spd_register(SPD_TYPE_SDRAM, 0x7, 256);
+    device_add(&via_vt82c686_hwm_device); /* fans: CPU1, Chassis; temperatures: CPU, System, unused */
+    hwm_values.temperatures[0] += 2;      /* CPU offset */
+    hwm_values.temperatures[1] += 2;      /* System offset */
+    hwm_values.temperatures[2] = 0;       /* unused */
 
     return ret;
 }

@@ -377,6 +377,134 @@ machine_at_lx6_init(const machine_t *model)
     return ret;
 }
 
+static const device_config_t ax6lc_config[] = {
+    // clang-format off
+    {
+        .name           = "bios",
+        .description    = "BIOS Version",
+        .type           = CONFIG_BIOS,
+        .default_string = "ax6lc",
+        .default_int    = 0,
+        .file_filter    = NULL,
+        .spinner        = { 0 },
+        .selection      = { { 0 } },
+        .bios           = {
+            {
+                .name          = "Award Modular BIOS v4.51PGM - Revision R1.20",
+                .internal_name = "ax6lc_451pg",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/ax6lc/ax6lc120.bin", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v4.60PGMA - Revision R2.00",
+                .internal_name = "ax6lc",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/ax6lc/ax6lc200.bin", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v4.60PGMA - Revision R2.01b",
+                .internal_name = "ax6lc_r201b",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/ax6lc/6LC201B.BIN", "" }
+            },
+            { .files_no = 0 }
+        }
+    },
+    { .name = "", .description = "", .type = CONFIG_END }
+    // clang-format on
+};
+
+const device_t ax6lc_device = {
+    .name          = "AOpen AX6LC",
+    .internal_name = "ax6lc",
+    .flags         = 0,
+    .local         = 0,
+    .init          = NULL,
+    .close         = NULL,
+    .reset         = NULL,
+    .available     = NULL,
+    .speed_changed = NULL,
+    .force_redraw  = NULL,
+    .config        = ax6lc_config
+};
+
+int
+machine_at_ax6lc_init(const machine_t *model)
+{
+    int         ret = 0;
+    const char *fn;
+
+    /* No ROMs available */
+    if (!device_available(model->device))
+        return ret;
+
+    device_context(model->device);
+    fn  = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
+    ret = bios_load_linear(fn, 0x000c0000, 262144, 0);
+    device_context_restore();
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 1, 2, 3, 4);
+    pci_register_slot(0x09, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x0A, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x0B, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x0C, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x0D, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,   1, 2, 3, 4);
+
+    device_add(&i440lx_device);
+    device_add(&piix4e_device);
+    device_add_params(&w83977_device, (void *) (W83977TF | W83977_AMI | W83977_NO_NVR));
+    device_add(&sst_flash_29ee020_device);
+    spd_register(SPD_TYPE_SDRAM, 0xF, 256);
+    device_add(&gl518sm_2d_device); /* fans: System, CPU; temperature: CPU; no reporting in BIOS */
+
+    return ret;
+}
+
+int
+machine_at_m6tlc_init(const machine_t *model)
+{
+    int ret;
+
+    ret = bios_load_linear("roms/machines/m6tlc/TLC0306B.BIN",
+                           0x000c0000, 262144, 0);
+
+    if (bios_only || !ret)
+        return ret;
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 1, 2, 3, 4);
+    pci_register_slot(0x08, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x09, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x0A, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x0B, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,   1, 2, 3, 4);
+
+    device_add(&i440lx_device);
+    device_add(&piix4e_device);
+    device_add_params(&w83977_device, (void *) (W83977TF | W83977_AMI | W83977_NO_NVR));
+    device_add(&sst_flash_29ee020_device);
+    spd_register(SPD_TYPE_SDRAM, 0xF, 256);
+
+    return ret;
+}
+
 int
 machine_at_optiplexgxa_init(const machine_t *model)
 {
@@ -408,6 +536,67 @@ machine_at_optiplexgxa_init(const machine_t *model)
     device_add_params(&pc87307_device, (void *) (PCX730X_PHOENIX_42 | PCX7307_PC87307));
     device_add(&intel_flash_bxt_device);
     spd_register(SPD_TYPE_SDRAM, 0x7, 256);
+
+    return ret;
+}
+
+int
+machine_at_p6lxaplus_init(const machine_t *model)
+{
+    int ret;
+
+    ret = bios_load_linear("roms/machines/p6lxaplus/p6lxap33a.bin",
+                           0x000c0000, 262144, 0);
+
+    if (bios_only || !ret)
+        return ret;
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 1, 2, 3, 4);
+    pci_register_slot(0x09, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x0A, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x0B, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x0C, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,   1, 2, 3, 4);
+
+    device_add(&i440lx_device);
+    device_add(&piix4e_device);
+    device_add_params(&w83977_device, (void *) (W83977TF | W83977_AMI | W83977_NO_NVR));
+    device_add(&sst_flash_29ee020_device);
+    spd_register(SPD_TYPE_SDRAM, 0xF, 256);
+
+    return ret;
+}
+
+int
+machine_at_ga6l_init(const machine_t *model)
+{
+    int ret;
+
+    ret = bios_load_linear("roms/machines/686lx/6lx.f2",
+                           0x000c0000, 262144, 0);
+
+    if (bios_only || !ret)
+        return ret;
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x08, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x09, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x0A, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x0B, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 1, 2, 3, 4);
+    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,   1, 2, 3, 4);
+    device_add(&i440lx_device);
+    device_add(&piix4e_device);
+    device_add(&it8661f_device);
+    device_add(&intel_flash_bxt_device);
+    spd_register(SPD_TYPE_SDRAM, 0xF, 256);
 
     return ret;
 }
@@ -640,6 +829,36 @@ machine_at_ma30d_init(const machine_t *model)
     device_add_params(&fdc37c67x_device, (void *) (FDC37XXX2 | FDC37XXXX_370));
     device_add(&intel_flash_bxt_device);
     spd_register(SPD_TYPE_SDRAM, 0x7, 256);
+
+    return ret;
+}
+
+int
+machine_at_sl61b_init(const machine_t *model)
+{
+    int ret;
+
+    ret = bios_load_linear("roms/machines/sl61b/61b-e3.bin",
+                           0x000e0000, 131072, 0);
+
+    if (bios_only || !ret)
+        return ret;
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x08, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x09, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x0A, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x0B, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 1, 2, 3, 4);
+    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,   1, 2, 3, 4);
+    device_add(&i440lx_device);
+    device_add(&piix4e_device);
+    device_add_params(&w83977_device, (void *) (W83977TF | W83977_AMI | W83977_NO_NVR));
+    device_add(&sst_flash_29ee010_device);
+    spd_register(SPD_TYPE_SDRAM, 0xF, 256);
 
     return ret;
 }
@@ -1307,6 +1526,305 @@ machine_at_ax6bc_init(const machine_t *model)
     return ret;
 }
 
+static const device_config_t m6tba_config[] = {
+    // clang-format off
+    {
+        .name           = "bios",
+        .description    = "BIOS Version",
+        .type           = CONFIG_BIOS,
+        .default_string = "m6tba",
+        .default_int    = 0,
+        .file_filter    = NULL,
+        .spinner        = { 0 },
+        .selection      = { { 0 } },
+        .bios           = {
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision 11/24/1999",
+                .internal_name = "m6tba_1999",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/m6tba/TBA1124B.BIN", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision 06/02/2000",
+                .internal_name = "m6tba",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/m6tba/TBA0602B.BIN", "" }
+            },
+            { .files_no = 0 }
+        }
+    },
+    { .name = "", .description = "", .type = CONFIG_END }
+    // clang-format on
+};
+
+const device_t m6tba_device = {
+    .name          = "Biostar M6TBA",
+    .internal_name = "m6tba",
+    .flags         = 0,
+    .local         = 0,
+    .init          = NULL,
+    .close         = NULL,
+    .reset         = NULL,
+    .available     = NULL,
+    .speed_changed = NULL,
+    .force_redraw  = NULL,
+    .config        = m6tba_config
+};
+
+int
+machine_at_m6tba_init(const machine_t *model)
+{
+    int         ret = 0;
+    const char *fn;
+
+    /* No ROMs available */
+    if (!device_available(model->device))
+        return ret;
+
+    device_context(model->device);
+    fn  = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
+    ret = bios_load_linear(fn, 0x000c0000, 262144, 0);
+    device_context_restore();
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 1, 2, 3, 4);
+    pci_register_slot(0x08, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x09, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x0A, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x0B, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,   1, 2, 3, 4);
+
+    device_add(&i440bx_device);
+    device_add(&piix4e_device);
+    device_add(ics9xxx_get(ICS9150_08)); 
+    device_add_params(&fdc37m60x_device, (void *) (FDC37XXX2 | FDC37C93X_NO_NVR | FDC37XXXX_370));
+    device_add(&sst_flash_39sf020_device);
+    spd_register(SPD_TYPE_SDRAM, 0x3, 512);
+    device_add(&w83781d_device);       /* fans: CPU, CHS, PS; temperatures: unused, CPU, System */
+    hwm_values.temperatures[0] = 0;    /* unused */
+    hwm_values.voltages[1]     = 3500; /* CPUVTT */
+
+    return ret;
+}
+
+int
+machine_at_mbx8440_init(const machine_t *model)
+{
+    int ret;
+
+    ret = bios_load_linear("roms/machines/mbx8440/MBX8440C.BIN",
+                           0x000e0000, 131072, 0);
+
+    if (bios_only || !ret)
+        return ret;
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 1, 2, 3, 4);
+    pci_register_slot(0x08, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x09, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x0A, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x0B, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,   1, 2, 3, 4);
+
+    device_add(&i440bx_device);
+    device_add(&piix4e_device);
+    device_add_params(&w83977_device, (void *) (W83977TF | W83977_AMI | W83977_NO_NVR));
+    device_add(&sst_flash_29ee010_device);
+    spd_register(SPD_TYPE_SDRAM, 0xF, 256);
+
+    return ret;
+}
+
+static const device_config_t cb650mbx_config[] = {
+    // clang-format off
+    {
+        .name           = "bios",
+        .description    = "BIOS Revision",
+        .type           = CONFIG_BIOS,
+        .default_string = "cb650mbx",
+        .default_int    = 0,
+        .file_filter    = NULL,
+        .spinner        = { 0 },
+        .bios           = {
+            {
+              .name          = "Award Modular BIOS v4.51PG - Revision V.650.05E (iDOT Explora)",
+              .internal_name = "idotexplora",
+              .bios_type     = BIOS_NORMAL, 
+              .files_no      = 1,
+              .local         = 0,
+              .size          = 262144,
+              .files         = { "roms/machines/cb650mbx/65005E.bin", "" }
+            },
+            {
+              .name          = "Award Modular BIOS v4.51PG - Revision V.650.06",
+              .internal_name = "cb650mbx",
+              .bios_type     = BIOS_NORMAL, 
+              .files_no      = 1,
+              .local         = 0,
+              .size          = 262144,
+              .files         = { "roms/machines/cb650mbx/65006.bin", "" }
+            },
+            { .files_no = 0 }
+        },
+    },
+    { .name = "", .description = "", .type = CONFIG_END }
+    // clang-format on
+};
+
+const device_t cb650mbx_device = {
+    .name          = "Daewoo CB650M-BX",
+    .internal_name = "cb650mbx",
+    .flags         = 0,
+    .local         = 0,
+    .init          = NULL,
+    .close         = NULL,
+    .reset         = NULL,
+    .available     = NULL,
+    .speed_changed = NULL,
+    .force_redraw  = NULL,
+    .config        = cb650mbx_config
+};
+
+int
+machine_at_cb650mbx_init(const machine_t *model)
+{
+    int ret = 0;
+    const char* fn;
+
+    /* No ROMs available */
+    if (!device_available(model->device))
+        return ret;
+
+    device_context(model->device);
+    fn = device_get_bios_file(model->device, device_get_config_bios("bios"), 0);
+    ret = bios_load_linear(fn, 0x000c0000, 262144, 0);
+    device_context_restore();
+
+    if (bios_only || !ret)
+        return ret;
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 1, 2, 3, 4);
+    pci_register_slot(0x09, PCI_CARD_NORMAL,      3, 4, 1, 2); /* sound */
+    pci_register_slot(0x0F, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x10, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x12, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,   1, 2, 3, 4);
+    device_add(&i440bx_device);
+    device_add(&piix4e_device);
+    device_add(&it8671f_device);
+    device_add(&winbond_flash_w29c020_device);
+    spd_register(SPD_TYPE_SDRAM, 0xF, 256);
+    device_add(&w83781d_device);       /* fans: CPU, CHS, PS; temperatures: unused, CPU, System */
+    hwm_values.temperatures[0] = 0;    /* unused */
+    hwm_values.voltages[1]     = 3500; /* CPUVTT */
+
+    return ret;
+}
+
+static const device_config_t p2xbl_config[] = {
+    // clang-format off
+    {
+        .name           = "bios",
+        .description    = "BIOS Revision",
+        .type           = CONFIG_BIOS,
+        .default_string = "p2xbl",
+        .default_int    = 0,
+        .file_filter    = NULL,
+        .spinner        = { 0 },
+        .bios           = {
+            {
+              .name          = "Award Modular BIOS v4.51PG - Revision 10/26/1999",
+              .internal_name = "p2xbl",
+              .bios_type     = BIOS_NORMAL, 
+              .files_no      = 1,
+              .local         = 0,
+              .size          = 262144,
+              .files         = { "roms/machines/p2xbl/pbbzk.bin", "" }
+            },
+            {
+              .name          = "Phoenix-AwardBIOS v6.00PG - Revision 02/23/2004 (by eSupport)",
+              .internal_name = "p2xbl_esupport",
+              .bios_type     = BIOS_NORMAL, 
+              .files_no      = 1,
+              .local         = 0,
+              .size          = 262144,
+              .files         = { "roms/machines/p2xbl/6Z69KD49.BIN", "" }
+            },
+            { .files_no = 0 }
+        },
+    },
+    { .name = "", .description = "", .type = CONFIG_END }
+    // clang-format on
+};
+
+const device_t p2xbl_device = {
+    .name          = "DFI P2XBL",
+    .internal_name = "p2xbl",
+    .flags         = 0,
+    .local         = 0,
+    .init          = NULL,
+    .close         = NULL,
+    .reset         = NULL,
+    .available     = NULL,
+    .speed_changed = NULL,
+    .force_redraw  = NULL,
+    .config        = p2xbl_config
+};
+
+int
+machine_at_p2xbl_init(const machine_t *model)
+{
+    int ret = 0;
+    const char* fn;
+
+    /* No ROMs available */
+    if (!device_available(model->device))
+        return ret;
+
+    device_context(model->device);
+    fn = device_get_bios_file(model->device, device_get_config_bios("bios"), 0);
+    ret = bios_load_linear(fn, 0x000c0000, 262144, 0);
+    device_context_restore();
+
+    if (bios_only || !ret)
+        return ret;
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 1, 2, 3, 4);
+    pci_register_slot(0x09, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x0B, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x0D, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x0F, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,   1, 2, 3, 4);
+
+    device_add(&i440bx_device);
+    device_add(&piix4e_device);
+    device_add_params(&w83977_device, (void *) (W83977EF | W83977_AMI | W83977_NO_NVR));
+    device_add(&sst_flash_39sf020_device);
+    spd_register(SPD_TYPE_SDRAM, 0xF, 256);
+
+    return ret;
+}
+
 static const device_config_t ga686_config[] = {
     // clang-format off
     {
@@ -1381,6 +1899,43 @@ machine_at_ga686_init(const machine_t *model)
     fn  = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
     ret = bios_load_linear(fn, 0x000c0000, 262144, 0);
     device_context_restore();
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 1, 2, 3, 4);
+    pci_register_slot(0x08, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x09, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x0A, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x0B, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,   1, 2, 3, 4);
+
+    device_add(&i440bx_device);
+    device_add(&piix4e_device);
+    device_add_params(&w83977_device, (void *) (W83977TF | W83977_AMI | W83977_NO_NVR));
+    device_add(&intel_flash_bxt_device);
+    spd_register(SPD_TYPE_SDRAM, 0xF, 256);
+    device_add(&w83781d_device);     /* fans: CPU, unused, unused; temperatures: unused, CPU, unused */
+    hwm_values.temperatures[0] = 0;  /* unused */
+    hwm_values.temperatures[1] += 4; /* CPU offset */
+    hwm_values.temperatures[2] = 0;  /* unused */
+    hwm_values.fans[1]         = 0;  /* unused */
+    hwm_values.fans[2]         = 0;  /* unused */
+
+    return ret;
+}
+
+int
+machine_at_ga6a_init(const machine_t *model)
+{
+    int ret;
+
+    ret = bios_load_linear("roms/machines/6ba/6ba.f1",
+                           0x000e0000, 131072, 0);
+
+    if (bios_only || !ret)
+        return ret;
 
     machine_at_common_init(model);
 
@@ -1932,6 +2487,90 @@ const device_t vei8_device = {
 };
 
 /* i440ZX */
+static const device_config_t in440zx_config[] = {
+    // clang-format off
+    {
+        .name           = "bios",
+        .description    = "BIOS Version",
+        .type           = CONFIG_BIOS,
+        .default_string = "in440zx",
+        .default_int    = 0,
+        .file_filter    = NULL,
+        .spinner        = { 0 },
+        .selection      = { { 0 } },
+        .bios           = {
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision 1.02",
+                .internal_name = "in440zx",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/in440zx/20861102.BIN", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision 2.05.07 (Toshiba Equium 3200)",
+                .internal_name = "equium3200",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/in440zx/738257L.bin", "" }
+            },
+            { .files_no = 0 }
+        }
+    },
+    { .name = "", .description = "", .type = CONFIG_END }
+    // clang-format on
+};
+
+const device_t in440zx_device = {
+    .name          = "BCM IN440ZX",
+    .internal_name = "in440zx",
+    .flags         = 0,
+    .local         = 0,
+    .init          = NULL,
+    .close         = NULL,
+    .reset         = NULL,
+    .available     = NULL,
+    .speed_changed = NULL,
+    .force_redraw  = NULL,
+    .config        = in440zx_config
+};
+
+int
+machine_at_in440zx_init(const machine_t *model)
+{
+    int         ret = 0;
+    const char *fn;
+
+    /* No ROMs available */
+    if (!device_available(model->device))
+        return ret;
+
+    device_context(model->device);
+    fn  = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
+    ret = bios_load_linear(fn, 0x000c0000, 262144, 0);
+    device_context_restore();
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x11, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x0D, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x13, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 1, 2, 3, 4);
+    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,   1, 2, 3, 4);
+    device_add(&i440zx_device);
+    device_add(&piix4e_device);
+    device_add_params(&w83977_device, (void *) (W83977TF | W83977_AMI | W83977_NO_NVR));
+    device_add(&sst_flash_39sf020_device);
+    spd_register(SPD_TYPE_SDRAM, 0x3, 256);
+
+    return ret;
+}
+
 int
 machine_at_vei8_init(const machine_t *model)
 {
@@ -1964,6 +2603,105 @@ machine_at_vei8_init(const machine_t *model)
     device_add(&sst_flash_39sf020_device);
     spd_register(SPD_TYPE_SDRAM, 0x3, 512);
     device_add(&as99127f_device); /* fans: Chassis, CPU, Power; temperatures: MB, JTPWR, CPU */
+
+    return ret;
+}
+
+static const device_config_t ms6156zx_config[] = {
+    // clang-format off
+    {
+        .name           = "bios",
+        .description    = "BIOS Version",
+        .type           = CONFIG_BIOS,
+        .default_string = "ms6156zxw",
+        .default_int    = 0,
+        .file_filter    = NULL,
+        .spinner        = { 0 },
+        .selection      = { { 0 } },
+        .bios           = {
+            {
+                .name          = "AMIBIOS 6 (071595) - Revision 1.61 (Packard Bell PB911)",
+                .internal_name = "ms6156zxap",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/ms6156zx/A656P33.ROM", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision 1.3 (Fujitsu T-Bird GS160X PIII450)",
+                .internal_name = "ms6156zxwf",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/ms6156zx/V13.BIN", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision 1.6",
+                .internal_name = "ms6156zxw",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/ms6156zx/W6156ZMS.160", "" }
+            },
+            { .files_no = 0 }
+        }
+    },
+    { .name = "", .description = "", .type = CONFIG_END }
+    // clang-format on
+};
+
+const device_t ms6156zx_device = {
+    .name          = "MSI MS-6156ZX",
+    .internal_name = "ms6156zx",
+    .flags         = 0,
+    .local         = 0,
+    .init          = NULL,
+    .close         = NULL,
+    .reset         = NULL,
+    .available     = NULL,
+    .speed_changed = NULL,
+    .force_redraw  = NULL,
+    .config        = ms6156zx_config
+};
+
+int
+machine_at_ms6156zx_init(const machine_t *model)
+{
+    int         ret = 0;
+    const char *fn;
+
+    /* No ROMs available */
+    if (!device_available(model->device))
+        return ret;
+
+    device_context(model->device);
+    fn  = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
+    ret = bios_load_linear(fn, 0x000c0000, 262144, 0);
+    device_context_restore();
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x0E, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x10, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x12, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x14, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 1, 2, 3, 4);
+    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,   1, 2, 3, 4);
+    device_add(&i440zx_device);
+    device_add(&piix4e_device);
+    device_add_params(&w83977_device, (void *) (W83977TF | W83977_AMI | W83977_NO_NVR));
+    device_add(&winbond_flash_w29c020_device);
+    spd_register(SPD_TYPE_SDRAM, 0x3, 256);
+
+    if (sound_card_current[0] == SOUND_INTERNAL) {
+        device_add(machine_get_snd_device(machine));
+        device_add(&cs4297_device);
+    }
 
     return ret;
 }
@@ -2026,6 +2764,37 @@ machine_at_borapro_init(const machine_t *model)
         return ret;
 
     machine_at_ms6168_common_init(model);
+
+    return ret;
+}
+
+int
+machine_at_sl67ez_init(const machine_t *model)
+{
+    int ret;
+
+    ret = bios_load_linear("roms/machines/sl67ez/67ezb-r8.bin",
+                           0x000c0000, 262144, 0);
+
+    if (bios_only || !ret)
+        return ret;
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x08, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x09, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x0A, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x0B, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x0C, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 1, 2, 3, 4);
+    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,   1, 2, 3, 4);
+    device_add(&i440zx_device);
+    device_add(&piix4e_device);
+    device_add_params(&w83977_device, (void *) (W83977EF | W83977_AMI | W83977_NO_NVR));
+    device_add(&sst_flash_39sf020_device);
+    spd_register(SPD_TYPE_SDRAM, 0x3, 256);
 
     return ret;
 }
@@ -2429,6 +3198,40 @@ machine_at_gt694va_init(const machine_t *model)
         device_add(machine_get_snd_device(machine));
         device_add(&cs4297_device); /* no good pictures, but the marking looks like CS4297 from a distance */
     }
+
+    return ret;
+}
+
+int
+machine_at_sl67kv_init(const machine_t *model)
+{
+    int ret;
+
+    ret = bios_load_linear("roms/machines/sl67kv/67kv-f81.bin",
+                           0x000c0000, 262144, 0);
+
+    if (bios_only || !ret)
+        return ret;
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 0, 0, 3, 4);
+    pci_register_slot(0x08, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x09, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x0A, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x0B, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x0C, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,   1, 2, 3, 4);
+
+    device_add(&via_apro133a_device);
+    device_add(&via_vt82c686a_device);
+    device_add(&sst_flash_39sf020_device);
+    spd_register(SPD_TYPE_SDRAM, 0x7, 1024);
+
+    if (sound_card_current[0] == SOUND_INTERNAL)
+        device_add(machine_get_snd_device(machine));
 
     return ret;
 }

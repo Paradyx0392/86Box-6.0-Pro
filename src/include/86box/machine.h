@@ -1252,8 +1252,15 @@ extern const device_t  delhi3_device;
 extern int             machine_at_delhi3_init(const machine_t *);
 extern int             machine_at_mvp3_init(const machine_t *);
 extern int             machine_at_ficva503a_init(const machine_t *);
+extern int             machine_at_5emaplus_init(const machine_t *);
 extern int             machine_at_5emapro_init(const machine_t *);
 extern int             machine_at_k6bv3p_a_init(const machine_t *);
+extern int             machine_at_sl54u5_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  sl56d5_device;
+#endif
+extern int             machine_at_sl56d5_init(const machine_t *);
+extern int             machine_at_sl56h5_init(const machine_t *);
 
 /* SiS 5591 */
 extern int             machine_at_5sg100_init(const machine_t *);
@@ -1303,12 +1310,28 @@ extern int             machine_at_fickn6000_init(const machine_t *);
 extern const device_t  lx6_device;
 #endif
 extern int             machine_at_lx6_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  ax6lc_device;
+#endif
+extern int             machine_at_ax6lc_init(const machine_t *);
+extern int             machine_at_m6tlc_init(const machine_t *);
 extern int             machine_at_optiplexgxa_init(const machine_t *);
+extern int             machine_at_p6lxaplus_init(const machine_t *);
+extern int             machine_at_ga6l_init(const machine_t *);
 extern int             machine_at_spitfire_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  ms6117_device;
+#endif
+extern int             machine_at_ms6117_init(const machine_t *);
 extern int             machine_at_ma30d_init(const machine_t *);
+extern int             machine_at_sl61b_init(const machine_t *);
 
 /* i440EX */
 extern int             machine_at_brio83xx_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  ms6122_device;
+#endif
+extern int             machine_at_ms6122_init(const machine_t *);
 extern int             machine_at_p6i440e2_init(const machine_t *);
 #ifdef EMU_DEVICE_H
 extern const device_t  como_device;
@@ -1337,13 +1360,23 @@ extern const device_t  p3bf_device;
 #endif
 extern int             machine_at_p3bf_init(const machine_t *);
 #ifdef EMU_DEVICE_H
+extern const device_t  m6tba_device;
+#endif
+extern int             machine_at_m6tba_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  cb650mbx_device;
+#endif
+extern int             machine_at_cb650mbx_init(const machine_t *);
+extern int             machine_at_mbx8440_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  p2xbl_device;
+#endif
+extern int             machine_at_p2xbl_init(const machine_t *);
+#ifdef EMU_DEVICE_H
 extern const device_t  ga686_device;
 #endif
 extern int             machine_at_ga686_init(const machine_t *);
-#ifdef EMU_DEVICE_H
-extern const device_t  ms6117_device;
-#endif
-extern int             machine_at_ms6117_init(const machine_t *);
+extern int             machine_at_ga6a_init(const machine_t *);
 #ifdef EMU_DEVICE_H
 extern const device_t  ms6119_device;
 #endif
@@ -1364,11 +1397,20 @@ extern int             machine_at_s1846_init(const machine_t *);
 
 /* i440ZX */
 #ifdef EMU_DEVICE_H
+extern const device_t  in440zx_device;
+#endif
+extern int             machine_at_in440zx_init(const machine_t *);
+#ifdef EMU_DEVICE_H
 extern const device_t  vei8_device;
 #endif
 extern int             machine_at_vei8_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  ms6156zx_device;
+#endif
+extern int             machine_at_ms6156zx_init(const machine_t *);
 extern int             machine_at_ms6168_init(const machine_t *);
 extern int             machine_at_borapro_init(const machine_t *);
+extern int             machine_at_sl67ez_init(const machine_t *);
 
 /* SMSC VictoryBX-66 */
 extern int             machine_at_atc6310bxii_init(const machine_t *);
@@ -1392,6 +1434,7 @@ extern const device_t  p3v4x_device;
 #endif
 extern int             machine_at_p3v4x_init(const machine_t *);
 extern int             machine_at_gt694va_init(const machine_t *);
+extern int             machine_at_sl67kv_init(const machine_t *);
 
 /* SiS 5600 */
 extern int             machine_at_p6f99_init(const machine_t *);
@@ -1419,6 +1462,14 @@ extern int             machine_at_s2dge_init(const machine_t *);
 
 /* m_at_socket370.c */
 /* i440LX */
+#ifdef EMU_DEVICE_H
+extern const device_t  ga6la7_device;
+#endif
+extern int             machine_at_ga6la7_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  ms6161_device;
+#endif
+extern int             machine_at_ms6161_init(const machine_t *);
 extern int             machine_at_s370slm_init(const machine_t *);
 
 /* i440BX */
@@ -1428,10 +1479,14 @@ extern int             machine_at_ambx133_init(const machine_t *);
 extern const device_t  cubx_device;
 #endif
 extern int             machine_at_cubx_init(const machine_t *);
+extern int             machine_at_cb61_init(const machine_t *);
+extern int             machine_at_prm27i_init(const machine_t *);
+extern int             machine_at_ga6bx7_init(const machine_t *);
 extern int             machine_at_65eb_init(const machine_t *);
 
 /* i440ZX */
 extern int             machine_at_63a1_init(const machine_t *);
+extern int             machine_at_sl65fplus_init(const machine_t *);
 
 /* SiS 600 */
 extern int             machine_at_7sbb_init(const machine_t *);
@@ -1449,14 +1504,24 @@ extern int             machine_at_p6bap_init(const machine_t *);
 /* VIA Apollo Pro 133A */
 extern int             machine_at_6via90ap_init(const machine_t *);
 #ifdef EMU_DEVICE_H
+extern const device_t  cuv4xcm_device;
+#endif
+extern int             machine_at_cuv4xcm_init(const machine_t *);
+#ifdef EMU_DEVICE_H
 extern const device_t  cuv4xls_device;
 #endif
 extern int             machine_at_cuv4xls_init(const machine_t *);
+extern int             machine_at_gt694vp_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  m6vcg_device;
+#endif
+extern int             machine_at_m6vcg_init(const machine_t *);
 #ifdef EMU_DEVICE_H
 extern const device_t  ms6318_device;
 #endif
 extern int             machine_at_ms6318_init(const machine_t *);
 extern int             machine_at_cairo5_init(const machine_t *);
+extern int             machine_at_sl65kv_init(const machine_t *);
 
 /* m_at_misc.c */
 extern int             machine_at_vpc2007_init(const machine_t *);
