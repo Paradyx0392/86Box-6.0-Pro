@@ -14763,7 +14763,7 @@ const machine_t machines[] = {
         .kbc_params               = KBC_VEN_AMI | 0x00004800,
         .nvr_device               = &nvr_at_device,
         /* TODO: Per-BIOS NVR parameters. */
-        .nvr_params               = NULL,
+        .nvr_params               = 0x00000000,
         .sio_device               = NULL,
         .sio_params               = 0x00000000,
         .kbc_p1                   = 0x00000cf0,
