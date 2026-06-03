@@ -15725,7 +15725,7 @@ const machine_t machines[] = {
         .vid_device               = NULL,
         .snd_device               = NULL,
         .net_device               = NULL,
-        .aliases                  = { "" }
+        .aliases                  = { "Premio Denali", "Premio 200A", "" }
     },
     /* This most likely uses AMI MegaKey KBC firmware as well due to having the same
        Super I/O chip (that has the KBC firmware on it) as eg. the Advanced/EV. */
