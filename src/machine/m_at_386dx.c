@@ -457,16 +457,70 @@ machine_at_asus3863364k_init(const machine_t *model)
     return ret;
 }
 
+static const device_config_t asus386_config[] = {
+    // clang-format off
+    {
+        .name           = "bios",
+        .description    = "BIOS Version",
+        .type           = CONFIG_BIOS,
+        .default_string = "asus386",
+        .default_int    = 0,
+        .file_filter    = NULL,
+        .spinner        = { 0 },
+        .selection      = { { 0 } },
+        .bios = {
+            {
+                .name          = "AMIBIOS 050591",
+                .internal_name = "asus386",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 65536,
+                .files         = { "roms/machines/asus386/ASUS_ISA-386C_BIOS.bin", "" }
+            },
+            {
+                .name          = "Award BIOS v4.00",
+                .internal_name = "asus386_award",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 65536,
+                .files         = { "roms/machines/asus386/386c-award.bin", "" }
+            },
+            { .files_no = 0 }
+        }
+    },
+    { .name = "", .description = "", .type = CONFIG_END }
+    // clang-format on
+};
+
+const device_t asus386_device = {
+    .name          = "ASUS ISA-386C",
+    .internal_name = "asus386",
+    .flags         = 0,
+    .local         = 0,
+    .init          = NULL,
+    .close         = NULL,
+    .reset         = NULL,
+    .available     = NULL,
+    .speed_changed = NULL,
+    .force_redraw  = NULL,
+    .config        = asus386_config
+};
+
 int
 machine_at_asus386_init(const machine_t *model)
 {
-    int ret;
+    int         ret = 0;
+    const char *fn;
 
-    ret = bios_load_linear("roms/machines/asus386/ASUS_ISA-386C_BIOS.bin",
-                           0x000f0000, 65536, 0);
-
-    if (bios_only || !ret)
+    /* No ROMs available */
+    if (!device_available(model->device))
         return ret;
+
+    device_context(model->device);
+    fn  = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
+    ret = bios_load_linear(fn, 0x000f0000, 65536, 0);
 
     machine_at_common_init(model);
 
