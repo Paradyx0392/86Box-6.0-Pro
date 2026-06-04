@@ -1133,6 +1133,7 @@ extern int             machine_at_i430vx_init(const machine_t *);
 extern int             machine_at_55a5_init(const machine_t *);
 
 /* i430TX */
+extern int             machine_at_tx5_init(const machine_t *);
 extern int             machine_at_nupro592_init(const machine_t *);
 #ifdef EMU_DEVICE_H
 extern const device_t  tx97_device;
@@ -1220,10 +1221,20 @@ extern int             machine_at_m560_init(const machine_t *);
 
 /* m_at_sockets7.c */
 /* ALi ALADDiN V */
+#ifdef EMU_DEVICE_H
+extern const device_t  p5a_device;
+#endif
 extern int             machine_at_p5a_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  m5ala_device;
+#endif
+extern int             machine_at_m5ala_init(const machine_t *);
 extern int             machine_at_m579_init(const machine_t *);
 extern int             machine_at_gwlucas_init(const machine_t *);
-extern int             machine_at_5aa_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  g5a_device;
+#endif
+extern int             machine_at_g5a_init(const machine_t *);
 #ifdef EMU_DEVICE_H
 extern const device_t  g5x_device;
 #endif
