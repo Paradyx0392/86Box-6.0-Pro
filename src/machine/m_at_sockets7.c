@@ -61,6 +61,15 @@ static const device_config_t p5a_config[] = {
                 .files         = { "roms/machines/p5a/AL5I1007.AWD", "" }
             },
             {
+                .name          = "Award Modular BIOS v4.51PG - Revision 1007.A",
+                .internal_name = "p5a_1007a",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/p5a/AL5I107A.AWD", "" }
+            },
+            {
                 .name          = "Award Modular BIOS v4.51PG - Revision 1011 Beta 005",
                 .internal_name = "p5a_1011beta005",
                 .bios_type     = BIOS_NORMAL,
@@ -196,7 +205,7 @@ machine_at_m5ala_init(const machine_t *model)
     ret = bios_load_linear(fn, 0x000e0000, 131072, 0);
     device_context_restore();
 
-    machine_at_common_init_ex(model, 2);
+    machine_at_common_init(model);
 
     pci_init(PCI_CONFIG_TYPE_1);
     pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE,     0, 0, 0, 0);
@@ -644,6 +653,38 @@ machine_at_ficva503a_init(const machine_t *model)
 
     if (sound_card_current[0] == SOUND_INTERNAL)
         device_add(machine_get_snd_device(machine));
+
+    return ret;
+}
+
+int
+machine_at_5emaplus_init(const machine_t *model)
+{
+    int ret;
+
+    ret = bios_load_linear("roms/machines/5emaplus/5ema1ea1.bin",
+                           0x000e0000, 131072, 0);
+
+    if (bios_only || !ret)
+        return ret;
+
+    machine_at_common_init_ex(model, 2);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 0, 0, 3, 4);
+    pci_register_slot(0x08, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x09, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x0A, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x0B, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x0C, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,   1, 2, 3, 4);
+
+    device_add(&via_mvp3_device);
+    device_add(&via_vt82c586b_device);
+    device_add_params(&fdc37c669_device, (void *) 0);
+    device_add(&sst_flash_39sf010_device);
+    spd_register(SPD_TYPE_SDRAM, 0x7, 256);
 
     return ret;
 }
