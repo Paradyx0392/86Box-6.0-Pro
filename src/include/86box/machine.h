@@ -1191,10 +1191,17 @@ extern const device_t  r534f_device;
 extern int             machine_at_r534f_init(const machine_t *);
 
 /* SiS 5581 */
+#ifdef EMU_DEVICE_H
+extern const device_t  sp97xv_device;
+#endif
 extern int             machine_at_sp97xv_init(const machine_t *);
 extern int             machine_at_sq578_init(const machine_t *);
 
 /* SiS 5591 */
+#ifdef EMU_DEVICE_H
+extern const device_t  sp98agpx_device;
+#endif
+extern int             machine_at_sp98agpx_init(const machine_t *);
 #ifdef EMU_DEVICE_H
 extern const device_t  ms5172_device;
 #endif
