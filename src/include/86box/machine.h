@@ -1078,6 +1078,9 @@ extern int             machine_at_zeoswildcat_init(const machine_t *);
 /* m_at_socket7.c */
 /* i430HX */
 extern int             machine_at_acerm3a_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  p55t2p4_device;
+#endif
 extern int             machine_at_p55t2p4_init(const machine_t *);
 #ifdef EMU_DEVICE_H
 extern void            machine_at_p65up5_common_init(const machine_t *, const device_t *northbridge);
@@ -1102,6 +1105,9 @@ extern int             machine_at_p55t2s_init(const machine_t *);
 
 /* i430VX */
 extern int             machine_at_ap5vm_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  p55tvp4_device;
+#endif
 extern int             machine_at_p55tvp4_init(const machine_t *);
 extern int             machine_at_5ivg_init(const machine_t *);
 extern int             machine_at_8500tvxa_init(const machine_t *);
@@ -1127,6 +1133,9 @@ extern int             machine_at_55a5_init(const machine_t *);
 
 /* i430TX */
 extern int             machine_at_nupro592_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  tx97_device;
+#endif
 extern int             machine_at_tx97_init(const machine_t *);
 extern int             machine_at_tx97xv_init(const machine_t *);
 #ifdef EMU_DEVICE_H
