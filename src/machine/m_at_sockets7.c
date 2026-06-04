@@ -39,6 +39,7 @@
 #include <86box/clock.h>
 
 /* ALi ALADDiN V */
+/* ALi ALADDiN V */
 static const device_config_t p5a_config[] = {
     // clang-format off
     {
@@ -52,30 +53,12 @@ static const device_config_t p5a_config[] = {
         .selection      = { { 0 } },
         .bios           = {
             {
-                .name          = "Award Modular BIOS v4.51PG - Revision 1004",
-                .internal_name = "p5a_1004",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/p5a/AL5I1004.AWD", "" }
-            },
-            {
-                .name          = "Award Modular BIOS v4.51PG - Revision 1005",
-                .internal_name = "p5a_1005",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/p5a/AL5I1005.AWD", "" }
-            },
-            {
                 .name          = "Award Modular BIOS v4.51PG - Revision 1007",
                 .internal_name = "p5a",
                 .bios_type     = BIOS_NORMAL,
                 .files_no      = 1,
                 .local         = 0,
-                .size          = 131072,
+                .size          = 262144,
                 .files         = { "roms/machines/p5a/AL5I1007.AWD", "" }
             },
             {
@@ -84,16 +67,16 @@ static const device_config_t p5a_config[] = {
                 .bios_type     = BIOS_NORMAL,
                 .files_no      = 1,
                 .local         = 0,
-                .size          = 131072,
+                .size          = 262144,
                 .files         = { "roms/machines/p5a/AL5I107A.AWD", "" }
             },
             {
                 .name          = "Award Modular BIOS v4.51PG - Revision 1011 Beta 005",
-                .internal_name = "p5a_1011b005",
+                .internal_name = "p5a_1011beta005",
                 .bios_type     = BIOS_NORMAL,
                 .files_no      = 1,
                 .local         = 0,
-                .size          = 131072,
+                .size          = 262144,
                 .files         = { "roms/machines/p5a/1011.005", "" }
             },
             { .files_no = 0 }
@@ -153,127 +136,6 @@ machine_at_p5a_init(const machine_t *model)
     device_add(&sst_flash_39sf020_device);
     spd_register(SPD_TYPE_SDRAM, 0x7, 512);
     device_add(&w83781d_p5a_device); /* fans: Chassis, CPU, Power; temperatures: MB, unused, CPU */
-
-    return ret;
-}
-
-int
-machine_at_vp1541_init(const machine_t *model)
-{
-    int ret;
-
-    ret = bios_load_linear("roms/machines/vp1541/20641108.bin",
-                           0x000e0000, 131072, 0);
-
-    if (bios_only || !ret)
-        return ret;
-
-    machine_at_common_init(model);
-
-    pci_init(PCI_CONFIG_TYPE_1);
-    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE,     0, 0, 0, 0);
-    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,       1, 2, 0, 0);
-    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE,     1, 2, 3, 4);
-    pci_register_slot(0x0F, PCI_CARD_SOUTHBRIDGE_IDE, 1, 2, 3, 4);
-    pci_register_slot(0x03, PCI_CARD_SOUTHBRIDGE_PMU, 1, 2, 3, 4);
-    pci_register_slot(0x02, PCI_CARD_SOUTHBRIDGE_USB, 1, 2, 3, 4);
-    pci_register_slot(0x14, PCI_CARD_NORMAL,          1, 2, 3, 4);
-    pci_register_slot(0x12, PCI_CARD_NORMAL,          2, 3, 4, 1);
-    pci_register_slot(0x10, PCI_CARD_NORMAL,          3, 4, 1, 2);
-    pci_register_slot(0x0E, PCI_CARD_NORMAL,          4, 1, 2, 3);
-
-    device_add(&ali1541_device);
-    device_add(&ali1543c_device);
-    device_add(&sst_flash_29ee010_device);
-    spd_register(SPD_TYPE_SDRAM, 0x7, 512);
-
-    return ret;
-}
-
-static const device_config_t m5ala_config[] = {
-    // clang-format off
-    {
-        .name           = "bios",
-        .description    = "BIOS Version",
-        .type           = CONFIG_BIOS,
-        .default_string = "m5ala",
-        .default_int    = 0,
-        .file_filter    = NULL,
-        .spinner        = { 0 },
-        .selection      = { { 0 } },
-        .bios           = {
-            {
-                .name          = "Award Modular BIOS v4.51PG - Revision 11/05/1999",
-                .internal_name = "m5ala_1999",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/m5ala/ALA1105B.BIN", "" }
-            },
-            {
-                .name          = "Award Modular BIOS v4.51PG - Revision 11/22/2000",
-                .internal_name = "m5ala",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/m5ala/ALA1122B.BIN", "" }
-            },
-            { .files_no = 0 }
-        }
-    },
-    { .name = "", .description = "", .type = CONFIG_END }
-    // clang-format on
-};
-
-const device_t m5ala_device = {
-    .name          = "Biostar M5ALA",
-    .internal_name = "m5ala",
-    .flags         = 0,
-    .local         = 0,
-    .init          = NULL,
-    .close         = NULL,
-    .reset         = NULL,
-    .available     = NULL,
-    .speed_changed = NULL,
-    .force_redraw  = NULL,
-    .config        = m5ala_config
-};
-
-int
-machine_at_m5ala_init(const machine_t *model)
-{
-    int         ret = 0;
-    const char *fn;
-
-    /* No ROMs available */
-    if (!device_available(model->device))
-        return ret;
-
-    device_context(model->device);
-    fn  = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
-    ret = bios_load_linear(fn, 0x000e0000, 131072, 0);
-    device_context_restore();
-
-    machine_at_common_init(model);
-
-    pci_init(PCI_CONFIG_TYPE_1);
-    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE,     0, 0, 0, 0);
-    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,       1, 2, 0, 0);
-    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE,     1, 2, 3, 4);
-    pci_register_slot(0x0F, PCI_CARD_SOUTHBRIDGE_IDE, 1, 2, 3, 4);
-    pci_register_slot(0x03, PCI_CARD_SOUTHBRIDGE_PMU, 1, 2, 3, 4);
-    pci_register_slot(0x02, PCI_CARD_SOUTHBRIDGE_USB, 1, 2, 3, 4);
-    pci_register_slot(0x08, PCI_CARD_NORMAL,          1, 2, 3, 4);
-    pci_register_slot(0x09, PCI_CARD_NORMAL,          2, 3, 4, 1);
-    pci_register_slot(0x0A, PCI_CARD_NORMAL,          3, 4, 1, 2);
-    pci_register_slot(0x0B, PCI_CARD_NORMAL,          4, 1, 2, 3);
-
-    device_add(&ali1541_device);
-    device_add(&ali1543c_device); /* +0 */
-    device_add(&sst_flash_29ee010_device);
-    spd_register(SPD_TYPE_SDRAM, 0x7, 512);
 
     return ret;
 }
@@ -370,7 +232,7 @@ static const device_config_t g5a_config[] = {
                 .files         = { "roms/machines/5aa/GA-5AA.F6", "" }
             },
             {
-                .name          = "AMIBIOS 6 (071595) - Revision F7b (Beta)",
+                .name          = "AMIBIOS 6 (071595) - Revision F7b (beta)",
                 .internal_name = "5aa",
                 .bios_type     = BIOS_NORMAL,
                 .files_no      = 1,

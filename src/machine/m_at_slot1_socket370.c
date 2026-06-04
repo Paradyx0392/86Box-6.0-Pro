@@ -143,95 +143,6 @@ machine_at_prosignias31x_bx_init(const machine_t *model)
     return ret;
 }
 
-static const device_config_t pb1408_config[] = {
-    // clang-format off
-    {
-        .name           = "bios",
-        .description    = "BIOS Version",
-        .type           = CONFIG_BIOS,
-        .default_string = "pb1408award",
-        .default_int    = 0,
-        .file_filter    = NULL,
-        .spinner        = { 0 },
-        .selection      = { { 0 } },
-        .bios           = {
-            {
-                .name          = "AMIBIOS 6 (071595) - Revision 01/24/2000",
-                .internal_name = "pb1408ami",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/pb1408/14a2cp08.rom", "" }
-            },
-            {
-                .name          = "Award Modular BIOS v4.51PG - Revision 03/24/2000",
-                .internal_name = "pb1408award",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 262144,
-                .files         = { "roms/machines/pb1408/award5.bin", "" }
-            },
-            { .files_no = 0 }
-        }
-    },
-    { .name = "", .description = "", .type = CONFIG_END }
-    // clang-format on
-};
-
-const device_t pb1408_device = {
-    .name          = "Sono PB1408",
-    .internal_name = "pb1408",
-    .flags         = 0,
-    .local         = 0,
-    .init          = NULL,
-    .close         = NULL,
-    .reset         = NULL,
-    .available     = NULL,
-    .speed_changed = NULL,
-    .force_redraw  = NULL,
-    .config        = pb1408_config
-};
-
-int
-machine_at_pb1408_init(const machine_t *model)
-{
-    int         ret = 0;
-    const char *fn;
-
-    /* No ROMs available */
-    if (!device_available(model->device))
-        return ret;
-
-    device_context(model->device);
-    fn  = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
-    int size = device_get_bios_file_size(machine_get_device(machine), device_get_config_bios("bios"));
-    ret = bios_load_linear(fn, 0x00100000 - size, size, 0);
-    device_context_restore();
-
-    machine_at_common_init(model);
-
-    pci_init(PCI_CONFIG_TYPE_1);
-    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
-    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 1, 2, 3, 4);
-    pci_register_slot(0x0D, PCI_CARD_SOUND,       4, 3, 0, 0);
-    pci_register_slot(0x08, PCI_CARD_NORMAL,      1, 2, 3, 4);
-    pci_register_slot(0x09, PCI_CARD_NORMAL,      2, 3, 4, 1);
-    pci_register_slot(0x0A, PCI_CARD_NORMAL,      3, 4, 1, 2);
-    pci_register_slot(0x0B, PCI_CARD_NORMAL,      4, 1, 2, 3);
-    pci_register_slot(0x0C, PCI_CARD_NORMAL,      2, 3, 4, 1);
-    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,   1, 2, 3, 4);
-
-    device_add(&i440bx_device);
-    device_add(&piix4e_device);
-    device_add(&it8671f_device);
-    device_add((size > 131072) ? &sst_flash_39sf020_device /* assumed */ : &sst_flash_39sf010_device);
-    spd_register(SPD_TYPE_SDRAM, 0x7, 256);
-
-    return ret;
-}
-
 int
 machine_at_s1857_init(const machine_t *model)
 {
@@ -271,38 +182,6 @@ machine_at_s1857_init(const machine_t *model)
 }
 
 /* VIA Apollo Pro 133 */
-int
-machine_at_m6vca_init(const machine_t *model)
-{
-    int ret;
-
-    ret = bios_load_linear("roms/machines/m6vca/vca0114f.bin",
-                           0x000c0000, 262144, 0);
-
-    if (bios_only || !ret)
-        return ret;
-
-    machine_at_common_init(model);
-
-    pci_init(PCI_CONFIG_TYPE_1);
-    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
-    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 0, 0, 3, 4);
-    pci_register_slot(0x08, PCI_CARD_NORMAL,      1, 2, 3, 4);
-    pci_register_slot(0x09, PCI_CARD_NORMAL,      2, 3, 4, 1);
-    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,   1, 2, 3, 4);
-
-    device_add(&via_apro133a_device);
-    device_add(&via_vt82c686a_device);
-    device_add(&sst_flash_39sf020_device);
-    spd_register(SPD_TYPE_SDRAM, 0x7, 256);
-    device_add(&via_vt82c686_hwm_device); /* fans: CPU1, Chassis; temperatures: CPU, System, unused */
-    hwm_values.temperatures[0] += 2; /* CPU offset */
-    hwm_values.temperatures[1] += 2; /* System offset */
-    hwm_values.temperatures[2] = 0;  /* unused */
-
-    return ret;
-}
-
 int
 machine_at_p6bat_init(const machine_t *model)
 {

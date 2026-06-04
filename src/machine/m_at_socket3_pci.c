@@ -49,71 +49,13 @@
 #include <86box/sound.h>
 
 /* ALi M1429G */
-static const device_config_t ms4134_config[] = {
-    // clang-format off
-    {
-        .name           = "bios",
-        .description    = "BIOS Version",
-        .type           = CONFIG_BIOS,
-        .default_string = "ms4134",
-        .default_int    = 0,
-        .file_filter    = NULL,
-        .spinner        = { 0 },
-        .selection      = { { 0 } },
-        .bios           = {
-            {
-                .name          = "AMI 080893 - Revision AL51",
-                .internal_name = "ms4134_al51",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/ms4134/4alm001.bin", "" }
-            },
-            {
-                .name          = "AMI 080893 - Revision AL57",
-                .internal_name = "ms4134",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/ms4134/AL57.ROM", "" }
-            },
-            { .files_no = 0 }
-        }
-    },
-    { .name = "", .description = "", .type = CONFIG_END }
-    // clang-format on
-};
-
-const device_t ms4134_device = {
-    .name          = "MSI MS-4134",
-    .internal_name = "ms4134",
-    .flags         = 0,
-    .local         = 0,
-    .init          = NULL,
-    .close         = NULL,
-    .reset         = NULL,
-    .available     = NULL,
-    .speed_changed = NULL,
-    .force_redraw  = NULL,
-    .config        = ms4134_config
-};
-
 int
 machine_at_ms4134_init(const machine_t *model)
 {
-    int         ret = 0;
-    const char *fn;
+    int ret;
 
-    /* No ROMs available */
-    if (!device_available(model->device))
-        return ret;
-
-    device_context(model->device);
-    fn  = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
-    ret = bios_load_linear(fn, 0x000e0000, 131072, 0);
-    device_context_restore();
+    ret = bios_load_linear("roms/machines/ms4134/4alm001.bin",
+                           0x000e0000, 131072, 0);
 
     if (bios_only || !ret)
         return ret;
@@ -173,71 +115,16 @@ machine_at_tg486gp_init(const machine_t *model)
 }
 
 /* ALi M1489 */
-static const device_config_t sbc490_config[] = {
-    // clang-format off
-    {
-        .name           = "bios",
-        .description    = "BIOS Version",
-        .type           = CONFIG_BIOS,
-        .default_string = "sbc490",
-        .default_int    = 0,
-        .file_filter    = NULL,
-        .spinner        = { 0 },
-        .selection      = { { 0 } },
-        .bios           = {
-            {
-                .name          = "AMIBIOS 6 (071595) - Revision 2.0",
-                .internal_name = "sbc490_20",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/sbc490/07159589.ROM", "" }
-            },
-            {
-                .name          = "AMIBIOS 6 (071595) - Revision 2.1",
-                .internal_name = "sbc490",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/sbc490/490R21.ROM", "" }
-            },
-            { .files_no = 0 }
-        }
-    },
-    { .name = "", .description = "", .type = CONFIG_END }
-    // clang-format on
-};
-
-const device_t sbc490_device = {
-    .name          = "AAEON SBC-490",
-    .internal_name = "sbc490",
-    .flags         = 0,
-    .local         = 0,
-    .init          = NULL,
-    .close         = NULL,
-    .reset         = NULL,
-    .available     = NULL,
-    .speed_changed = NULL,
-    .force_redraw  = NULL,
-    .config        = sbc490_config
-};
-
 int
 machine_at_sbc490_init(const machine_t *model)
 {
-    int         ret = 0;
-    const char *fn;
+    int ret;
 
-    /* No ROMs available */
-    if (!device_available(model->device))
+    ret = bios_load_linear("roms/machines/sbc490/07159589.rom",
+                           0x000e0000, 131072, 0);
+
+    if (bios_only || !ret)
         return ret;
-
-    device_context(model->device);
-    fn  = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
-    ret = bios_load_linear(fn, 0x000e0000, 131072, 0);
-    device_context_restore();
 
     machine_at_common_init(model);
 
@@ -262,80 +149,13 @@ machine_at_sbc490_init(const machine_t *model)
     return ret;
 }
 
-static const device_config_t abpb4_config[] = {
-    // clang-format off
-    {
-        .name           = "bios",
-        .description    = "BIOS Version",
-        .type           = CONFIG_BIOS,
-        .default_string = "abpb4",
-        .default_int    = 0,
-        .file_filter    = NULL,
-        .spinner        = { 0 },
-        .selection      = { { 0 } },
-        .bios           = {
-            {
-                .name          = "Award Modular BIOS v4.50G - Revision 5E",
-                .internal_name = "abpb4",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/abpb4/486-AB-PB4.BIN", "" }
-            },
-            {
-                .name          = "Award Modular BIOS v4.51G - Revision D2",
-                .internal_name = "abpb4_451g",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/abpb4/AB-PB4_D2_rev1_5.bin", "" }
-            },
-            {
-                .name          = "Award Modular BIOS v4.51PG - Revision F2",
-                .internal_name = "abpb4_451pg",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/abpb4/PB4P_F2.BIN", "" }
-            },
-            { .files_no = 0 }
-        }
-    },
-    { .name = "", .description = "", .type = CONFIG_END }
-    // clang-format on
-};
-
-const device_t abpb4_device = {
-    .name          = "ABIT AB-PB4",
-    .internal_name = "abpb4",
-    .flags         = 0,
-    .local         = 0,
-    .init          = NULL,
-    .close         = NULL,
-    .reset         = NULL,
-    .available     = NULL,
-    .speed_changed = NULL,
-    .force_redraw  = NULL,
-    .config        = abpb4_config
-};
-
 int
 machine_at_abpb4_init(const machine_t *model)
 {
-    int         ret = 0;
-    const char *fn;
+    int ret;
 
-    /* No ROMs available */
-    if (!device_available(model->device))
-        return ret;
-
-    device_context(model->device);
-    fn  = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
-    ret = bios_load_linear(fn, 0x000e0000, 131072, 0);
-    device_context_restore();
+    ret = bios_load_linear("roms/machines/abpb4/486-AB-PB4.BIN",
+                           0x000e0000, 131072, 0);
 
     if (bios_only || !ret)
         return ret;
@@ -408,71 +228,16 @@ machine_at_tf486_init(const machine_t *model)
     return ret;
 }
 
-static const device_config_t ms4145_config[] = {
-    // clang-format off
-    {
-        .name           = "bios",
-        .description    = "BIOS Version",
-        .type           = CONFIG_BIOS,
-        .default_string = "ms4145",
-        .default_int    = 0,
-        .file_filter    = NULL,
-        .spinner        = { 0 },
-        .selection      = { { 0 } },
-        .bios           = {
-            {
-                .name          = "AMI WinBIOS (101094) - Revision AG56S",
-                .internal_name = "ms4145",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/ms4145/AG56S.ROM", "" }
-            },
-            {
-                .name          = "AMI WinBIOS (101094) - Revision AG57",
-                .internal_name = "ms4145",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/ms4145/AG57.ROM", "" }
-            },
-            { .files_no = 0 }
-        }
-    },
-    { .name = "", .description = "", .type = CONFIG_END }
-    // clang-format on
-};
-
-const device_t ms4145_device = {
-    .name          = "MSI MS-4145",
-    .internal_name = "ms4145",
-    .flags         = 0,
-    .local         = 0,
-    .init          = NULL,
-    .close         = NULL,
-    .reset         = NULL,
-    .available     = NULL,
-    .speed_changed = NULL,
-    .force_redraw  = NULL,
-    .config        = ms4145_config
-};
-
 int
 machine_at_ms4145_init(const machine_t *model)
 {
-    int         ret = 0;
-    const char *fn;
+    int ret;
 
-    /* No ROMs available */
-    if (!device_available(model->device))
+    ret = bios_load_linear("roms/machines/ms4145/AG56S.ROM",
+                           0x000e0000, 131072, 0);
+
+    if (bios_only || !ret)
         return ret;
-
-    device_context(model->device);
-    fn  = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
-    ret = bios_load_linear(fn, 0x000e0000, 131072, 0);
-    device_context_restore();
 
     machine_at_common_init(model);
 
@@ -775,71 +540,16 @@ machine_at_bat4ip3e_init(const machine_t *model)
     return ret;
 }
 
-static const device_config_t a486ap4_config[] = {
-    // clang-format off
-    {
-        .name           = "bios",
-        .description    = "BIOS Version",
-        .type           = CONFIG_BIOS,
-        .default_string = "486ap4",
-        .default_int    = 0,
-        .file_filter    = NULL,
-        .spinner        = { 0 },
-        .selection      = { { 0 } },
-        .bios           = {
-            {
-                .name          = "Award Modular BIOS v4.50G - Revision 0204",
-                .internal_name = "486ap4",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/486ap4/awai0204.bin", "" }
-            },
-            {
-                .name          = "Award Modular BIOS v4.51G - Revision 0205-2 (Beta)",
-                .internal_name = "486ap4_beta",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/486ap4/0205.002", "" }
-            },
-            { .files_no = 0 }
-        }
-    },
-    { .name = "", .description = "", .type = CONFIG_END }
-    // clang-format on
-};
-
-const device_t a486ap4_device = {
-    .name          = "ASUS PVI-486AP4",
-    .internal_name = "486ap4",
-    .flags         = 0,
-    .local         = 0,
-    .init          = NULL,
-    .close         = NULL,
-    .reset         = NULL,
-    .available     = NULL,
-    .speed_changed = NULL,
-    .force_redraw  = NULL,
-    .config        = a486ap4_config
-};
-
 int
-machine_at_a486ap4_init(const machine_t *model)
+machine_at_486ap4_init(const machine_t *model)
 {
-    int         ret = 0;
-    const char *fn;
+    int ret;
 
-    /* No ROMs available */
-    if (!device_available(model->device))
+    ret = bios_load_linear("roms/machines/486ap4/0205.002",
+                           0x000e0000, 131072, 0);
+
+    if (bios_only || !ret)
         return ret;
-
-    device_context(model->device);
-    fn  = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
-    ret = bios_load_linear(fn, 0x000e0000, 131072, 0);
-    device_context_restore();
 
     machine_at_common_init(model);
 
@@ -1020,71 +730,16 @@ machine_at_alfredo_init(const machine_t *model)
 }
 
 /* i420ZX */
-static const device_config_t a486sp3g_config[] = {
-    // clang-format off
-    {
-        .name           = "bios",
-        .description    = "BIOS Version",
-        .type           = CONFIG_BIOS,
-        .default_string = "486sp3g",
-        .default_int    = 0,
-        .file_filter    = NULL,
-        .spinner        = { 0 },
-        .selection      = { { 0 } },
-        .bios           = {
-            {
-                .name          = "Award Modular BIOS v4.50G - Revision 0304",
-                .internal_name = "486sp3g",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/486sp3g/awsg0304.bin", "" }
-            },
-            {
-                .name          = "Award Modular BIOS v4.51G - Revision 0306-1 (Beta)",
-                .internal_name = "486sp3g_beta",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/486sp3g/PCI-I-486SP3G_0306.001 (Beta).bin", "" }
-            },
-            { .files_no = 0 }
-        }
-    },
-    { .name = "", .description = "", .type = CONFIG_END }
-    // clang-format on
-};
-
-const device_t a486sp3g_device = {
-    .name          = "ASUS PCI/I-486SP3G",
-    .internal_name = "486sp3g",
-    .flags         = 0,
-    .local         = 0,
-    .init          = NULL,
-    .close         = NULL,
-    .reset         = NULL,
-    .available     = NULL,
-    .speed_changed = NULL,
-    .force_redraw  = NULL,
-    .config        = a486sp3g_config
-};
-
 int
-machine_at_a486sp3g_init(const machine_t *model)
+machine_at_486sp3g_init(const machine_t *model)
 {
-    int         ret = 0;
-    const char *fn;
+    int ret;
 
-    /* No ROMs available */
-    if (!device_available(model->device))
+    ret = bios_load_linear("roms/machines/486sp3g/PCI-I-486SP3G_0306.001 (Beta).bin",
+                           0x000e0000, 131072, 0);
+
+    if (bios_only || !ret)
         return ret;
-
-    device_context(model->device);
-    fn  = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
-    ret = bios_load_linear(fn, 0x000e0000, 131072, 0);
-    device_context_restore();
 
     machine_at_common_init(model);
     device_add(&ide_isa_device);
@@ -1404,71 +1059,16 @@ machine_at_ms4144_init(const machine_t *model)
     return ret;
 }
 
-static const device_config_t r418_config[] = {
-    // clang-format off
-    {
-        .name           = "bios",
-        .description    = "BIOS Version",
-        .type           = CONFIG_BIOS,
-        .default_string = "r418",
-        .default_int    = 0,
-        .file_filter    = NULL,
-        .spinner        = { 0 },
-        .selection      = { { 0 } },
-        .bios           = {
-            {
-                .name          = "AMI WinBIOS (101094) - Revision B",
-                .internal_name = "r418_ami",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/r418/r418b.rom", "" }
-            },
-            {
-                .name          = "Award Modular BIOS v4.50G - Revision I",
-                .internal_name = "r418",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/r418/r418i.bin", "" }
-            },
-            { .files_no = 0 }
-        }
-    },
-    { .name = "", .description = "", .type = CONFIG_END }
-    // clang-format on
-};
-
-const device_t r418_device = {
-    .name          = "Rise Computer R418",
-    .internal_name = "r418",
-    .flags         = 0,
-    .local         = 0,
-    .init          = NULL,
-    .close         = NULL,
-    .reset         = NULL,
-    .available     = NULL,
-    .speed_changed = NULL,
-    .force_redraw  = NULL,
-    .config        = r418_config
-};
-
 int
 machine_at_r418_init(const machine_t *model)
 {
-    int         ret = 0;
-    const char *fn;
+    int ret;
 
-    /* No ROMs available */
-    if (!device_available(model->device))
+    ret = bios_load_linear("roms/machines/r418/r418i.bin",
+                           0x000e0000, 131072, 0);
+
+    if (bios_only || !ret)
         return ret;
-
-    device_context(model->device);
-    fn  = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
-    ret = bios_load_linear(fn, 0x000e0000, 131072, 0);
-    device_context_restore();
 
     machine_at_common_init(model);
 
@@ -1898,71 +1498,13 @@ machine_at_hot433a_init(const machine_t *model)
 }
 
 /* VIA VT82C496G */
-static const device_config_t g486vpa_config[] = {
-    // clang-format off
-    {
-        .name           = "bios",
-        .description    = "BIOS Version",
-        .type           = CONFIG_BIOS,
-        .default_string = "g486vpa",
-        .default_int    = 0,
-        .file_filter    = NULL,
-        .spinner        = { 0 },
-        .selection      = { { 0 } },
-        .bios           = {
-            {
-                .name          = "Award Modular BIOS v4.50PG - Revision 03 04/18/1995",
-                .internal_name = "g486vpa",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/g486vpa/3.BIN", "" }
-            },
-            {
-                .name          = "Award Modular BIOS v4.51PG - Revision E5 04/30/1996",
-                .internal_name = "g486vpa_451pg",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/g486vpa/E5.BIN", "" }
-            },
-            { .files_no = 0 }
-        }
-    },
-    { .name = "", .description = "", .type = CONFIG_END }
-    // clang-format on
-};
-
-const device_t g486vpa_device = {
-    .name          = "DFI G486VPA",
-    .internal_name = "g486vpa",
-    .flags         = 0,
-    .local         = 0,
-    .init          = NULL,
-    .close         = NULL,
-    .reset         = NULL,
-    .available     = NULL,
-    .speed_changed = NULL,
-    .force_redraw  = NULL,
-    .config        = g486vpa_config
-};
-
 int
 machine_at_g486vpa_init(const machine_t *model)
 {
-    int         ret = 0;
-    const char *fn;
+    int ret;
 
-    /* No ROMs available */
-    if (!device_available(model->device))
-        return ret;
-
-    device_context(model->device);
-    fn  = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
-    ret = bios_load_linear(fn, 0x000e0000, 131072, 0);
-    device_context_restore();
+    ret = bios_load_linear("roms/machines/g486vpa/3.BIN",
+                           0x000e0000, 131072, 0);
 
     if (bios_only || !ret)
         return ret;
