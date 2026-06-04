@@ -1166,11 +1166,17 @@ extern int             machine_at_p5mms98_init(const machine_t *);
 extern int             machine_at_richmond_init(const machine_t *);
 
 /* VIA VPX */
+#ifdef EMU_DEVICE_H
+extern const device_t  ficva502_device;
+#endif
 extern int             machine_at_ficva502_init(const machine_t *);
 
 /* VIA VP3 */
 extern int             machine_at_ficpa2012_init(const machine_t *);
 extern int             machine_at_5avp3_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  via809ds_device;
+#endif
 extern int             machine_at_via809ds_init(const machine_t *);
 
 /* SiS 5571 */

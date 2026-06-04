@@ -1015,6 +1015,15 @@ static const device_config_t p5vxb_config[] = {
                 .files         = { "roms/machines/p5vxb/P5VXB10.BIN", "" }
             },
             {
+                .name          = "Award Modular BIOS v4.51PG - Revision 1.5",
+                .internal_name = "p5vxb_451pg15",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 131072,
+                .files         = { "roms/machines/p5vxb/P5VXB15.BIN", "" }
+            },
+            {
                 .name          = "Award Modular BIOS v4.51PG - Revision 1.5c",
                 .internal_name = "p5vxb_451pg",
                 .bios_type     = BIOS_NORMAL,
@@ -2323,16 +2332,71 @@ machine_at_richmond_init(const machine_t *model)
 }
 
 /* VIA VPX */
+static const device_config_t ficva502_config[] = {
+    // clang-format off
+    {
+        .name           = "bios",
+        .description    = "BIOS Version",
+        .type           = CONFIG_BIOS,
+        .default_string = "ficva502",
+        .default_int    = 0,
+        .file_filter    = NULL,
+        .spinner        = { 0 },
+        .selection      = { { 0 } },
+        .bios           = {
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision 1.13AJ139",
+                .internal_name = "ficva502",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 131072,
+                .files         = { "roms/machines/ficva502/ajw1393dc4.awd", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision 1.13AJ139 (patch)",
+                .internal_name = "ficva502_patch",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 131072,
+                .files         = { "roms/machines/ficva502/VA502bp.BIN", "" }
+            },
+            { .files_no = 0 }
+        }
+    },
+    { .name = "", .description = "", .type = CONFIG_END }
+    // clang-format on
+};
+
+const device_t ficva502_device = {
+    .name          = "FIC VA-502",
+    .internal_name = "ficva502",
+    .flags         = 0,
+    .local         = 0,
+    .init          = NULL,
+    .close         = NULL,
+    .reset         = NULL,
+    .available     = NULL,
+    .speed_changed = NULL,
+    .force_redraw  = NULL,
+    .config        = ficva502_config
+};
+
 int
 machine_at_ficva502_init(const machine_t *model)
 {
-    int ret;
+    int         ret = 0;
+    const char *fn;
 
-    ret = bios_load_linear("roms/machines/ficva502/VA502bp.BIN",
-                           0x000e0000, 131072, 0);
-
-    if (bios_only || !ret)
+    /* No ROMs available */
+    if (!device_available(model->device))
         return ret;
+
+    device_context(model->device);
+    fn  = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
+    ret = bios_load_linear(fn, 0x000e0000, 131072, 0);
+    device_context_restore();
 
     machine_at_common_init(model);
 
@@ -2416,16 +2480,71 @@ machine_at_5avp3_init(const machine_t *model)
     return ret;
 }
 
+static const device_config_t via809ds_config[] = {
+    // clang-format off
+    {
+        .name           = "bios",
+        .description    = "BIOS Version",
+        .type           = CONFIG_BIOS,
+        .default_string = "via809ds",
+        .default_int    = 0,
+        .file_filter    = NULL,
+        .spinner        = { 0 },
+        .selection      = { { 0 } },
+        .bios           = {
+            {
+                .name          = "AMIBIOS 6 (071595) - Revision 04/22/1998",
+                .internal_name = "via809ds",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 131072,
+                .files         = { "roms/machines/via809ds/v30422sg.bin", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision 05/06/1998",
+                .internal_name = "via809ds_451pg",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 131072,
+                .files         = { "roms/machines/via809ds/vp30506s.bin", "" }
+            },
+            { .files_no = 0 }
+        }
+    },
+    { .name = "", .description = "", .type = CONFIG_END }
+    // clang-format on
+};
+
+const device_t via809ds_device = {
+    .name          = "PC Partner VIA809DS",
+    .internal_name = "via809ds",
+    .flags         = 0,
+    .local         = 0,
+    .init          = NULL,
+    .close         = NULL,
+    .reset         = NULL,
+    .available     = NULL,
+    .speed_changed = NULL,
+    .force_redraw  = NULL,
+    .config        = via809ds_config
+};
+
 int
 machine_at_via809ds_init(const machine_t *model)
 {
-    int ret;
+    int         ret = 0;
+    const char *fn;
 
-    ret = bios_load_linear("roms/machines/via809ds/v30422sg.rom",
-                           0x000e0000, 131072, 0);
-
-    if (bios_only || !ret)
+    /* No ROMs available */
+    if (!device_available(model->device))
         return ret;
+
+    device_context(model->device);
+    fn  = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
+    ret = bios_load_linear(fn, 0x000e0000, 131072, 0);
+    device_context_restore();
 
     machine_at_common_init(model);
 
