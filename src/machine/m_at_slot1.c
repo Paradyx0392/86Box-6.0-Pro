@@ -484,6 +484,15 @@ static const device_config_t ms6117_config[] = {
                 .files         = { "roms/machines/ms6117/A617C410.ROM", "" }
             },
             {
+                .name          = "Award Modular BIOS v4.51PG - Revision 2.5",
+                .internal_name = "ms6117w25",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/ms6117/W617MS25.BIN", "" }
+            },
+            {
                 .name          = "Award Modular BIOS v4.51PG - Revision 3.2",
                 .internal_name = "ms6117w",
                 .bios_type     = BIOS_NORMAL,
@@ -695,6 +704,15 @@ static const device_config_t como_config[] = {
                 .local         = 0,
                 .size          = 262144,
                 .files         = { "roms/machines/como/COMO.ROM", "" }
+            },
+            {
+                .name          = "AMIBIOS 6 (071595) - Revision 01/23/1999 (Xoceco-TriGem OEM)",
+                .internal_name = "como_xoceco",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/como/COMOX.ROM", "" }
             },
             { .files_no = 0 }
         }
@@ -1602,6 +1620,91 @@ machine_at_s1846_init(const machine_t *model)
     return ret;
 }
 
+/* i440ZX */
+static const device_config_t in440zx_config[] = {
+    // clang-format off
+    {
+        .name           = "bios",
+        .description    = "BIOS Version",
+        .type           = CONFIG_BIOS,
+        .default_string = "in440zx",
+        .default_int    = 0,
+        .file_filter    = NULL,
+        .spinner        = { 0 },
+        .selection      = { { 0 } },
+        .bios           = {
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision 1.02",
+                .internal_name = "in440zx",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/in440zx/20861102.BIN", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision 2.05.07 (Toshiba Equium 3200)",
+                .internal_name = "equium3200",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/in440zx/738257L.bin", "" }
+            },
+            { .files_no = 0 }
+        }
+    },
+    { .name = "", .description = "", .type = CONFIG_END }
+    // clang-format on
+};
+
+const device_t in440zx_device = {
+    .name          = "BCM IN440ZX",
+    .internal_name = "in440zx",
+    .flags         = 0,
+    .local         = 0,
+    .init          = NULL,
+    .close         = NULL,
+    .reset         = NULL,
+    .available     = NULL,
+    .speed_changed = NULL,
+    .force_redraw  = NULL,
+    .config        = in440zx_config
+};
+
+int
+machine_at_in440zx_init(const machine_t *model)
+{
+    int         ret = 0;
+    const char *fn;
+
+    /* No ROMs available */
+    if (!device_available(model->device))
+        return ret;
+
+    device_context(model->device);
+    fn  = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
+    ret = bios_load_linear(fn, 0x000c0000, 262144, 0);
+    device_context_restore();
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x11, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x0D, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x13, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 1, 2, 3, 4);
+    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,   1, 2, 3, 4);
+    device_add(&i440zx_device);
+    device_add(&piix4e_device);
+    device_add_params(&w83977_device, (void *) (W83977TF | W83977_AMI | W83977_NO_NVR));
+    device_add(&sst_flash_39sf020_device);
+    spd_register(SPD_TYPE_SDRAM, 0x3, 256);
+
+    return ret;
+}
+
 static const device_config_t vei8_config[] = {
     // clang-format off
     {
@@ -1662,7 +1765,6 @@ const device_t vei8_device = {
     .config        = vei8_config
 };
 
-/* i440ZX */
 int
 machine_at_vei8_init(const machine_t *model)
 {
