@@ -1718,36 +1718,6 @@ machine_at_nupro592_init(const machine_t *model)
     return ret;
 }
 
-int
-machine_at_ap5t_init(const machine_t *model)
-{
-    int ret;
-
-    ret = bios_load_linear("roms/machines/ap5t/AP5V183.BIN",
-                           0x000e0000, 131072, 0);
-
-    if (bios_only || !ret)
-        return ret;
-
-    machine_at_common_init(model);
-
-    pci_init(PCI_CONFIG_TYPE_1);
-    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
-    pci_register_slot(0x0C, PCI_CARD_NORMAL,      1, 2, 3, 4);
-    pci_register_slot(0x0B, PCI_CARD_NORMAL,      2, 3, 4, 1);
-    pci_register_slot(0x0A, PCI_CARD_NORMAL,      3, 4, 1, 2);
-    pci_register_slot(0x09, PCI_CARD_NORMAL,      4, 1, 2, 3);
-    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 0, 0, 0, 0);
-
-    device_add(&i430tx_device);
-    device_add(&piix4_device);
-    device_add_params(machine_get_kbc_device(machine), (void *) model->kbc_params);
-    device_add_params(&fdc37c669_device, (void *) FDC37C6XX_370);
-    device_add(&sst_flash_29ee010_device);
-
-    return ret;
-}
-
 static const device_config_t tx97_config[] = {
     // clang-format off
     {
@@ -2599,35 +2569,6 @@ machine_at_mb540n_init(const machine_t *model)
     device_add(&piix4_device);
     device_add_params(machine_get_kbc_device(machine), (void *) model->kbc_params);
     device_add_params(&um8669f_device, (void *) 0);
-    device_add(&sst_flash_29ee010_device);
-    spd_register(SPD_TYPE_SDRAM, 0x3, 128);
-
-    return ret;
-}
-
-int
-machine_at_p5i430tx400_init(const machine_t *model)
-{
-    int ret;
-
-    ret = bios_load_linear("roms/machines/p5i430tx400/T1e_v15l.BIN",
-                           0x000e0000, 131072, 0);
-
-    if (bios_only || !ret)
-        return ret;
-
-    machine_at_common_init(model);
-
-    pci_init(PCI_CONFIG_TYPE_1);
-    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
-    pci_register_slot(0x09, PCI_CARD_NORMAL,      1, 2, 3, 4);
-    pci_register_slot(0x0A, PCI_CARD_NORMAL,      2, 3, 4, 1);
-    pci_register_slot(0x0B, PCI_CARD_NORMAL,      3, 4, 1, 2);
-    pci_register_slot(0x0C, PCI_CARD_NORMAL,      4, 1, 2, 3);
-    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 0, 0, 0, 0);
-    device_add(&i430tx_device);
-    device_add(&piix4_device);
-    device_add_params(&w83977_device, (void *) (W83977TF | W83977_AMI | W83977_NO_NVR));
     device_add(&sst_flash_29ee010_device);
     spd_register(SPD_TYPE_SDRAM, 0x3, 128);
 
