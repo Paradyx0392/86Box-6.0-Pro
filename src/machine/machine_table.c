@@ -21102,55 +21102,6 @@ const machine_t machines[] = {
         .net_device               = NULL, /* not yet emulated */
         .aliases                  = { "Dell System Tabasco", "" }
     },
-    /* Has an ITE IT8661F Super I/O chip with on-chip KBC with AMIKey-2 KBC
-       firmware. */
-    {
-        .name              = "[i440LX] Gigabyte GA-686LX",
-        .internal_name     = "ga6l",
-        .type              = MACHINE_TYPE_SLOT1,
-        .chipset           = MACHINE_CHIPSET_INTEL_440LX,
-        .init              = machine_at_ga6l_init,
-        .p1_handler        = machine_generic_p1_handler,
-        .gpio_handler      = NULL,
-        .available_flag    = MACHINE_AVAILABLE,
-        .gpio_acpi_handler = NULL,
-        .cpu               = {
-            .package     = CPU_PKG_SLOT1,
-            .block       = CPU_BLOCK_NONE,
-            .min_bus     = 66666667,
-            .max_bus     = 66666667,
-            .min_voltage = 1500,
-            .max_voltage = 3500,
-            .min_multi   = 1.5,
-            .max_multi   = 8.0
-        },
-        .bus_flags = MACHINE_PS2_AGP | MACHINE_BUS_USB,
-        .flags     = MACHINE_IDE_DUAL | MACHINE_APM | MACHINE_ACPI | MACHINE_USB,
-        .ram       = {
-            .min  = 8192,
-            .max  = 1048576,
-            .step = 8192
-        },
-        .nvrmask                  = 255,
-        .jumpered_ecp_dma         = 0,
-        .default_jumpered_ecp_dma = -1,
-        .kbc_device               = NULL,
-        .kbc_params               = 0x00000000,
-        .nvr_device               = NULL,
-        .nvr_params               = 0x00000000,
-        .sio_device               = NULL,
-        .sio_params               = 0x00000000,
-        .kbc_p1                   = 0x00000cf0,
-        .gpio                     = 0xffffffff,
-        .gpio_acpi                = 0xffffffff,
-        .device                   = NULL,
-        .kbd_device               = NULL,
-        .fdc_device               = NULL,
-        .vid_device               = NULL,
-        .snd_device               = NULL,
-        .net_device               = NULL,
-        .aliases                  = { "" }
-    },
     /* Has a SM(S)C FDC37C935 Super I/O chip with on-chip KBC with Phoenix
        MultiKey/42 (version 1.38) KBC firmware. */
     {
@@ -21601,104 +21552,6 @@ const machine_t machines[] = {
         .net_device               = NULL,
         .aliases                  = { "RM Accelerator 350P2XB", "RM Accelerator 450P3XB", "" }
     },
-    /* Has a Winbond W83977TF Super I/O chip with on-chip KBC with AMIKey-2 KBC
-       firmware. */
-    {
-        .name              = "[i440BX] ASUS P2B",
-        .internal_name     = "p2b",
-        .type              = MACHINE_TYPE_SLOT1,
-        .chipset           = MACHINE_CHIPSET_INTEL_440BX,
-        .init              = machine_at_p2b_init,
-        .p1_handler        = machine_generic_p1_handler,
-        .gpio_handler      = NULL,
-        .available_flag    = MACHINE_AVAILABLE,
-        .gpio_acpi_handler = NULL,
-        .cpu               = {
-            .package     = CPU_PKG_SLOT1,
-            .block       = CPU_BLOCK_NONE,
-            .min_bus     = 66666667,
-            .max_bus     = 150000000,
-            .min_voltage = 1300,
-            .max_voltage = 3500,
-            .min_multi   = 1.5,
-            .max_multi   = 8.0
-        },
-        .bus_flags = MACHINE_PS2_AGP | MACHINE_BUS_USB,
-        .flags     = MACHINE_IDE_DUAL | MACHINE_APM | MACHINE_ACPI | MACHINE_USB,
-        .ram       = {
-            .min  = 8192,
-            .max  = 786432,
-            .step = 8192
-        },
-        .nvrmask                  = 255,
-        .jumpered_ecp_dma         = 0,
-        .default_jumpered_ecp_dma = -1,
-        .kbc_device               = NULL,
-        .kbc_params               = 0x00000000,
-        .nvr_device               = NULL,
-        .nvr_params               = 0x00000000,
-        .sio_device               = NULL,
-        .sio_params               = 0x00000000,
-        .kbc_p1                   = 0x00000cf0,
-        .gpio                     = 0xffffffff,
-        .gpio_acpi                = 0xffffffff,
-        .device                   = &p2b_device,
-        .kbd_device               = NULL,
-        .fdc_device               = NULL,
-        .vid_device               = NULL,
-        .snd_device               = NULL,
-        .net_device               = NULL,
-        .aliases                  = { "" }
-    },
-    /* Has a Winbond W83977TF Super I/O chip with on-chip KBC with AMIKey-2 KBC
-       firmware. */
-    {
-        .name              = "[i440BX] ASUS P2B-B",
-        .internal_name     = "p2bb",
-        .type              = MACHINE_TYPE_SLOT1,
-        .chipset           = MACHINE_CHIPSET_INTEL_440BX,
-        .init              = machine_at_p2bb_init,
-        .p1_handler        = machine_generic_p1_handler,
-        .gpio_handler      = NULL,
-        .available_flag    = MACHINE_AVAILABLE,
-        .gpio_acpi_handler = NULL,
-        .cpu               = {
-            .package     = CPU_PKG_SLOT1,
-            .block       = CPU_BLOCK_NONE,
-            .min_bus     = 66666667,
-            .max_bus     = 112121212,
-            .min_voltage = 1300,
-            .max_voltage = 3500,
-            .min_multi   = 1.5,
-            .max_multi   = 8.0
-        },
-        .bus_flags = MACHINE_PS2_AGP | MACHINE_BUS_USB,
-        .flags     = MACHINE_IDE_DUAL | MACHINE_APM | MACHINE_ACPI | MACHINE_USB,
-        .ram       = {
-            .min  = 8192,
-            .max  = 786432,
-            .step = 8192
-        },
-        .nvrmask                  = 255,
-        .jumpered_ecp_dma         = 0,
-        .default_jumpered_ecp_dma = -1,
-        .kbc_device               = NULL,
-        .kbc_params               = 0x00000000,
-        .nvr_device               = NULL,
-        .nvr_params               = 0x00000000,
-        .sio_device               = NULL,
-        .sio_params               = 0x00000000,
-        .kbc_p1                   = 0x00000cf0,
-        .gpio                     = 0xffffffff,
-        .gpio_acpi                = 0xffffffff,
-        .device                   = &p2bb_device,
-        .kbd_device               = NULL,
-        .fdc_device               = NULL,
-        .vid_device               = NULL,
-        .snd_device               = NULL,
-        .net_device               = NULL,
-        .aliases                  = { "" }
-    },
     /* Has a Winbond W83977EF Super I/O chip with on-chip KBC with AMIKey-2 KBC
        firmware. */
     {
@@ -22139,54 +21992,6 @@ const machine_t machines[] = {
         .snd_device               = NULL,
         .net_device               = NULL,
         .aliases                  = { "HP Sherwood-B", "HP Vectra VEi8", "HP Brio BA600", "HP Brio BAX", "" }
-    },
-    /* Has a Winbond W83977TF Super I/O chip with on-chip KBC with AMIKey-2 KBC firmware. */
-    {
-        .name              = "[i440ZX] MSI MS-6156ZX",
-        .internal_name     = "ms6156zx",
-        .type              = MACHINE_TYPE_SLOT1,
-        .chipset           = MACHINE_CHIPSET_INTEL_440ZX,
-        .init              = machine_at_ms6156zx_init,
-        .p1_handler        = machine_generic_p1_handler,
-        .gpio_handler      = NULL,
-        .available_flag    = MACHINE_AVAILABLE,
-        .gpio_acpi_handler = NULL,
-        .cpu               = {
-            .package     = CPU_PKG_SLOT1,
-            .block       = CPU_BLOCK_NONE,
-            .min_bus     = 66666667,
-            .max_bus     = 100000000,
-            .min_voltage = 1800,
-            .max_voltage = 3500,
-            .min_multi   = 1.5,
-            .max_multi   = 8.0
-        },
-        .bus_flags = MACHINE_PS2_AGP | MACHINE_BUS_USB,
-        .flags     = MACHINE_IDE_DUAL | MACHINE_APM | MACHINE_ACPI | MACHINE_GAMEPORT | MACHINE_USB,
-        .ram       = {
-            .min  = 8192,
-            .max  = 524288,
-            .step = 8192
-        },
-        .nvrmask                  = 255,
-        .jumpered_ecp_dma         = 0,
-        .default_jumpered_ecp_dma = -1,
-        .kbc_device               = NULL,
-        .kbc_params               = 0x00000000,
-        .nvr_device               = NULL,
-        .nvr_params               = 0x00000000,
-        .sio_device               = NULL,
-        .sio_params               = 0x00000000,
-        .kbc_p1                   = 0x00000cf0,
-        .gpio                     = 0xffffffff,
-        .gpio_acpi                = 0xffffffff,
-        .device                   = NULL,
-        .kbd_device               = NULL,
-        .fdc_device               = NULL,
-        .vid_device               = NULL,
-        .snd_device               = &es1373_onboard_device,
-        .net_device               = NULL,
-        .aliases                  = { "Fujitsu F-T-Bird GS160X PIII450", "Packard Bell PB911", "" }
     },
     /* Has a Winbond W83977EF Super I/O chip with on-chip KBC with AMIKey-2 KBC
        firmware. */
@@ -23643,11 +23448,11 @@ const machine_t machines[] = {
     /* Has the VIA VT82C686B southbridge with on-chip KBC identical to the VIA
        VT82C42N. */
     {
-        .name              = "[VIA Apollo Pro 133A] ASUS CUV4X-CM",
-        .internal_name     = "cuv4xcm",
+        .name              = "[VIA Apollo Pro 133A] ASUS CUV4X-LS",
+        .internal_name     = "cuv4xls",
         .type              = MACHINE_TYPE_SOCKET370,
         .chipset           = MACHINE_CHIPSET_VIA_APOLLO_PRO_133A,
-        .init              = machine_at_cuv4xcm_init,
+        .init              = machine_at_cuv4xls_init,
         .p1_handler        = machine_generic_p1_handler,
         .gpio_handler      = NULL,
         .available_flag    = MACHINE_AVAILABLE,
