@@ -987,6 +987,9 @@ extern int             machine_at_optiplexgxl_init(const machine_t *);
 extern const device_t  pt2000_device;
 #endif
 extern int             machine_at_pt2000_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  morrison32_device;
+#endif
 extern int             machine_at_morrison32_init(const machine_t *);
 extern int             machine_at_pc330_65x6_init(const machine_t *);
 #ifdef EMU_DEVICE_H
@@ -1005,9 +1008,15 @@ extern int             machine_at_hot543_init(const machine_t *);
 extern int             machine_at_pat54pv_init(const machine_t *);
 
 /* SiS 501 */
+#ifdef EMU_DEVICE_H
+extern const device_t  p54sp4_device;
+#endif
 extern int             machine_at_p54sp4_init(const machine_t *);
 extern int             machine_at_sq588_init(const machine_t *);
 extern int             machine_at_p54sps_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  ms5109_device;
+#endif
 extern int             machine_at_ms5109_init(const machine_t *);
 
 /* SiS 5501 */
