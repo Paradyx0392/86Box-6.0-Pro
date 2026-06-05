@@ -23643,11 +23643,11 @@ const machine_t machines[] = {
     /* Has the VIA VT82C686B southbridge with on-chip KBC identical to the VIA
        VT82C42N. */
     {
-        .name              = "[VIA Apollo Pro 133A] ASUS CUV4X-LS",
-        .internal_name     = "cuv4xls",
+        .name              = "[VIA Apollo Pro 133A] ASUS CUV4X-CM",
+        .internal_name     = "cuv4xcm",
         .type              = MACHINE_TYPE_SOCKET370,
         .chipset           = MACHINE_CHIPSET_VIA_APOLLO_PRO_133A,
-        .init              = machine_at_cuv4xls_init,
+        .init              = machine_at_cuv4xcm_init,
         .p1_handler        = machine_generic_p1_handler,
         .gpio_handler      = NULL,
         .available_flag    = MACHINE_AVAILABLE,
