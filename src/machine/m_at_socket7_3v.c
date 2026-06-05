@@ -894,6 +894,15 @@ static const device_config_t ms5119_config[] = {
                 .files         = { "roms/machines/ms5119/A37EB.ROM", "" }
             },
             {
+                .name          = "AMIBIOS 6 (071595) - Revision W374",
+                .internal_name = "ms5119_451pg374",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 131072,
+                .files         = { "roms/machines/ms5119/W374.BIN", "" }
+            },
+            {
                 .name          = "Award Modular BIOS v4.51PG - Release 2.3 (by Rainbow)",
                 .internal_name = "ms5119_451pg",
                 .bios_type     = BIOS_NORMAL,
@@ -910,7 +919,7 @@ static const device_config_t ms5119_config[] = {
 };
 
 const device_t ms5119_device = {
-    .name          = "MSI MS-5119",
+    .name          = "MSI MS-5119 and MS-5120",
     .internal_name = "ms5119",
     .flags         = 0,
     .local         = 0,
@@ -1169,16 +1178,71 @@ machine_at_acerv35n_init(const machine_t *model)
     return ret;
 }
 
+static const device_config_t ap53_config[] = {
+    // clang-format off
+    {
+        .name           = "bios",
+        .description    = "BIOS Version",
+        .type           = CONFIG_BIOS,
+        .default_string = "ap53",
+        .default_int    = 0,
+        .file_filter    = NULL,
+        .spinner        = { 0 },
+        .selection      = { { 0 } },
+        .bios           = {
+            {
+                .name          = "AMIBIOS 6 (071595) - Revision R2.C0",
+                .internal_name = "ap53_r2c0",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 131072,
+                .files         = { "roms/machines/ap53/ap53r2c0.rom", "" }
+            },
+            {
+                .name          = "AMIBIOS 6 (071595) - Revision R3.C0",
+                .internal_name = "ap53",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 131072,
+                .files         = { "roms/machines/ap53/AP53R3C0.ROM", "" }
+            },
+            { .files_no = 0 }
+        }
+    },
+    { .name = "", .description = "", .type = CONFIG_END }
+    // clang-format on
+};
+
+const device_t ap53_device = {
+    .name          = "AOpen AP53",
+    .internal_name = "ap53",
+    .flags         = 0,
+    .local         = 0,
+    .init          = NULL,
+    .close         = NULL,
+    .reset         = NULL,
+    .available     = NULL,
+    .speed_changed = NULL,
+    .force_redraw  = NULL,
+    .config        = ap53_config
+};
+
 int
 machine_at_ap53_init(const machine_t *model)
 {
-    int ret;
+    int         ret = 0;
+    const char *fn;
 
-    ret = bios_load_linear("roms/machines/ap53/ap53r2c0.rom",
-                           0x000e0000, 131072, 0);
-
-    if (bios_only || !ret)
+    /* No ROMs available */
+    if (!device_available(model->device))
         return ret;
+
+    device_context(model->device);
+    fn  = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
+    ret = bios_load_linear(fn, 0x000e0000, 131072, 0);
+    device_context_restore();
 
     machine_at_common_init(model);
 

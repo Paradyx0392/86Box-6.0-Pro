@@ -195,6 +195,7 @@ device_set_context(device_context_t *ctx, const device_t *dev, int inst)
         { .old = "AST Bravo MS/MS-T/MS-L (Rattler)", .new = "AST Bravo MS" }, /* 6.0 pre-release */
         { .old = "Intel Advanced/ATX (Thor)", .new = "Intel Advanced/ATX" },
         { .old = "Intel Advanced/MA (Monaco)", .new = "Intel Advanced/MA" },
+        { .old = "MSI MS-5119", .new = "MSI MS-5119 and MS-5120" },
         { .old = "Chaintech 5SBM/5SBM2 (M103)", .new = "Chaintech 5SBM2" },
         { .old = "Intel CU430HX (Cumberland)", .new = "Intel CU430HX" },
         { .old = "Intel TC430HX (Tucson)", .new = "Intel TC430HX" },
