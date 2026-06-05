@@ -1332,7 +1332,7 @@ extern int             machine_at_ax6bc_init(const machine_t *);
 #ifdef EMU_DEVICE_H
 extern const device_t  p2bb_device;
 #endif
-extern int             machine_at_ax6bc_init(const machine_t *);
+extern int             machine_at_p2bb_init(const machine_t *);
 #ifdef EMU_DEVICE_H
 extern const device_t  p2bls_device;
 #endif
