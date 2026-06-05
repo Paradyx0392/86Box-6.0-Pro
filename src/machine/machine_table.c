@@ -21021,13 +21021,13 @@ const machine_t machines[] = {
             .block       = CPU_BLOCK_NONE,
             .min_bus     = 66666667,
             .max_bus     = 83333333,
-            .min_voltage = 1500,
+            .min_voltage = 1800,
             .max_voltage = 3500,
             .min_multi   = 2.0,
             .max_multi   = 5.5
         },
         .bus_flags = MACHINE_PS2_AGP | MACHINE_BUS_USB,
-        .flags     = MACHINE_IDE_DUAL | MACHINE_APM | MACHINE_USB,
+        .flags     = MACHINE_IDE_DUAL | MACHINE_APM | MACHINE_ACPI | MACHINE_USB,
         .ram       = {
             .min  = 8192,
             .max  = 786432,
@@ -23643,11 +23643,11 @@ const machine_t machines[] = {
     /* Has the VIA VT82C686B southbridge with on-chip KBC identical to the VIA
        VT82C42N. */
     {
-        .name              = "[VIA Apollo Pro 133A] ASUS CUV4X-CM",
-        .internal_name     = "cuv4xcm",
+        .name              = "[VIA Apollo Pro 133A] ASUS CUV4X-LS",
+        .internal_name     = "cuv4xls",
         .type              = MACHINE_TYPE_SOCKET370,
         .chipset           = MACHINE_CHIPSET_VIA_APOLLO_PRO_133A,
-        .init              = machine_at_cuv4xcm_init,
+        .init              = machine_at_cuv4xls_init,
         .p1_handler        = machine_generic_p1_handler,
         .gpio_handler      = NULL,
         .available_flag    = MACHINE_AVAILABLE,
@@ -23687,7 +23687,7 @@ const machine_t machines[] = {
         .vid_device               = NULL,
         .snd_device               = &ct5880_onboard_device,
         .net_device               = NULL,
-        .aliases                  = { "Medion MED 2001", "" }
+        .aliases                  = { "" }
     },
     /* Has the VIA VT82C686B southbridge with on-chip KBC identical to the VIA
        VT82C42N. */
