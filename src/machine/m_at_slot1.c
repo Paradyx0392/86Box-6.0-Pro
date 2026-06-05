@@ -1016,6 +1016,123 @@ machine_at_bx6_init(const machine_t *model)
     return ret;
 }
 
+static const device_config_t p2bb_config[] = {
+    // clang-format off
+    {
+        .name           = "bios",
+        .description    = "BIOS Version",
+        .type           = CONFIG_BIOS,
+        .default_string = "p2bb",
+        .default_int    = 0,
+        .file_filter    = NULL,
+        .spinner        = { 0 },
+        .selection      = { { 0 } },
+        .bios           = {
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision 1007",
+                .internal_name = "p2bb_1007",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/p2bb/BX2B1007.AWD", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision 1009",
+                .internal_name = "p2bb_1009",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/p2bb/BX2B1009.AWD", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision 1010",
+                .internal_name = "p2bb_1010",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/p2bb/BX2B1010.AWD", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision 1011",
+                .internal_name = "p2bb",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/p2bb/BX2B1011.AWD", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision 1014 Beta 003",
+                .internal_name = "p2bb_1014beta003",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/p2bb/1014b.003", "" }
+            },
+            { .files_no = 0 }
+        }
+    },
+    { .name = "", .description = "", .type = CONFIG_END }
+    // clang-format on
+};
+
+const device_t p2bb_device = {
+    .name          = "ASUS P2B-B",
+    .internal_name = "p2bb",
+    .flags         = 0,
+    .local         = 0,
+    .init          = NULL,
+    .close         = NULL,
+    .reset         = NULL,
+    .available     = NULL,
+    .speed_changed = NULL,
+    .force_redraw  = NULL,
+    .config        = p2bb_config
+};
+
+int
+machine_at_p2bb_init(const machine_t *model)
+{
+    int         ret = 0;
+    const char *fn;
+
+    /* No ROMs available */
+    if (!device_available(model->device))
+        return ret;
+
+    device_context(model->device);
+    fn  = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
+    ret = bios_load_linear(fn, 0x000c0000, 262144, 0);
+    device_context_restore();
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x04, PCI_CARD_SOUTHBRIDGE, 1, 2, 3, 4);
+    pci_register_slot(0x07, PCI_CARD_NETWORK,     3, 4, 1, 2);
+    pci_register_slot(0x09, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x0A, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x0B, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,   1, 2, 3, 4);
+
+    device_add(&i440bx_device);
+    device_add(&piix4e_device);
+    device_add_params(&w83977_device, (void *) (W83977TF | W83977_AMI | W83977_NO_NVR));
+    device_add(ics9xxx_get(ICS9250_08));
+    device_add(&sst_flash_29ee020_device);
+    spd_register(SPD_TYPE_SDRAM, 0xF, 256);
+    device_add(&w83781d_device);     /* fans: Chassis, CPU, Power; temperatures: MB, unused, CPU */
+    hwm_values.temperatures[1] = 0;  /* unused */
+    hwm_values.temperatures[2] -= 3; /* CPU offset */
+
+    return ret;
+}
+
 static const device_config_t p2bls_config[] = {
     // clang-format off
     {

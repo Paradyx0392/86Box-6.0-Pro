@@ -547,91 +547,17 @@ machine_at_morrison32_gpio_init(void)
     machine_set_gpio_default(gpio);
 }
 
-static const device_config_t morrison32_config[] = {
-    // clang-format off
-    {
-        .name           = "bios",
-        .description    = "BIOS Version",
-        .type           = CONFIG_BIOS,
-        .default_string = "morrison32",
-        .default_int    = 0,
-        .file_filter    = NULL,
-        .spinner        = { 0 },
-        .selection      = { { 0 } },
-        .bios           = {
-            {
-                .name          = "Intel AMIBIOS - Revision 1.00.06.BT0Q (AST Advantage! 8100P)",
-                .internal_name = "ambradp90",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 2,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/morrison32/1006BT0Q.BIO", "roms/machines/morrison32/1006BT0Q.BI1", "" }
-            },
-            {
-                .name          = "Intel AMIBIOS - Revision 1.00.09.BT0",
-                .internal_name = "morrison32",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 2,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/morrison32/1009BT0_.BIO", "roms/machines/morrison32/1009BT0_.BI1", "" }
-            },
-            {
-                .name          = "Intel AMIBIOS - Revision 1.00.09.BT0U (Zenith Data Systems Z-Station GT)",
-                .internal_name = "morrison32",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 2,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/morrison32/1009BT0U.BIO", "roms/machines/morrison32/1009BT0U.BI1", "" }
-            },
-            {
-                .name          = "Intel AMIBIOS - Revision 1.00.11.BT0L (HP Pavilion 50x0/70xx)",
-                .internal_name = "morrison32_hp",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 2,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/morrison32/1011BT0L.BIO", "roms/machines/morrison32/1011BT0L.BIO", "" }
-            },
-            { .files_no = 0 }
-        }
-    },
-    { .name = "", .description = "", .type = CONFIG_END }
-    // clang-format on
-};
-
-const device_t morrison32_device = {
-    .name          = "Intel Advanced/MN",
-    .internal_name = "morrison32",
-    .flags         = 0,
-    .local         = 0,
-    .init          = NULL,
-    .close         = NULL,
-    .reset         = NULL,
-    .available     = NULL,
-    .speed_changed = NULL,
-    .force_redraw  = NULL,
-    .config        = morrison32_config
-};
-
 int
 machine_at_morrison32_init(const machine_t *model)
 {
-    int         ret = 0;
-    const char *fn;
-    const char *fn2;
+    int ret;
 
-    /* No ROMs available */
-    if (!device_available(model->device))
+    ret = bios_load_linear_combined("roms/machines/morrison32/1011BT0L.BIO",
+                                    "roms/machines/morrison32/1011BT0L.BI1",
+                                    0x20000, 128);
+
+    if (bios_only || !ret)
         return ret;
-
-    device_context(model->device);
-    fn  = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
-    fn2 = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 1);
-    ret = bios_load_linear_combined(fn, fn2, 0x1d000, 128);
-    device_context_restore();
 
     machine_at_common_init(model);
     machine_at_morrison32_gpio_init();
@@ -1070,71 +996,16 @@ machine_at_pat54pv_init(const machine_t *model)
 }
 
 /* SiS 501 */
-static const device_config_t p54sp4_config[] = {
-    // clang-format off
-    {
-        .name           = "bios",
-        .description    = "BIOS Version",
-        .type           = CONFIG_BIOS,
-        .default_string = "p54sp4",
-        .default_int    = 0,
-        .file_filter    = NULL,
-        .spinner        = { 0 },
-        .selection      = { { 0 } },
-        .bios           = {
-            {
-                .name          = "Award Modular BIOS v4.51G - Revision 0109",
-                .internal_name = "p54sp4_0109",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/p54sp4/SI5I0109.AWD", "" }
-            },
-            {
-                .name          = "Award Modular BIOS v4.51G - Revision 0204",
-                .internal_name = "p54sp4",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/p54sp4/SI5I0204.AWD", "" }
-            },
-            { .files_no = 0 }
-        }
-    },
-    { .name = "", .description = "", .type = CONFIG_END }
-    // clang-format on
-};
-
-const device_t p54sp4_device = {
-    .name          = "ASUS PCI/I-P54SP4",
-    .internal_name = "p54sp4",
-    .flags         = 0,
-    .local         = 0,
-    .init          = NULL,
-    .close         = NULL,
-    .reset         = NULL,
-    .available     = NULL,
-    .speed_changed = NULL,
-    .force_redraw  = NULL,
-    .config        = p54sp4_config
-};
-
 int
 machine_at_p54sp4_init(const machine_t *model)
 {
-    int         ret = 0;
-    const char *fn;
+    int ret;
 
-    /* No ROMs available */
-    if (!device_available(model->device))
+    ret = bios_load_linear("roms/machines/p54sp4/SI5I0204.AWD",
+                           0x000e0000, 131072, 0);
+
+    if (bios_only || !ret)
         return ret;
-
-    device_context(model->device);
-    fn  = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
-    ret = bios_load_linear(fn, 0x000e0000, 131072, 0);
-    device_context_restore();
 
     machine_at_sp4_common_init(model);
 
@@ -1203,75 +1074,18 @@ machine_at_p54sps_init(const machine_t *model)
     return ret;
 }
 
-static const device_config_t ms5109_config[] = {
-    // clang-format off
-    {
-        .name           = "bios",
-        .description    = "BIOS Version",
-        .type           = CONFIG_BIOS,
-        .default_string = "ms5109a",
-        .default_int    = 0,
-        .file_filter    = NULL,
-        .spinner        = { 0 },
-        .selection      = { { 0 } },
-        .bios           = {
-            {
-                .name          = "AMI WinBIOS (072594) - Revision A778",
-                .internal_name = "ms5109a",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/ms5109/A778.ROM", "" }
-            },
-            {
-                .name          = "Award Modular BIOS v4.50PG - Revision W772",
-                .internal_name = "ms5109w",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/ms5109/W772.BIN", "" }
-            },
-            { .files_no = 0 }
-        }
-    },
-    { .name = "", .description = "", .type = CONFIG_END }
-    // clang-format on
-};
-
-const device_t ms5109_device = {
-    .name          = "MSI MS-5109",
-    .internal_name = "ms5109",
-    .flags         = 0,
-    .local         = 0,
-    .init          = NULL,
-    .close         = NULL,
-    .reset         = NULL,
-    .available     = NULL,
-    .speed_changed = NULL,
-    .force_redraw  = NULL,
-    .config        = ms5109_config
-};
-
 int
 machine_at_ms5109_init(const machine_t *model)
 {
-    int         ret = 0;
-    const char *fn;
+    int ret;
 
-    /* No ROMs available */
-    if (!device_available(model->device))
+    ret = bios_load_linear("roms/machines/ms5109/A778.ROM",
+                           0x000e0000, 131072, 0);
+
+    if (bios_only || !ret)
         return ret;
 
-    device_context(model->device);
-    int is_award = !strcmp(device_get_config_bios("bios"), "ms5109w");
-    fn           = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
-    ret          = bios_load_linear(fn, 0x000e0000, 131072, 0);
-    device_context_restore();
-
     machine_at_common_init(model);
-    device_add_params(&nvr_at_device, (void *) (uintptr_t) (is_award ? (NVR_AT) : (NVR_AMI_1994)));
 
     pci_init(PCI_CONFIG_TYPE_1 | FLAG_TRC_CONTROLS_CPURST);
     pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);

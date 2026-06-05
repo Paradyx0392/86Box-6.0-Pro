@@ -663,9 +663,6 @@ extern int             machine_at_opti495_init(const machine_t *);
 
 /* SiS 310 */
 extern int             machine_at_asus3863364k_init(const machine_t *);
-#ifdef EMU_DEVICE_H
-extern const device_t  asus386_device;
-#endif
 extern int             machine_at_asus386_init(const machine_t *);
 
 /* m_at_386dx_486.c */
@@ -799,9 +796,6 @@ extern int             machine_at_acerv10_init(const machine_t *);
 extern int             machine_at_win471_init(const machine_t *);
 extern int             machine_at_win471t_init(const machine_t *);
 extern int             machine_at_vi15g_init(const machine_t *);
-#ifdef EMU_DEVICE_H
-extern const device_t  vli486sv2g_device;
-#endif
 extern int             machine_at_vli486sv2g_init(const machine_t *);
 extern int             machine_at_dvent4xx_init(const machine_t *);
 extern int             machine_at_dtk486_init(const machine_t *);
@@ -811,20 +805,11 @@ extern int             machine_at_tg486g_init(const machine_t *);
 
 /* m_at_socket3_pci.c */
 /* ALi M1429G */
-#ifdef EMU_DEVICE_H
-extern const device_t  ms4134_device;
-#endif
 extern int             machine_at_ms4134_init(const machine_t *);
 extern int             machine_at_tg486gp_init(const machine_t *);
 
 /* ALi M1489 */
-#ifdef EMU_DEVICE_H
-extern const device_t  sbc490_device;
-#endif
 extern int             machine_at_sbc490_init(const machine_t *);
-#ifdef EMU_DEVICE_H
-extern const device_t  abpb4_device;
-#endif
 extern int             machine_at_abpb4_init(const machine_t *);
 extern int             machine_at_arb1476_init(const machine_t *);
 extern int             machine_at_tf486_init(const machine_t *);
@@ -856,10 +841,7 @@ extern int             machine_at_486sp3_init(const machine_t *);
 extern int             machine_at_alfredo_init(const machine_t *);
 
 /* i420ZX */
-#ifdef EMU_DEVICE_H
-extern const device_t  asi486s_device;
-#endif
-extern int             machine_at_asi486s_init(const machine_t *);
+extern int             machine_at_486sp3g_init(const machine_t *);
 #ifdef EMU_DEVICE_H
 extern const device_t  sb486pv_device;
 #endif
@@ -876,10 +858,7 @@ extern int             machine_at_m4li_init(const machine_t *);
 extern int             machine_at_ms4144_init(const machine_t *);
 extern int             machine_at_r418_init(const machine_t *);
 extern int             machine_at_4saw2_init(const machine_t *);
-#ifdef EMU_DEVICE_H
-extern const device_t  zi4d_device;
-#endif
-extern int             machine_at_zi4d_init(const machine_t *);
+extern int             machine_at_4dps_init(const machine_t *);
 
 /* UMC 8881 */
 extern int             machine_at_atc1415_init(const machine_t *);
@@ -896,9 +875,6 @@ extern const device_t  hot433a_device;
 extern int             machine_at_hot433a_init(const machine_t *);
 
 /* VIA VT82C496G */
-#ifdef EMU_DEVICE_H
-extern const device_t  g486vpa_device;
-#endif
 extern int             machine_at_g486vpa_init(const machine_t *);
 extern int             machine_at_486vipio2_init(const machine_t *);
 
@@ -952,9 +928,6 @@ extern int             machine_at_p5vl_init(const machine_t *);
 /* SiS 501 */
 extern int             machine_at_excaliburpci2_init(const machine_t *);
 extern void            machine_at_sp4_common_init(const machine_t *model);
-#ifdef EMU_DEVICE_H
-extern const device_t  p5sp4_device;
-#endif
 extern int             machine_at_p5sp4_init(const machine_t *);
 extern int             machine_at_ecs50x_init(const machine_t *);
 
@@ -987,9 +960,6 @@ extern int             machine_at_optiplexgxl_init(const machine_t *);
 extern const device_t  pt2000_device;
 #endif
 extern int             machine_at_pt2000_init(const machine_t *);
-#ifdef EMU_DEVICE_H
-extern const device_t  morrison32_device;
-#endif
 extern int             machine_at_morrison32_init(const machine_t *);
 extern int             machine_at_pc330_65x6_init(const machine_t *);
 #ifdef EMU_DEVICE_H
@@ -1008,15 +978,9 @@ extern int             machine_at_hot543_init(const machine_t *);
 extern int             machine_at_pat54pv_init(const machine_t *);
 
 /* SiS 501 */
-#ifdef EMU_DEVICE_H
-extern const device_t  p54sp4_device;
-#endif
 extern int             machine_at_p54sp4_init(const machine_t *);
 extern int             machine_at_sq588_init(const machine_t *);
 extern int             machine_at_p54sps_init(const machine_t *);
-#ifdef EMU_DEVICE_H
-extern const device_t  ms5109_device;
-#endif
 extern int             machine_at_ms5109_init(const machine_t *);
 
 /* SiS 5501 */
@@ -1078,9 +1042,6 @@ extern int             machine_at_fmb_init(const machine_t *);
 
 /* i430HX */
 extern int             machine_at_acerv35n_init(const machine_t *);
-#ifdef EMU_DEVICE_H
-extern const device_t  ap53_device;
-#endif
 extern int             machine_at_ap53_init(const machine_t *);
 extern int             machine_at_8500tuc_init(const machine_t *);
 #ifdef EMU_DEVICE_H
@@ -1366,6 +1327,10 @@ extern const device_t  bx6_device;
 extern int             machine_at_bx6_init(const machine_t *);
 #ifdef EMU_DEVICE_H
 extern const device_t  ax6bc_device;
+#endif
+extern int             machine_at_ax6bc_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  p2bb_device;
 #endif
 extern int             machine_at_ax6bc_init(const machine_t *);
 #ifdef EMU_DEVICE_H
