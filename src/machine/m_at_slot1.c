@@ -369,6 +369,37 @@ machine_at_lx6_init(const machine_t *model)
 }
 
 int
+machine_at_m6tlc_init(const machine_t *model)
+{
+    int ret;
+
+    ret = bios_load_linear("roms/machines/m6tlc/TLC0306B.BIN",
+                           0x000c0000, 262144, 0);
+
+    if (bios_only || !ret)
+        return ret;
+
+    machine_at_common_init(model);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE, 0, 0, 0, 0);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 1, 2, 3, 4);
+    pci_register_slot(0x08, PCI_CARD_NORMAL,      1, 2, 3, 4);
+    pci_register_slot(0x09, PCI_CARD_NORMAL,      2, 3, 4, 1);
+    pci_register_slot(0x0A, PCI_CARD_NORMAL,      3, 4, 1, 2);
+    pci_register_slot(0x0B, PCI_CARD_NORMAL,      4, 1, 2, 3);
+    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,   1, 2, 3, 4);
+
+    device_add(&i440lx_device);
+    device_add(&piix4e_device);
+    device_add_params(&fdc37m60x_device, (void *) (FDC37XXX2 | FDC37C93X_NO_NVR | FDC37XXXX_370));
+    device_add(&sst_flash_29ee020_device);
+    spd_register(SPD_TYPE_SDRAM, 0xF, 256);
+
+    return ret;
+}
+
+int
 machine_at_optiplexgxa_init(const machine_t *model)
 {
     int ret;
@@ -489,7 +520,7 @@ static const device_config_t ms6117_config[] = {
                 .bios_type     = BIOS_NORMAL,
                 .files_no      = 1,
                 .local         = 0,
-                .size          = 262144,
+                .size          = 131072,
                 .files         = { "roms/machines/ms6117/W617MS25.BIN", "" }
             },
             {
@@ -819,7 +850,7 @@ static const device_config_t bf6_config[] = {
         .bios           = {
             {
                 .name          = "Award Modular BIOS v6.00PG - Revision RV",
-                .internal_name = "bf6_UH",
+                .internal_name = "bf6_RV",
                 .bios_type     = BIOS_NORMAL,
                 .files_no      = 1,
                 .local         = 0,
@@ -907,15 +938,6 @@ static const device_config_t bx6_config[] = {
         .selection      = { { 0 } },
         .bios           = {
             {
-                .name          = "Award Modular BIOS v4.51PG - Revision EG",
-                .internal_name = "bx6",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 131072,
-                .files         = { "roms/machines/bx6/BX6_EG.BIN", "" }
-            },
-            {
                 .name          = "Award Modular BIOS v4.51PG - Revision CW",
                 .internal_name = "bx6_CW",
                 .bios_type     = BIOS_NORMAL,
@@ -923,6 +945,15 @@ static const device_config_t bx6_config[] = {
                 .local         = 0,
                 .size          = 131072,
                 .files         = { "roms/machines/bx6/BX6_CW.bin", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision EG",
+                .internal_name = "bx6",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 131072,
+                .files         = { "roms/machines/bx6/BX6_EG.BIN", "" }
             },
             {
                 .name          = "Award Modular BIOS v4.51PG - Revision GQ",
@@ -2115,6 +2146,15 @@ static const device_config_t p3v133_config[] = {
         .selection      = { { 0 } },
         .bios           = {
             {
+                .name          = "Award Medallion BIOS v6.0 - Revision 1001a",
+                .internal_name = "p3v133_1001a",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/p3v133/p3v133a1.awd", "" }
+            },
+            {
                 .name          = "Award Medallion BIOS v6.0 - Revision 1002",
                 .internal_name = "p3v133",
                 .bios_type     = BIOS_NORMAL,
@@ -2131,6 +2171,15 @@ static const device_config_t p3v133_config[] = {
                 .local         = 0,
                 .size          = 262144,
                 .files         = { "roms/machines/p3v133/1003.002", "" }
+            },
+            {
+                .name          = "Award Medallion BIOS v6.0 - Revision 0.18 (HP NetServer E200)",
+                .internal_name = "p3v133_hp018",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/p3v133/SST39SF020A-01.BIN", "" }
             },
             { .files_no = 0 }
         }
