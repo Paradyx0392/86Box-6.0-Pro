@@ -663,6 +663,9 @@ extern int             machine_at_opti495_init(const machine_t *);
 
 /* SiS 310 */
 extern int             machine_at_asus3863364k_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  asus386_device;
+#endif
 extern int             machine_at_asus386_init(const machine_t *);
 
 /* m_at_386dx_486.c */
@@ -796,6 +799,9 @@ extern int             machine_at_acerv10_init(const machine_t *);
 extern int             machine_at_win471_init(const machine_t *);
 extern int             machine_at_win471t_init(const machine_t *);
 extern int             machine_at_vi15g_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  vli486sv2g_device;
+#endif
 extern int             machine_at_vli486sv2g_init(const machine_t *);
 extern int             machine_at_dvent4xx_init(const machine_t *);
 extern int             machine_at_dtk486_init(const machine_t *);
@@ -841,7 +847,10 @@ extern int             machine_at_486sp3_init(const machine_t *);
 extern int             machine_at_alfredo_init(const machine_t *);
 
 /* i420ZX */
-extern int             machine_at_486sp3g_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  asi486s_device;
+#endif
+extern int             machine_at_asi486s_init(const machine_t *);
 #ifdef EMU_DEVICE_H
 extern const device_t  sb486pv_device;
 #endif
