@@ -799,6 +799,9 @@ extern int             machine_at_acerv10_init(const machine_t *);
 extern int             machine_at_win471_init(const machine_t *);
 extern int             machine_at_win471t_init(const machine_t *);
 extern int             machine_at_vi15g_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  vli486sv2g_device;
+#endif
 extern int             machine_at_vli486sv2g_init(const machine_t *);
 extern int             machine_at_dvent4xx_init(const machine_t *);
 extern int             machine_at_dtk486_init(const machine_t *);
