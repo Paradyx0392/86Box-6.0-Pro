@@ -928,6 +928,9 @@ extern int             machine_at_p5vl_init(const machine_t *);
 /* SiS 501 */
 extern int             machine_at_excaliburpci2_init(const machine_t *);
 extern void            machine_at_sp4_common_init(const machine_t *model);
+#ifdef EMU_DEVICE_H
+extern const device_t  p5sp4_device;
+#endif
 extern int             machine_at_p5sp4_init(const machine_t *);
 extern int             machine_at_ecs50x_init(const machine_t *);
 
