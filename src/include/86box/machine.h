@@ -663,6 +663,9 @@ extern int             machine_at_opti495_init(const machine_t *);
 
 /* SiS 310 */
 extern int             machine_at_asus3863364k_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  asus386_device;
+#endif
 extern int             machine_at_asus386_init(const machine_t *);
 
 /* m_at_386dx_486.c */
