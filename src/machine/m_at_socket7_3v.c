@@ -894,6 +894,15 @@ static const device_config_t ms5119_config[] = {
                 .files         = { "roms/machines/ms5119/A37EB.ROM", "" }
             },
             {
+                .name          = "Award Modular BIOS v4.51PG - Revision W374",
+                .internal_name = "ms5119_451pg374",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 131072,
+                .files         = { "roms/machines/ms5119/W374.BIN", "" }
+            },
+            {
                 .name          = "Award Modular BIOS v4.51PG - Release 2.3 (by Rainbow)",
                 .internal_name = "ms5119_451pg",
                 .bios_type     = BIOS_NORMAL,
@@ -910,7 +919,7 @@ static const device_config_t ms5119_config[] = {
 };
 
 const device_t ms5119_device = {
-    .name          = "MSI MS-5119",
+    .name          = "MSI MS-5119 and MS-5120",
     .internal_name = "ms5119",
     .flags         = 0,
     .local         = 0,

@@ -190,6 +190,7 @@ device_set_context(device_context_t *ctx, const device_t *dev, int inst)
         { .old = "Intel Premiere/PCI (Batman)", .new = "Intel Premiere/PCI" },
         { .old = "Intel Premiere/PCI II (Plato)", .new = "Intel Premiere/PCI II" },
         { .old = "Intel Advanced/ZP (Zappa)", .new = "Intel Advanced/ZP" },
+        { .old = "MSI MS-5119", .new = "MSI MS-5119 and MS-5120" },
         { .old = "AST Bravo MS P/90", .new = "AST Bravo MS" },
         { .old = "AST Bravo MS/MS-T/MS-L (Rattler)", .new = "AST Bravo MS" }, /* 6.0 pre-release */
         { .old = "Intel Advanced/ATX (Thor)", .new = "Intel Advanced/ATX" },
