@@ -796,9 +796,6 @@ extern int             machine_at_403tg_d_mr_init(const machine_t *);
 extern int             machine_at_acerv10_init(const machine_t *);
 
 /* SiS 471 */
-#ifdef EMU_DEVICE_H
-extern const device_t  win471_device;
-#endif
 extern int             machine_at_win471_init(const machine_t *);
 #ifdef EMU_DEVICE_H
 extern const device_t  win471t_device;
