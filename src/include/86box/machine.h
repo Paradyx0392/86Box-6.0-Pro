@@ -817,6 +817,9 @@ extern int             machine_at_tg486g_init(const machine_t *);
 
 /* m_at_socket3_pci.c */
 /* ALi M1429G */
+#ifdef EMU_DEVICE_H
+extern const device_t  ms4134_device;
+#endif
 extern int             machine_at_ms4134_init(const machine_t *);
 extern int             machine_at_tg486gp_init(const machine_t *);
 
