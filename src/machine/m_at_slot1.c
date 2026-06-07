@@ -226,7 +226,7 @@ static const device_config_t kn97_config[] = {
         .selection      = { { 0 } },
         .bios           = {
             {
-                .name          = "Award Modular BIOS v4.51PG - Revision 0116-1 (Beta)",
+                .name          = "Award Modular BIOS v4.51PG - Revision 0116i-1 (Beta)",
                 .internal_name = "kn97_beta",
                 .bios_type     = BIOS_NORMAL, 
                 .files_no      = 1,
@@ -235,7 +235,7 @@ static const device_config_t kn97_config[] = {
                 .files         = { "roms/machines/kn97/0116I.001", "" }
             },
             {
-                .name          = "Award Modular BIOS v4.51PG - Revision 0116",
+                .name          = "Award Modular BIOS v4.51PG - Revision 0116i",
                 .internal_name = "kn97",
                 .bios_type     = BIOS_NORMAL, 
                 .files_no      = 1,
@@ -1529,6 +1529,24 @@ static const device_config_t p3bf_config[] = {
         .spinner        = { 0 },
         .selection      = { { 0 } },
         .bios           = {
+            {
+                .name          = "Award Medallion BIOS v6.0 - Revision 1004",
+                .internal_name = "p3bf_1004",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/p3bf/BX3F1004.AWD", "" }
+            },
+            {
+                .name          = "Award Medallion BIOS v6.0 - Revision 1005",
+                .internal_name = "p3bf_1005",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/p3bf/BX3F1005.AWD", "" }
+            },
             {
                 .name          = "Award Medallion BIOS v6.0 - Revision 1006",
                 .internal_name = "p3bf",
