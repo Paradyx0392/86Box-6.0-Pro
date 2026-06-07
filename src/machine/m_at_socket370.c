@@ -158,6 +158,15 @@ static const device_config_t cubx_config[] = {
         .selection      = { { 0 } },
         .bios           = {
             {
+                .name          = "Award Medallion BIOS v6.0 - Revision 1005",
+                .internal_name = "cubx_1005",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/cubx/cubx1005.awd", "" }
+            },
+            {
                 .name          = "Award Medallion BIOS v6.0 - Revision 1006",
                 .internal_name = "cubx_1006",
                 .bios_type     = BIOS_NORMAL,
