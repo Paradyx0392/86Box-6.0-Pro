@@ -1846,6 +1846,24 @@ static const device_config_t ms6119_config[] = {
         .selection      = { { 0 } },
         .bios           = {
             {
+                .name          = "AMIBIOS 6 (071595) - Revision 1.61 (Packard Bell-ZDS Tacoma)",
+                .internal_name = "tacoma_161",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/ms6119/ms6119-v1-61-19981120.ami", "" }
+            },
+            {
+                .name          = "AMIBIOS 6 (071595) - Revision 1.65 (Packard Bell Tacoma)",
+                .internal_name = "tacoma_165",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/ms6119/A19P2165.ROM", "" }
+            },
+            {
                 .name          = "AMIBIOS 6 (071595) - Revision 1.72 (Packard Bell Tacoma with logo)",
                 .internal_name = "tacoma_172",
                 .bios_type     = BIOS_NORMAL,
@@ -1873,6 +1891,15 @@ static const device_config_t ms6119_config[] = {
                 .files         = { "roms/machines/ms6119/A19P2190.ROM", "" }
             },
             {
+                .name          = "Award Modular BIOS v4.51PG - Revision 2.9",
+                .internal_name = "ms6119_29",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/ms6119/w6119ims.290", "" }
+            },
+            {
                 .name          = "Award Modular BIOS v4.51PG - Revision 2.10",
                 .internal_name = "ms6119",
                 .bios_type     = BIOS_NORMAL,
@@ -1889,6 +1916,15 @@ static const device_config_t ms6119_config[] = {
                 .local         = 0,
                 .size          = 262144,
                 .files         = { "roms/machines/ms6119/vig69m.212", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision 3.20 (LG IBM Multinet x7G)",
+                .internal_name = "lgibmx7g_320",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/ms6119/6119V320.BIN", "" }
             },
             {
                 .name          = "Award Modular BIOS v4.51PG - Revision 3.30b1 (LG IBM Multinet x7G)",
