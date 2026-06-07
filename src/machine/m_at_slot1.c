@@ -1639,6 +1639,33 @@ static const device_config_t ax6bc_config[] = {
                 .files         = { "roms/machines/ax6bc/ax6bc220.bin", "" }
             },
             {
+                .name          = "Award Modular BIOS v4.60PGMA - Revision R2.47",
+                .internal_name = "ax6bc_247",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/ax6bc/ax6bc247.bin", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v4.60PGMA - Revision R2.55",
+                .internal_name = "ax6bc_255",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/ax6bc/ax6bc255.bin", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v4.60PGMA - Revision R2.58",
+                .internal_name = "ax6bc_258",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/ax6bc/ax6bc258.bin", "" }
+            },
+            {
                 .name          = "Award Modular BIOS v4.60PGMA - Revision R2.59",
                 .internal_name = "ax6bc",
                 .bios_type     = BIOS_NORMAL,
