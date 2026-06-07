@@ -1409,6 +1409,33 @@ static const device_config_t p2bls_config[] = {
         .selection      = { { 0 } },
         .bios           = {
             {
+                .name          = "Award Modular BIOS v4.51PG - Revision 1008",
+                .internal_name = "p2bls_1008",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/p2bls/BXLS1008.AWD", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision 1010",
+                .internal_name = "p2bls_1010",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/p2bls/BXLS1010.AWD", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v4.51PG - Revision 1011",
+                .internal_name = "p2bls_1011",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/p2bls/BXLS1011.AWD", "" }
+            },
+            {
                 .name          = "Award Modular BIOS v4.51PG - Revision 1012",
                 .internal_name = "p2bls",
                 .bios_type     = BIOS_NORMAL,
