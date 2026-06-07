@@ -909,6 +909,15 @@ static const device_config_t bf6_config[] = {
         .selection      = { { 0 } },
         .bios           = {
             {
+                .name          = "Award Modular BIOS v6.00PG - Revision QJ",
+                .internal_name = "bf6_QJ",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/bf6/BEH_QJ.bin", "" }
+            },
+            {
                 .name          = "Award Modular BIOS v6.00PG - Revision RV",
                 .internal_name = "bf6_RV",
                 .bios_type     = BIOS_NORMAL,
@@ -916,6 +925,24 @@ static const device_config_t bf6_config[] = {
                 .local         = 0,
                 .size          = 262144,
                 .files         = { "roms/machines/bf6/BEH_RV.bin", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v6.00PG - Revision UH",
+                .internal_name = "bf6_UH",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/bf6/BEH_UH.bin", "" }
+            },
+            {
+                .name          = "Award Modular BIOS v6.00PG - Revision XU",
+                .internal_name = "bf6_XU",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 262144,
+                .files         = { "roms/machines/bf6/BEH_XU.bin", "" }
             },
             {
                 .name          = "Award Modular BIOS v6.00PG - Revision 70",
