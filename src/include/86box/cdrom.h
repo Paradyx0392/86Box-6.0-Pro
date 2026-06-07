@@ -144,6 +144,7 @@ static const struct cdrom_drive_types_s {
     { "GOLDSTAR", "CRD-8400B",         "1.03", "goldstar_8400b", BUS_TYPE_IDE,  0, 40, 36, 0, 0, {  4,  2,  2, -1 } },
     /* TODO: Find an IDENTIFY and/or INQUIRY dump. */
     { "GOLDSTAR", "GCD-R560B",         "1.00", "goldstar_r560b", BUS_TYPE_IDE,  0,  6, 36, 0, 0, {  4,  2,  2, -1 } },
+    { "GOLDSTAR", "GCD-R580B",         "1.05", "goldstar_r580b", BUS_TYPE_IDE,  0,  8, 36, 0, 0, {  4,  2,  2, -1 } },
     { "HITACHI",  "CDR-8130",          "0020", "hitachi_r8130",  BUS_TYPE_IDE,  0, 16, 36, 0, 0, {  4,  2,  2, -1 } },
     { "HITACHI",  "CDR-8435",          "0010", "hitachi_r8435",  BUS_TYPE_IDE,  0, 32, 36, 0, 0, {  4,  2,  2, -1 } },
     { "HITACHI",  "GD-7500",           "A1  ", "hitachi_7500",   BUS_TYPE_IDE,  0, 40, 36, 0, 1, {  4,  2,  2,  2 } }, /* DVD. */
@@ -156,6 +157,7 @@ static const struct cdrom_drive_types_s {
      */
     { "LG",       "CD-ROM CRN-8245B",  "1.30", "lg_8245b",       BUS_TYPE_IDE,  0, 24, 36, 0, 0, {  4,  2,  2, -1 } },
     { "LG",       "CD-ROM CRD-8322B",  "1.06", "lg_8322b",       BUS_TYPE_IDE,  0, 32, 36, 0, 0, {  4,  2,  2, -1 } },
+    { "LG",       "CD-ROM CRD-8522B",  "2.03", "lg_8522b",       BUS_TYPE_IDE,  0, 52, 36, 0, 0, {  4,  2,  2, -1 } },
     { "LG",       "DVD-ROM DRD-8160B", "1.01", "lg_drd8160b",    BUS_TYPE_IDE,  0, 16, 36, 0, 0, {  4,  2,  2,  2 } },
     /* Nothing on Google, deduced 48x from the name. */
     { "LITE-ON",  "LTN48125S",         "1S07", "liteon_48125s",  BUS_TYPE_IDE,  0, 48, 36, 0, 0, {  4,  2,  2,  2 } },
@@ -180,6 +182,8 @@ static const struct cdrom_drive_types_s {
     { "NEC",      "CDR-1300A",         "1.05", "nec_1300a",      BUS_TYPE_IDE,  0,  6, 36, 0, 0, {  4,  2,  2, -1 } },
     { "NEC",      "CDR-1900A",         "1.00", "nec_1900a",      BUS_TYPE_IDE,  0, 32, 36, 0, 0, {  4,  2,  2, -1 } },
     { "PHILIPS",  "CD-ROM PCA403CD",   "U31P", "philips_403",    BUS_TYPE_IDE,  0, 40, 36, 0, 0, {  4,  2,  2, -1 } },
+    { "SANYO",    "CRD-254P",          "1.05", "sanyo_crd254p",  BUS_TYPE_IDE,  0,  4, 36, 0, 0, {  2, -1, -1, -1 } },
+    { "SANYO",    "CRD-820P",          "1.04", "sanyo_crd820p",  BUS_TYPE_IDE,  0, 20, 36, 0, 0, {  3,  2,  2, -1 } },
     { "SONY",     "CD-ROM CDU76",      "1.0i", "sony_76",        BUS_TYPE_IDE,  0,  4, 36, 0, 0, {  2, -1, -1, -1 } },
     { "SONY",     "CD-ROM CDU311",     "3.0h", "sony_311",       BUS_TYPE_IDE,  0,  8, 36, 0, 0, {  3,  2,  1, -1 } },
     { "SONY",     "CD-ROM CDU611",     "2.2c", "sony_611",       BUS_TYPE_IDE,  0, 24, 36, 0, 0, {  3,  2,  2, -1 } },
@@ -211,6 +215,7 @@ static const struct cdrom_drive_types_s {
     { "NEC",      "CD-ROM DRIVE:900",  "2.5a", "nec_900",        BUS_TYPE_SCSI, 2,  4, 36, 0, 0, { -1, -1, -1, -1 } },
     /* The speed of the following two is guesswork based on the name. */
     { "ShinaKen", "CD-ROM DM-3x1S",    "1.04", "shinaken_3x1s",  BUS_TYPE_SCSI, 1,  3, 36, 0, 0, { -1, -1, -1, -1 } },
+    { "SANYO",    "CRD-254SH",         "1.05", "sanyo_crd254sh", BUS_TYPE_SCSI, 2,  4, 36, 0, 0, { -1, -1, -1, -1 } },
     { "SONY",     "CD-ROM CDU-541",    "1.0i", "sony_541",       BUS_TYPE_SCSI, 1,  1, 36, 1, 0, { -1, -1, -1, -1 } },
     { "SONY",     "CD-ROM CDU-561",    "1.8k", "sony_561",       BUS_TYPE_SCSI, 2,  2, 36, 1, 0, { -1, -1, -1, -1 } },
     { "SONY",     "CD-ROM CDU-76S",    "1.00", "sony_76s",       BUS_TYPE_SCSI, 2,  4, 36, 0, 0, { -1, -1, -1, -1 } },
