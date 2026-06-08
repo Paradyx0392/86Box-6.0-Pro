@@ -137,9 +137,11 @@ static const struct cdrom_drive_types_s {
     { "ASUS",     "CD-S520/A4",        "1.32", "asus_520",       BUS_TYPE_IDE,  0, 52, 36, 0, 0, {  4,  2,  2,  2 } },
     { "AZT",      "CDA46802I",         "1.15", "azt_cda",        BUS_TYPE_IDE,  0,  4, 36, 0, 0, {  3,  0,  0,  0 } },
     { "BTC",      "CD-ROM BCD36XH",    "U1.0", "btc_36xh",       BUS_TYPE_IDE,  0, 36, 36, 0, 0, {  4,  2,  2, -1 } },
+    { "COMPAQ",   "CRD-8322B",         "1.03", "compaq_8322b",   BUS_TYPE_IDE,  0, 32, 36, 0, 0, {  4,  2,  2, -1 } },
     { "GOLDSTAR", "CRD-8160B",         "1.04", "goldstar_104",   BUS_TYPE_IDE,  0, 16, 36, 0, 0, {  4,  2,  2, -1 } },
     { "GOLDSTAR", "CRD-8160B",         "3.14", "goldstar",       BUS_TYPE_IDE,  0, 16, 36, 0, 0, {  4,  2,  2, -1 } },
     { "GOLDSTAR", "CRD-8240B",         "1.24", "goldstar_8240b", BUS_TYPE_IDE,  0, 24, 36, 0, 0, {  4,  2,  2, -1 } },
+    { "GOLDSTAR", "CRD-8320B",         "1.10", "goldstar_8320b", BUS_TYPE_IDE,  0, 32, 36, 0, 0, {  4,  2,  2, -1 } },
     { "GOLDSTAR", "CRD-8322B",         "1.02", "goldstar_8322b", BUS_TYPE_IDE,  0, 32, 36, 0, 0, {  4,  2,  2, -1 } },
     { "GOLDSTAR", "CRD-8400B",         "1.03", "goldstar_8400b", BUS_TYPE_IDE,  0, 40, 36, 0, 0, {  4,  2,  2, -1 } },
     /* TODO: Find an IDENTIFY and/or INQUIRY dump. */
@@ -147,6 +149,7 @@ static const struct cdrom_drive_types_s {
     { "GOLDSTAR", "GCD-R580B",         "1.05", "goldstar_r580b", BUS_TYPE_IDE,  0,  8, 36, 0, 0, {  4,  2,  2, -1 } },
     { "HITACHI",  "CDR-8130",          "0020", "hitachi_r8130",  BUS_TYPE_IDE,  0, 16, 36, 0, 0, {  4,  2,  2, -1 } },
     { "HITACHI",  "CDR-8435",          "0010", "hitachi_r8435",  BUS_TYPE_IDE,  0, 32, 36, 0, 0, {  4,  2,  2, -1 } },
+    { "HITACHI",  "GD-2500",           "A0  ", "hitachi_2500",   BUS_TYPE_IDE,  0, 24, 36, 0, 1, {  4,  2,  2,  2 } }, /* DVD. */
     { "HITACHI",  "GD-7500",           "A1  ", "hitachi_7500",   BUS_TYPE_IDE,  0, 40, 36, 0, 1, {  4,  2,  2,  2 } }, /* DVD. */
     { "HL-DT-ST", "CD-ROM GCR-8526B",  "1.01", "hldtst_8526b",   BUS_TYPE_IDE,  0, 52, 36, 0, 0, {  4,  2,  2,  2 } },
     { "HL-DT-ST", "DVDRAM GSA-4160",   "A302", "hldtst_4160",    BUS_TYPE_IDE,  0, 40, 36, 0, 1, {  4,  2,  2,  2 } },
@@ -157,8 +160,11 @@ static const struct cdrom_drive_types_s {
      */
     { "LG",       "CD-ROM CRN-8245B",  "1.30", "lg_8245b",       BUS_TYPE_IDE,  0, 24, 36, 0, 0, {  4,  2,  2, -1 } },
     { "LG",       "CD-ROM CRD-8322B",  "1.06", "lg_8322b",       BUS_TYPE_IDE,  0, 32, 36, 0, 0, {  4,  2,  2, -1 } },
-    { "LG",       "CD-ROM CRD-8522B",  "1.02", "lg_8522b",       BUS_TYPE_IDE,  0, 52, 36, 0, 0, {  4,  2,  2, -1 } },
-    { "LG",       "DVD-ROM DRD-8160B", "1.01", "lg_drd8160b",    BUS_TYPE_IDE,  0, 16, 36, 0, 0, {  4,  2,  2,  2 } },
+    { "LG",       "CD-ROM CRD-8482B",  "1.00", "lg_8482b",       BUS_TYPE_IDE,  0, 48, 36, 0, 0, {  4,  2,  2,  2 } },
+    { "LG",       "CD-ROM CRD-8522B",  "1.02", "lg_8522b",       BUS_TYPE_IDE,  0, 52, 36, 0, 0, {  4,  2,  2,  2 } },
+    { "LG",       "CD-ROM CRD-8522B",  "2.03", "lg_8522b_203",   BUS_TYPE_IDE,  0, 52, 36, 0, 0, {  4,  2,  2,  2 } },
+    { "LG",       "DVD-ROM DRD-8160B", "1.01", "lg_drd8160b",    BUS_TYPE_IDE,  0, 48, 36, 0, 1, {  4,  2,  2,  2 } },
+    { "LITE-ON",  "LTN486S",           "YDS4", "liteon_486s",    BUS_TYPE_IDE,  0, 48, 36, 0, 0, {  4,  2,  2,  2 } },
     /* Nothing on Google, deduced 48x from the name. */
     { "LITE-ON",  "LTN48125S",         "1S07", "liteon_48125s",  BUS_TYPE_IDE,  0, 48, 36, 0, 0, {  4,  2,  2,  2 } },
     /* Confirmed to be 52x, was the basis for deducing the other one's speed. */
@@ -198,6 +204,7 @@ static const struct cdrom_drive_types_s {
     { "TOSHIBA",  "CD-ROM XM-6402B",   "1008", "toshiba_6402b",  BUS_TYPE_IDE,  0, 32, 96, 0, 0, {  4,  2,  2,  2 } },
     { "TOSHIBA",  "CD-ROM XM-6702B",   "1007", "toshiba_6720b",  BUS_TYPE_IDE,  0, 48, 96, 0, 0, {  4,  2,  2,  2 } },
     { "TOSHIBA",  "DVD-ROM SD-M1202",  "1020", "toshiba_m1202",  BUS_TYPE_IDE,  0, 32, 96, 0, 1, {  4,  2,  2,  2 } },
+    { "TOSHIBA",  "DVD-ROM SD-M1222",  "1004", "toshiba_m1222",  BUS_TYPE_IDE,  0, 24, 96, 0, 1, {  4,  2,  2,  2 } },
     { "TOSHIBA",  "DVD-ROM SD-M1802",  "1051", "toshiba_m1802",  BUS_TYPE_IDE,  0, 48, 96, 0, 1, {  4,  2,  2,  2 } },
     { "CHINON",   "CD-ROM CDS-431",    "H42 ", "chinon_431",     BUS_TYPE_SCSI, 1,  1, 36, 1, 0, { -1, -1, -1, -1 } },
     { "CHINON",   "CD-ROM CDX-435",    "M62 ", "chinon_435",     BUS_TYPE_SCSI, 1,  2, 36, 1, 0, { -1, -1, -1, -1 } },
