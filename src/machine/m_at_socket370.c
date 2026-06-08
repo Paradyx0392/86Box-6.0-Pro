@@ -569,7 +569,7 @@ machine_at_m6vch_init(const machine_t *model)
     device_add(&via_apro133a_device);
     device_add(&via_vt82c686a_device);
     device_add(&sst_flash_39sf020_device); /* assumed */
-    spd_register(SPD_TYPE_SDRAM, 0x7, 1024);
+    spd_register(SPD_TYPE_SDRAM, 0x7, 512);
     device_add(&via_vt82c686_hwm_device); /* fans: CPU1, Chassis; temperatures: CPU, System, unused */
     hwm_values.temperatures[0] += 2; /* CPU offset */
     hwm_values.temperatures[1] += 2; /* System offset */
