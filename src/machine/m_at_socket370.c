@@ -861,10 +861,9 @@ machine_at_gt694vp_init(const machine_t *model)
     pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,   1, 2, 3, 4);
 
     device_add(&via_apro133a_device);
-    device_add(&via_vt82c686a_device);
-    device_add(&sst_flash_39sf020_device); /* assumed */
+    device_add(&via_vt82c686b_device); /* fans: CPU1, CPU2; temperatures: CPU, System, unused and assumed */
+    device_add(&sst_flash_39sf020_device);
     spd_register(SPD_TYPE_SDRAM, 0x7, 1024);
-    device_add(&via_vt82c686_hwm_device); /* fans: CPU1, Chassis; temperatures: CPU, System, unused */
     hwm_values.temperatures[0] += 2; /* CPU offset */
     hwm_values.temperatures[1] += 2; /* System offset */
     hwm_values.temperatures[2] = 0;  /* unused */
