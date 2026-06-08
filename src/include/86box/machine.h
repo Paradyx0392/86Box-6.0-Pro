@@ -1449,7 +1449,6 @@ extern const device_t  p3v4x_device;
 #endif
 extern int             machine_at_p3v4x_init(const machine_t *);
 extern int             machine_at_gt694va_init(const machine_t *);
-extern int             machine_at_sl67kv_init(const machine_t *);
 
 /* SiS 5600 */
 extern int             machine_at_p6f99_init(const machine_t *);
