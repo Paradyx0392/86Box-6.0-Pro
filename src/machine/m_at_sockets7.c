@@ -52,24 +52,6 @@ static const device_config_t p5a_config[] = {
         .selection      = { { 0 } },
         .bios           = {
             {
-                .name          = "Award Modular BIOS v4.51PG - Revision 1005",
-                .internal_name = "p5a_1005",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 262144,
-                .files         = { "roms/machines/p5a/AL5I1005.AWD", "" }
-            },
-            {
-                .name          = "Award Modular BIOS v4.51PG - Revision 1006",
-                .internal_name = "p5a_1006",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 262144,
-                .files         = { "roms/machines/p5a/AL5I1006.AWD", "" }
-            },
-            {
                 .name          = "Award Modular BIOS v4.51PG - Revision 1007",
                 .internal_name = "p5a",
                 .bios_type     = BIOS_NORMAL,
@@ -156,6 +138,40 @@ machine_at_p5a_init(const machine_t *model)
 
     return ret;
 }
+
+int
+machine_at_vp1541_init(const machine_t *model)
+{
+    int ret;
+
+    ret = bios_load_linear("roms/machines/vp1541/20641108.bin",
+                           0x000e0000, 131072, 0);
+
+    if (bios_only || !ret)
+        return ret;
+
+    machine_at_common_init_ex(model, 2);
+
+    pci_init(PCI_CONFIG_TYPE_1);
+    pci_register_slot(0x00, PCI_CARD_NORTHBRIDGE,     0, 0, 0, 0);
+    pci_register_slot(0x01, PCI_CARD_AGPBRIDGE,       1, 2, 0, 0);
+    pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE,     1, 2, 3, 4);
+    pci_register_slot(0x0F, PCI_CARD_SOUTHBRIDGE_IDE, 1, 2, 3, 4);
+    pci_register_slot(0x03, PCI_CARD_SOUTHBRIDGE_PMU, 1, 2, 3, 4);
+    pci_register_slot(0x02, PCI_CARD_SOUTHBRIDGE_USB, 1, 2, 3, 4);
+    pci_register_slot(0x14, PCI_CARD_NORMAL,          1, 2, 3, 4);
+    pci_register_slot(0x12, PCI_CARD_NORMAL,          2, 3, 4, 1);
+    pci_register_slot(0x10, PCI_CARD_NORMAL,          3, 4, 1, 2);
+    pci_register_slot(0x0E, PCI_CARD_NORMAL,          4, 1, 2, 3);
+
+    device_add(&ali1541_device);
+    device_add(&ali1543c_device);
+    device_add(&sst_flash_29ee010_device);
+    spd_register(SPD_TYPE_SDRAM, 0x7, 512);
+
+    return ret;
+}
+
 
 static const device_config_t m5ala_config[] = {
     // clang-format off

@@ -1264,6 +1264,7 @@ extern int             machine_at_m560_init(const machine_t *);
 extern const device_t  p5a_device;
 #endif
 extern int             machine_at_p5a_init(const machine_t *);
+extern int             machine_at_vp1541_init(const machine_t *);
 #ifdef EMU_DEVICE_H
 extern const device_t  m5ala_device;
 #endif
