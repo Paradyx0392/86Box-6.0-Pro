@@ -137,7 +137,6 @@ static const struct cdrom_drive_types_s {
     { "ASUS",     "CD-S520/A4",        "1.32", "asus_520",       BUS_TYPE_IDE,  0, 52, 36, 0, 0, {  4,  2,  2,  2 } },
     { "AZT",      "CDA46802I",         "1.15", "azt_cda",        BUS_TYPE_IDE,  0,  4, 36, 0, 0, {  3,  0,  0,  0 } },
     { "BTC",      "CD-ROM BCD36XH",    "U1.0", "btc_36xh",       BUS_TYPE_IDE,  0, 36, 36, 0, 0, {  4,  2,  2, -1 } },
-    { "COMPAQ",   "CRD-8322B",         "1.03", "compaq_8322b",   BUS_TYPE_IDE,  0, 32, 36, 0, 0, {  4,  2,  2, -1 } },
     { "GOLDSTAR", "CRD-8160B",         "1.04", "goldstar_104",   BUS_TYPE_IDE,  0, 16, 36, 0, 0, {  4,  2,  2, -1 } },
     { "GOLDSTAR", "CRD-8160B",         "3.14", "goldstar",       BUS_TYPE_IDE,  0, 16, 36, 0, 0, {  4,  2,  2, -1 } },
     { "GOLDSTAR", "CRD-8240B",         "1.24", "goldstar_8240b", BUS_TYPE_IDE,  0, 24, 36, 0, 0, {  4,  2,  2, -1 } },
@@ -163,7 +162,9 @@ static const struct cdrom_drive_types_s {
     { "LG",       "CD-ROM CRD-8482B",  "1.00", "lg_8482b",       BUS_TYPE_IDE,  0, 48, 36, 0, 0, {  4,  2,  2,  2 } },
     { "LG",       "CD-ROM CRD-8522B",  "1.02", "lg_8522b",       BUS_TYPE_IDE,  0, 52, 36, 0, 0, {  4,  2,  2,  2 } },
     { "LG",       "CD-ROM CRD-8522B",  "2.03", "lg_8522b_203",   BUS_TYPE_IDE,  0, 52, 36, 0, 0, {  4,  2,  2,  2 } },
+    { "LG",       "DVD-ROM DRD-8080B", "1.27", "lg_drd8080b",    BUS_TYPE_IDE,  0, 40, 36, 0, 1, {  4,  2,  2,  2 } },
     { "LG",       "DVD-ROM DRD-8160B", "1.01", "lg_drd8160b",    BUS_TYPE_IDE,  0, 48, 36, 0, 1, {  4,  2,  2,  2 } },
+    { "LITE-ON",  "LTN301",            "MP12", "liteon_301",     BUS_TYPE_IDE,  0, 32, 36, 0, 0, {  4,  2,  2, -1 } },
     { "LITE-ON",  "LTN486S",           "YDS4", "liteon_486s",    BUS_TYPE_IDE,  0, 48, 36, 0, 0, {  4,  2,  2,  2 } },
     /* Nothing on Google, deduced 48x from the name. */
     { "LITE-ON",  "LTN48125S",         "1S07", "liteon_48125s",  BUS_TYPE_IDE,  0, 48, 36, 0, 0, {  4,  2,  2,  2 } },
