@@ -1489,6 +1489,7 @@ extern int             machine_at_65eb_init(const machine_t *);
 
 /* i440ZX */
 extern int             machine_at_63a1_init(const machine_t *);
+extern int             machine_at_sl65fplus_init(const machine_t *);
 
 /* SiS 600 */
 extern int             machine_at_7sbb_init(const machine_t *);
