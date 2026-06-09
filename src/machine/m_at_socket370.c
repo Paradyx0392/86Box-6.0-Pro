@@ -1171,7 +1171,7 @@ static const device_config_t ms6323_config[] = {
         .bios           = {
             {
                 .name          = "Award Modular BIOS v6.00PG - Revision 1.0",
-                .internal_name = "ms6323_100",
+                .internal_name = "ms6323",
                 .bios_type     = BIOS_NORMAL,
                 .files_no      = 1,
                 .local         = 0,
@@ -1179,17 +1179,8 @@ static const device_config_t ms6323_config[] = {
                 .files         = { "roms/machines/ms6323/w6323vms.100", "" }
             },
             {
-                .name          = "Award Modular BIOS v6.00PG - Revision 1.1",
-                .internal_name = "ms6323",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 262144,
-                .files         = { "roms/machines/ms6323/w6323vms.110", "" }
-            },
-            {
                 .name          = "Award Modular BIOS v6.00PG - Revision 1.5 (Fujitsu-Siemens OEM)",
-                .internal_name = "ms6323_150",
+                .internal_name = "ms6323_fsc",
                 .bios_type     = BIOS_NORMAL,
                 .files_no      = 1,
                 .local         = 0,
