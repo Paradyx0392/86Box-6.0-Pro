@@ -1510,6 +1510,7 @@ extern int             machine_at_m6vch_init(const machine_t *);
 extern int             machine_at_p6bap_init(const machine_t *);
 
 /* VIA Apollo Pro 133A */
+extern int             machine_at_vh6_init(const machine_t *);
 extern int             machine_at_6via90ap_init(const machine_t *);
 #ifdef EMU_DEVICE_H
 extern const device_t  cuv4xcm_device;
