@@ -990,9 +990,6 @@ extern int             machine_at_optiplexgxl_init(const machine_t *);
 extern const device_t  pt2000_device;
 #endif
 extern int             machine_at_pt2000_init(const machine_t *);
-#ifdef EMU_DEVICE_H
-extern const device_t  morrison32_device;
-#endif
 extern int             machine_at_morrison32_init(const machine_t *);
 extern int             machine_at_pc330_65x6_init(const machine_t *);
 #ifdef EMU_DEVICE_H
@@ -1480,10 +1477,6 @@ extern int             machine_at_s2dge_init(const machine_t *);
 
 /* m_at_socket370.c */
 /* i440LX */
-#ifdef EMU_DEVICE_H
-extern const device_t  ms6161_device;
-#endif
-extern int             machine_at_ms6161_init(const machine_t *);
 extern int             machine_at_s370slm_init(const machine_t *);
 
 /* i440BX */
@@ -1531,13 +1524,11 @@ extern const device_t  m6vcg_device;
 #endif
 extern int             machine_at_m6vcg_init(const machine_t *);
 extern int             machine_at_p6vap_init(const machine_t *);
-extern int             machine_at_j694as_init(const machine_t *);
 #ifdef EMU_DEVICE_H
 extern const device_t  ms6318_device;
 #endif
 extern int             machine_at_ms6318_init(const machine_t *);
 extern int             machine_at_cairo5_init(const machine_t *);
-extern int             machine_at_sl65kv2_init(const machine_t *);
 
 /* m_at_misc.c */
 extern int             machine_at_vpc2007_init(const machine_t *);
