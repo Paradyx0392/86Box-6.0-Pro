@@ -1477,10 +1477,6 @@ extern int             machine_at_s2dge_init(const machine_t *);
 
 /* m_at_socket370.c */
 /* i440LX */
-#ifdef EMU_DEVICE_H
-extern const device_t  ms6161_device;
-#endif
-extern int             machine_at_ms6161_init(const machine_t *);
 extern int             machine_at_s370slm_init(const machine_t *);
 
 /* i440BX */
