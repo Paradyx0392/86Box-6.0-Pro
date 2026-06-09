@@ -14276,13 +14276,13 @@ const machine_t machines[] = {
         .kbc_p1                   = 0x000044f0,
         .gpio                     = 0xffffffff,
         .gpio_acpi                = 0xffffffff,
-        .device                   = NULL,
+        .device                   = &morrison32_device,
         .kbd_device               = NULL,
         .fdc_device               = NULL,
         .vid_device               = &s3_trio32_onboard_pci_device,
         .snd_device               = &cs4232_onboard_device,
         .net_device               = NULL,
-        .aliases                  = { "Intel Morrison32", "HP Pavilion 50x0/70xx", "" }
+        .aliases                  = { "Intel Morrison32", "AST Advantage! 8100P", "HP Morrison", "HP Pavilion 50x0/70xx", "Zenith Data Systems Z-Station GT", "" }
     },
     /* According to tests from real hardware: This has AMI MegaKey KBC firmware on the
        PC87306 Super I/O chip, command 0xA1 returns '5'.
