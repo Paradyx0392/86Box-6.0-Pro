@@ -1173,7 +1173,6 @@ extern int             machine_at_55a5_init(const machine_t *);
 
 /* i430TX */
 extern int             machine_at_tx5_init(const machine_t *);
-extern int             machine_at_ap5t_init(const machine_t *);
 extern int             machine_at_nupro592_init(const machine_t *);
 #ifdef EMU_DEVICE_H
 extern const device_t  tx97_device;
