@@ -595,6 +595,15 @@ static const device_config_t morrison32_config[] = {
                 .size          = 131072,
                 .files         = { "roms/machines/morrison32/1011BT0L.BIO", "roms/machines/morrison32/1011BT0L.BIO", "" }
             },
+            {
+                .name          = "MR BIOS V3.30",
+                .internal_name = "morrison32_mr",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 131072,
+                .files         = { "roms/machines/thor/MR_MORIS.BIO", "" }
+            },
             { .files_no = 0 }
         }
     },
@@ -628,9 +637,15 @@ machine_at_morrison32_init(const machine_t *model)
         return ret;
 
     device_context(model->device);
-    fn  = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
-    fn2 = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 1);
-    ret = bios_load_linear_combined(fn, fn2, 0x1d000, 128);
+    int is_mr     = !strcmp(device_get_config_bios("bios"), "morrison32_mr");
+    int has_video = !strcmp(device_get_config_bios("bios"), "morrison32");
+    fn            = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
+    if (is_mr)
+        ret = bios_load_linear(fn, 0x000e0000, 131072, 0);
+    else {
+        fn2 = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 1);
+        ret = bios_load_linear_combined(fn, fn2, 0x20000, 128);
+    }
     device_context_restore();
 
     machine_at_common_init(model);
@@ -643,10 +658,10 @@ machine_at_morrison32_init(const machine_t *model)
     pci_register_slot(0x13, PCI_CARD_NORMAL,      2, 3, 4, 1);
     pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 0, 0, 0, 0);
 
-    if (gfxcard[0] == VID_INTERNAL)
+    if (has_video && (gfxcard[0] == VID_INTERNAL))
         device_add(machine_get_vid_device(machine));
 
-    if (sound_card_current[0] == SOUND_INTERNAL)
+    if (has_video && (sound_card_current[0] == SOUND_INTERNAL))
         machine_snd = device_add(machine_get_snd_device(machine));
 
     device_add(&i430fx_device);
