@@ -439,15 +439,6 @@ static const device_config_t tc430hx_config[] = {
                                    "roms/machines/tc430hx/1008DH08.BI2", "roms/machines/tc430hx/1008DH08.BI3",
                                    "roms/machines/tc430hx/1008DH08.RCV", "" }
             },
-            {
-                .name          = "MR BIOS 3.46",
-                .internal_name = "tc430hxmr",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 262144,
-                .files         = { "roms/machines/tc430hx/v098b5nt.bio", "" }
-            },
             { .files_no = 0 }
         }
     },
@@ -504,7 +495,6 @@ int
 machine_at_tc430hx_init(const machine_t *model)
 {
     int         ret = 0;
-    const char *fn;
     const char *fn[5];
 
     /* No ROMs available */
@@ -512,16 +502,9 @@ machine_at_tc430hx_init(const machine_t *model)
         return ret;
 
     device_context(model->device);
-    int is_mr     = !strcmp(device_get_config_bios("bios"), "tc430hxmr");
-    int has_video = !strcmp(device_get_config_bios("bios"), "tc430hx");
-    fn            = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
-    if (is_mr)
-        ret = bios_load_linear(fn, 0x000e0000, 131072, 0);
-    else {
-        for (int i = 0; i < 5; i++)
-            fn[i] = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), i);
-        ret = bios_load_linear_combined2(fn[0], fn[1], fn[2], fn[3], fn[4], 0x3a000, 128);
-    }
+    for (int i = 0; i < 5; i++)
+        fn[i] = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), i);
+    ret = bios_load_linear_combined2(fn[0], fn[1], fn[2], fn[3], fn[4], 0x3a000, 128);
     device_context_restore();
 
     machine_at_common_init(model);
@@ -536,10 +519,10 @@ machine_at_tc430hx_init(const machine_t *model)
     pci_register_slot(0x10, PCI_CARD_NORMAL,      4, 1, 2, 3);
     pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 0, 0, 0, 0);
 
-    if (has_video && (gfxcard[0] == VID_INTERNAL))
+    if (gfxcard[0] == VID_INTERNAL)
         device_add(machine_get_vid_device(machine));
 
-    if (has_video && (sound_card_current[0] == SOUND_INTERNAL))
+    if (sound_card_current[0] == SOUND_INTERNAL)
         machine_snd = device_add(machine_get_snd_device(machine));
 
     device_add(&i430hx_device);
@@ -1288,82 +1271,20 @@ machine_at_lgibmx52_init(const machine_t *model)
    the TC430HX, hence the #define. */
 #define machine_at_nv430vx_gpio_init machine_at_tc430hx_gpio_init
 
-static const device_config_t pb680_config[] = {
-    // clang-format off
-    {
-        .name           = "bios",
-        .description    = "BIOS Version",
-        .type           = CONFIG_BIOS,
-        .default_string = "pb680",
-        .default_int    = 0,
-        .file_filter    = NULL,
-        .spinner        = { 0 },
-        .selection      = { { 0 } },
-        .bios           = {
-            {
-                .name          = "Intel AMIBIOS - Revision 1.00.12.DN0R",
-                .internal_name = "pb680",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 5,
-                .local         = 0,
-                .size          = 262144,
-                .files         = { "roms/machines/pb680/1012DN0R.BIO", "roms/machines/pb680/1012DN0R.BI1",
-                                   "roms/machines/pb680/1012DN0R.BI2", "roms/machines/pb680/1012DN0R.BI3",
-                                   "roms/machines/pb680/1012DN0R.RCV", "" }
-            },
-            {
-                .name          = "MR BIOS 3.45",
-                .internal_name = "pb680_mr",
-                .bios_type     = BIOS_NORMAL,
-                .files_no      = 1,
-                .local         = 0,
-                .size          = 262144,
-                .files         = { "roms/machines/pb680/v09ab5ni.bio", "" }
-            },
-            { .files_no = 0 }
-        }
-    },
-    { .name = "", .description = "", .type = CONFIG_END }
-    // clang-format on
-};
-
-const device_t pb680_device = {
-    .name          = "Packard Bell PB68x",
-    .internal_name = "pb680",
-    .flags         = 0,
-    .local         = 0,
-    .init          = NULL,
-    .close         = NULL,
-    .reset         = NULL,
-    .available     = NULL,
-    .speed_changed = NULL,
-    .force_redraw  = NULL,
-    .config        = pb680_config
-};
-
 int
 machine_at_pb680_init(const machine_t *model)
 {
-    int         ret = 0;
-    const char *fn;
-    const char *fn[5];
+    int ret;
 
-    /* No ROMs available */
-    if (!device_available(model->device))
+    ret = bios_load_linear_combined2("roms/machines/pb680/1012DN0R.BIO",
+                                     "roms/machines/pb680/1012DN0R.BI1",
+                                     "roms/machines/pb680/1012DN0R.BI2",
+                                     "roms/machines/pb680/1012DN0R.BI3",
+                                     "roms/machines/pb680/1012DN0R.RCV",
+                                     0x3a000, 128);
+
+    if (bios_only || !ret)
         return ret;
-
-    device_context(model->device);
-    int is_mr     = !strcmp(device_get_config_bios("bios"), "pb680_mr");
-    int has_video = !strcmp(device_get_config_bios("bios"), "pb680");
-    fn            = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 0);
-    if (is_mr)
-        ret = bios_load_linear(fn, 0x000e0000, 131072, 0);
-    else {
-        for (int i = 0; i < 5; i++)
-            fn[i] = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), i);
-        ret = bios_load_linear_combined2(fn[0], fn[1], fn[2], fn[3], fn[4], 0x3a000, 128);
-    }
-    device_context_restore();
 
     machine_at_common_init(model);
     machine_at_nv430vx_gpio_init();
@@ -1376,7 +1297,7 @@ machine_at_pb680_init(const machine_t *model)
     pci_register_slot(0x0B, PCI_CARD_NORMAL,      3, 4, 1, 2);
     pci_register_slot(0x07, PCI_CARD_SOUTHBRIDGE, 0, 0, 0, 0);
 
-    if (has_video && gfxcard[0] == VID_INTERNAL)
+    if (gfxcard[0] == VID_INTERNAL)
         device_add(machine_get_vid_device(machine));
 
     device_add(&i430vx_device);
