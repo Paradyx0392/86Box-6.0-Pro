@@ -479,6 +479,15 @@ static const device_config_t vli486sv2g_config[] = {
                 .size          = 65536,
                 .files         = { "roms/machines/vli486sv2g/0402.001", "" }
             },
+            {
+                .name          = "MR BIOS 3.21 - Revision 11/16/95",
+                .internal_name = "vli486sv2g_mr",
+                .bios_type     = BIOS_NORMAL,
+                .files_no      = 1,
+                .local         = 0,
+                .size          = 65536,
+                .files         = { "roms/machines/vli486sv2g/MRBIOS-SIS471-V3-21.BIN", "" }
+            },
             { .files_no = 0 }
         }
     },
