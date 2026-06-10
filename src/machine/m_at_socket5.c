@@ -644,7 +644,7 @@ machine_at_morrison32_init(const machine_t *model)
         ret = bios_load_linear(fn, 0x000e0000, 131072, 0);
     else {
         fn2 = device_get_bios_file(machine_get_device(machine), device_get_config_bios("bios"), 1);
-        ret = bios_load_linear_combined(fn, fn2, 0x20000, 128);
+        ret = bios_load_linear_combined(fn, fn2, 0x1d000, 128);
     }
     device_context_restore();
 
