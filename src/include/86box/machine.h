@@ -1356,6 +1356,7 @@ extern int             machine_at_fickn6000_init(const machine_t *);
 extern const device_t  lx6_device;
 #endif
 extern int             machine_at_lx6_init(const machine_t *);
+extern int             machine_at_p6lxi_init(const machine_t *);
 extern int             machine_at_optiplexgxa_init(const machine_t *);
 extern int             machine_at_spitfire_init(const machine_t *);
 #ifdef EMU_DEVICE_H
