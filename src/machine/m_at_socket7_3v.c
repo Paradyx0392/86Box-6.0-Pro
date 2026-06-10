@@ -533,7 +533,7 @@ static const device_config_t atlantis_config[] = {
     // clang-format on
 };
 
-const device_t thor_device = {
+const device_t atlantis_device = {
     .name          = "Intel Advanced/AS",
     .internal_name = "atlantis",
     .flags         = 0,
@@ -790,7 +790,7 @@ static const device_config_t endeavor_config[] = {
     // clang-format on
 };
 
-const device_t thor_device = {
+const device_t endeavor_device = {
     .name          = "Intel Advanced/EV",
     .internal_name = "endeavor",
     .flags         = 0,
