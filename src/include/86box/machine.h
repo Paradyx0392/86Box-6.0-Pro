@@ -849,7 +849,10 @@ extern int             machine_at_pb450_init(const machine_t *);
 /* i420EX */
 extern int             machine_at_486pi_init(const machine_t *);
 extern int             machine_at_bat4ip3e_init(const machine_t *);
-extern int             machine_at_486ap4_init(const machine_t *);
+#ifdef EMU_DEVICE_H
+extern const device_t  a486pa_device;
+#endif
+extern int             machine_at_a486pa_init(const machine_t *);
 extern int             machine_at_sb486p_init(const machine_t *);
 extern int             machine_at_ninja_init(const machine_t *);
 
