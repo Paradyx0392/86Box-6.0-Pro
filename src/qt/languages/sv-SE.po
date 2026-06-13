@@ -1073,8 +1073,8 @@ msgstr "Spara"
 msgid "About %1"
 msgstr "Om %1"
 
-msgid "An emulator of old computers\n\nAuthors: Miran Grča (OBattler), RichardG867, Jasmine Iwanek, TC1995, coldbrewed, Teemu Korhonen (Manaatti), Joakim L. Gilje, Adrien Moulin (elyosh), Daniel Balsom (gloriouscow), Cacodemon345, Fred N. van Kempen (waltje), Tiseno100, reenigne, and others.\n\nWith previous core contributions from Sarah Walker, leilei, JohnElliott, greatpsycho, and others.\n\nReleased under the GNU General Public License version 2 or later. See LICENSE for more information."
-msgstr "En emulator av gamla datorer\n\nUpphovsmän: Miran Grča (OBattler), RichardG867, Jasmine Iwanek, TC1995, coldbrewed, Teemu Korhonen (Manaatti), Joakim L. Gilje, Adrien Moulin (elyosh), Daniel Balsom (gloriouscow), Cacodemon345, Fred N. van Kempen (waltje), Tiseno100, reenigne, med flera.\n\nMed tidigare grundbidrag från Sarah Walker, leilei, JohnElliott, greatpsycho, med flera.\n\nSläppt under GNU General Public License upplaga 2 eller senare. Se LICENSE för mer information."
+msgid "Pro Edition - An emulator of old computers\n\nAuthors: Miran Grča (OBattler), RichardG867, Jasmine Iwanek, TC1995, coldbrewed, Teemu Korhonen (Manaatti), Joakim L. Gilje, Adrien Moulin (elyosh), Daniel Balsom (gloriouscow), Cacodemon345, Fred N. van Kempen (waltje), Tiseno100, reenigne, and others.\n\nWith previous core contributions from Sarah Walker, leilei, JohnElliott, greatpsycho, and others.\n\nReleased under the GNU General Public License version 2 or later. See LICENSE for more information."
+msgstr "Pro-utgåva - En emulator av gamla datorer\n\nUpphovsmän: Miran Grča (OBattler), RichardG867, Jasmine Iwanek, TC1995, coldbrewed, Teemu Korhonen (Manaatti), Joakim L. Gilje, Adrien Moulin (elyosh), Daniel Balsom (gloriouscow), Cacodemon345, Fred N. van Kempen (waltje), Tiseno100, reenigne, med flera.\n\nMed tidigare grundbidrag från Sarah Walker, leilei, JohnElliott, greatpsycho, med flera.\n\nSläppt under GNU General Public License upplaga 2 eller senare. Se LICENSE för mer information."
 
 msgid "Hardware not available"
 msgstr "Hårdvara ej tillgänglig"
