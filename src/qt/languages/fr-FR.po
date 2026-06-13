@@ -1079,7 +1079,7 @@ msgstr "À propos de %1"
 
 msgid "An emulator of old computers\n\nAuthors: Miran Grča (OBattler), RichardG867, Jasmine Iwanek, TC1995, coldbrewed, Teemu Korhonen (Manaatti), Joakim L. Gilje, Adrien Moulin (elyosh), Daniel Balsom (gloriouscow), Cacodemon345, Fred N. van Kempen (waltje), Tiseno100, reenigne, and others.\n\nWith previous core contributions from Sarah Walker, leilei, JohnElliott, greatpsycho, and others.\n\nReleased under the GNU General Public License version 2 or later. See LICENSE for more information."
 msgstr ""
-"Un émulateur d'anciens ordinateurs\n"
+"Édition Pro - Un émulateur d'anciens ordinateurs\n"
 "\n"
 "Auteurs : Miran Grča (OBattler), RichardG867, Jasmine Iwanek, TC1995, "
 "coldbrewed, Teemu Korhonen (Manaatti), Joakim L. Gilje, Adrien Moulin "
