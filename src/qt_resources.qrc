@@ -114,6 +114,9 @@
         <file alias="addvm-watermark.png">qt/assets/addvm-watermark.png</file>
     </qresource>
     <qresource prefix="/systemicons">
+        <file alias="ast_adv_4050d.png">qt/assets/systemicons/ast_adv_4050d.png</file>
+        <file alias="ast_bravo_ms.png">qt/assets/systemicons/ast_bravo_ms.png</file>
+        <file alias="ast_bravo_mst.png">qt/assets/systemicons/ast_bravo_mst.png</file>
         <file alias="cpq_deskpro.png">qt/assets/systemicons/cpq_deskpro.png</file>
         <file alias="cpq_port_386.png">qt/assets/systemicons/cpq_port_386.png</file>
         <file alias="cpq_port_II.png">qt/assets/systemicons/cpq_port_II.png</file>
@@ -122,6 +125,7 @@
         <file alias="cpq_pres_2240.png">qt/assets/systemicons/cpq_pres_2240.png</file>
         <file alias="cpq_pres_4500.png">qt/assets/systemicons/cpq_pres_4500.png</file>
         <file alias="hp_pav_5030.png">qt/assets/systemicons/hp_pav_5030.png</file>
+        <file alias="hp_pav_7410p.png">qt/assets/systemicons/hp_pav_7410p.png</file>
         <file alias="hp_vectra_vei8.png">qt/assets/systemicons/hp_vectra_vei8.png</file>
         <file alias="ibm330.png">qt/assets/systemicons/ibm330.png</file>
         <file alias="ibm_at.png">qt/assets/systemicons/ibm_at.png</file>
